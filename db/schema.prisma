@@ -13,8 +13,13 @@ generator client {
 
 // --------------------------------------
 
-//model Project {
-//  id        Int      @default(autoincrement()) @id
-//  name      String
-//}
+model Job {
+ id        Int      @default(autoincrement()) @id
+ name      String
+ company   String
+}
 
+model Tag {
+ id        Int      @default(autoincrement()) @id
+ name      String
+}
