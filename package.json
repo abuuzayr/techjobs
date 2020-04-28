@@ -30,6 +30,7 @@
     "@prisma/client": "2.0.0-beta.3",
     "blitz": "latest",
     "react": "experimental",
+    "react-bulma-components": "3.2.0",
     "react-dom": "experimental",
     "typescript": "3.8.3"
   },
