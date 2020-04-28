@@ -32,6 +32,8 @@
     "react": "experimental",
     "react-bulma-components": "3.2.0",
     "react-dom": "experimental",
+    "react-icons": "3.10.0",
+    "styled-components": "5.1.0",
     "typescript": "3.8.3"
   },
   "NOTE": "Next.js dependency is currently only required for deploying to zeit",
