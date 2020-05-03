@@ -43,7 +43,7 @@ const Home = () => (
       <title>techjobs</title>
       <link rel="icon" href="/favicon.png" />
     </Head>
-    <Hero color="info" size="large">
+    <Hero color="info" size="medium">
       <Hero.Head>
         <Navbar
           color="info"
@@ -76,7 +76,7 @@ const Home = () => (
           </Container>
         </Navbar>
       </Hero.Head>
-      <HeroBody>
+      <HeroBody style={{ 'marginTop': -41 }}>
         <Container>
           <Title size={1} renderAs="h1" className="has-text-centered">
             Find a job in <Sun /> Singapore
@@ -116,6 +116,9 @@ const Home = () => (
               </li>
               <li>
                 <a>Aggregated</a>
+              </li>
+              <li>
+                <a>Resources</a>
               </li>
             </ul>
           </Container>
