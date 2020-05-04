@@ -3,7 +3,7 @@
 
 datasource postgresql {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -14,15 +14,15 @@ generator client {
 // --------------------------------------
 
 model Job {
-  id          Int      @default(autoincrement()) @id
-  name        String
-  company     String
-  avatar      String?
-  url         String?
-  salary      String?
-  postedDate  DateTime @default(now())
-  description String
-  tags        Tag[]    @relation(references: [id])
+  id         Int      @default(autoincrement()) @id
+  name       String
+  company    String
+  avatar     String
+  url        String
+  title      String
+  salary     String
+  postedDate DateTime @default(now())
+  tags       Tag[]    @relation(references: [id])
 }
 
 model Tag {

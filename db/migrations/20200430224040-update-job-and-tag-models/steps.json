@@ -1,0 +1,28 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "Job",
+      "field": "title"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Job",
+      "field": "avatar",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Job",
+      "field": "url",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Job",
+      "field": "salary",
+      "arity": "Optional"
+    }
+  ]
+}
