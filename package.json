@@ -28,12 +28,14 @@
   "dependencies": {
     "@prisma/cli": "2.0.0-beta.3",
     "@prisma/client": "2.0.0-beta.3",
+    "@zeit/next-less": "1.0.1",
     "blitz": "latest",
+    "less": "3.11.1",
     "react": "experimental",
     "react-bulma-components": "3.2.0",
     "react-dom": "experimental",
     "react-icons": "3.10.0",
-    "rsuite": "4.4.1",
+    "react-modal": "3.11.2",
     "styled-components": "5.1.0",
     "typescript": "3.8.3"
   },
