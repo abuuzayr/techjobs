@@ -1,9 +1,10 @@
 import React, { useState } from "react"
-import { Box, Media, Content, Tag, Icon, Level } from "react-bulma-components"
+import { Box, Media, Content, Tag, Icon, Level, Heading, Container, Button } from "react-bulma-components"
 import { FcLikePlaceholder, FcLike } from "react-icons/fc"
-import { RiShareForward2Line } from "react-icons/ri"
+import { RiShareLine } from "react-icons/ri"
 import { FaRegMoneyBillAlt } from "react-icons/fa"
-import { MdDateRange } from "react-icons/md"
+import { MdDateRange, MdClose } from "react-icons/md"
+import Modal from "react-modal"
 import styled from "styled-components"
 
 const JobBox = styled(Box)`
@@ -21,6 +22,18 @@ const IconSlot = styled(Icon)`
 const Job = (props) => {
   const { avatar, name, company, salary, tags, postedDate, description } = props.data
   const [like, setLike] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+
+  const closeModal = () => {
+    setShowModal(false)
+  }
+
+  const clickLike = (e) => {
+    e.stopPropagation()
+    setLike((prevLike) => !prevLike)
+  }
+
+  // Handle job age string
   let postedAgeStr = ""
   if (postedDate) {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
@@ -33,7 +46,7 @@ const Job = (props) => {
   }
   return (
     <JobBox>
-      <Media renderAs="article">
+      <Media renderAs="article" onClick={() => setShowModal(true)}>
         <Media.Item position="left">
           <figure className="image is-64x64">
             <img src={avatar} alt="Company logo" />
@@ -56,22 +69,49 @@ const Job = (props) => {
                 </Level.Item>
               </Level.Side>
             </Level>
-            <div>
-              {tags.map((tag) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
-            </div>
+            <div>{tags && tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}</div>
           </Content>
         </Media.Item>
         <Media.Item position="right">
-          <IconSlot onClick={() => setLike(!like)} title="Like">
+          <IconSlot onClick={clickLike} title="Like">
             {like ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
           </IconSlot>
           <IconSlot title="Share">
-            <RiShareForward2Line size="2em" />
+            <RiShareLine size="2em" />
           </IconSlot>
+          <Container>
+            <Button
+              color="info"
+              outlined={true}
+              rounded={true}
+              style={{ borderWidth: 2, fontWeight: 600 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              Apply
+            </Button>
+          </Container>
         </Media.Item>
       </Media>
+      <Modal isOpen={showModal} onRequestClose={closeModal}>
+        <Container>
+          <Level>
+            <Level.Side align="left">
+              <figure className="image is-64x64">
+                <img src={avatar} alt="Company logo" />
+              </figure>
+              <Heading>{name}</Heading>
+            </Level.Side>
+            <Level.Side align="right">
+              <MdClose onClick={closeModal} />
+            </Level.Side>
+          </Level>
+        </Container>
+      </Modal>
+      <style jsx global>{`
+        .ReactModal__Overlay.ReactModal__Overlay--after-open {
+          z-index: 99;
+        }
+      `}</style>
     </JobBox>
   )
 }
