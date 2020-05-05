@@ -1,8 +1,21 @@
-import React from "react"
-import { Container, Hero, Tabs, Columns, Level, Button } from "react-bulma-components"
+// Imports from libraries
+import { Suspense } from "react"
+import { useQuery } from "blitz"
+import { Container, Hero, Tabs, Columns, Level } from "react-bulma-components"
+import { FiSearch } from "react-icons/fi"
+
+// Import components
 import NavBar from "./NavBar"
 import { Title, HeroBody, Sun } from "../styles/common"
-import { FiSearch } from "react-icons/fi"
+
+// Import queries
+import getJobsCount from "app/jobs/queries/getJobsCount"
+
+const JobsCount = (props) => {
+  const [jobsCount] = useQuery(getJobsCount, props.args)
+
+  return <span style={{ marginLeft: 5 }}>({jobsCount})</span>
+}
 
 const HeroComponent = () => (
   <Hero color="info" size="medium">
@@ -55,7 +68,12 @@ const HeroComponent = () => (
         <Container>
           <ul>
             <li className="is-active">
-              <a>Featured</a>
+              <a>
+                Featured{" "}
+                <Suspense fallback={<></>}>
+                  <JobsCount />
+                </Suspense>
+              </a>
             </li>
             <li>
               <a>Aggregated</a>
