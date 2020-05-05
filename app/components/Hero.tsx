@@ -1,5 +1,5 @@
 import React from "react"
-import { Container, Hero, Tabs, Columns } from "react-bulma-components"
+import { Container, Hero, Tabs, Columns, Level, Button } from "react-bulma-components"
 import NavBar from "./NavBar"
 import { Title, HeroBody, Sun } from "../styles/common"
 import { FiSearch } from "react-icons/fi"
@@ -10,6 +10,25 @@ const HeroComponent = () => (
       <NavBar />
     </Hero.Head>
     <HeroBody style={{ marginTop: -41 }}>
+      <div className="credits">
+        <Level.Side align="right">
+          <a
+            className="unsplash"
+            href="https://unsplash.com/@kp89_?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Download free do whatever you want high-resolution photos from Kirill Petropavlov"
+          >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <title>unsplash-logo</title>
+                <path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path>
+              </svg>
+            </span>
+            <span>Kirill Petropavlov</span>
+          </a>
+        </Level.Side>
+      </div>
       <Container>
         <Title size={1} renderAs="h1" className="has-text-centered">
           Find a job in <Sun /> Singapore
@@ -25,6 +44,7 @@ const HeroComponent = () => (
                   <FiSearch />
                 </span>
               </p>
+              {/* TODO: Add quick search buttons for languages, etc. */}
             </div>
           </Columns.Column>
         </Columns>
@@ -47,6 +67,33 @@ const HeroComponent = () => (
         </Container>
       </Tabs>
     </Hero.Footer>
+    <style jsx>{`
+      .credits {
+        position: absolute;
+        top: 70px;
+        right: 20px;
+      }
+      .unsplash {
+        color: white;
+        padding: 4px 6px;
+        font-size: 12px;
+        line-height: 1.2;
+        border-radius: 3px;
+        opacity: 0.6;
+      }
+      .unsplash span {
+        display: inline-block;
+        padding: 2px 3px;
+      }
+      .unsplash span svg {
+        height: 12px;
+        width: auto;
+        position: relative;
+        vertical-align: middle;
+        top: -2px;
+        fill: white;
+      }
+    `}</style>
   </Hero>
 )
 
