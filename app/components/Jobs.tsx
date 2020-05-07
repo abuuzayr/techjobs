@@ -1,12 +1,21 @@
-import { Suspense } from "react"
+import { Suspense, useState } from "react"
 import { useQuery } from "blitz"
 import Job from "./Job"
 import getJobs from "../jobs/queries/getJobs"
+import getJobsCount from "../jobs/queries/getJobsCount"
 import { Container, Columns } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
 
 const Jobs = (props) => {
-  const [jobs] = useQuery(getJobs, props.args)
+  const JOBS_TO_SHOW = 20
+  const [page, setPage] = useState(0)
+  const [jobsCount] = useQuery(getJobsCount, props.args)
+
+  const [jobs] = useQuery(
+    getJobs,
+    { ...props.args, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
+    { paginated: true }
+  )
 
   return (
     <Container style={{ padding: "3rem" }}>
@@ -17,6 +26,10 @@ const Jobs = (props) => {
           ))}
         </Columns.Column>
       </Columns>
+
+      <button disabled={jobs.length === jobsCount} onClick={() => setPage(page + 1)}>
+        Load more
+      </button>
     </Container>
   )
 }
