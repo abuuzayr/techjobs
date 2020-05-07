@@ -55,7 +55,7 @@ const Job = (props) => {
         <Media.Item>
           <Content>
             <div>
-              <strong>{name}</strong> @ <small>{company}</small>
+              <strong>{name}</strong> @ <small>{company && company.name}</small>
               <br />
               {description}
             </div>
