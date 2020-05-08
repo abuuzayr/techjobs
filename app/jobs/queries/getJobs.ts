@@ -10,6 +10,7 @@ export default async function getJobs(args: FindManyJobArgs) {
           imgUrl: true,
         },
       },
+      tags: true,
     },
   })
 
