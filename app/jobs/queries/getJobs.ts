@@ -7,6 +7,7 @@ export default async function getJobs(args: FindManyJobArgs) {
       company: {
         select: {
           name: true,
+          imgUrl: true,
         },
       },
     },
