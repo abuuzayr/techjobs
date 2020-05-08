@@ -19,6 +19,17 @@ const IconSlot = styled(Icon)`
   margin-left: 10px;
 `
 
+const Placeholder = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  border-radius: 10px;
+  background: aliceblue;
+  font-weight: 700;
+`
+
 const Job = (props) => {
   const { avatar, name, company, salary, tags, postedDate, description } = props.data
   const [like, setLike] = useState(false)
@@ -49,7 +60,11 @@ const Job = (props) => {
       <Media renderAs="article" onClick={() => setShowModal(true)}>
         <Media.Item position="left">
           <figure className="image is-64x64">
-            <img src={avatar} alt="Company logo" />
+            {avatar || (company && company.imgUrl) ? (
+              <img src={avatar || (company && company.imgUrl)} alt="Company logo" />
+            ) : (
+              <Placeholder>{company ? company.name.slice(0, 1) : name.slice(0, 1)}</Placeholder>
+            )}
           </figure>
         </Media.Item>
         <Media.Item>
