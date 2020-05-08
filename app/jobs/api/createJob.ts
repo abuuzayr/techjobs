@@ -1,12 +1,9 @@
-import db, { JobCreateArgs, Job } from "db"
-
-interface Company {
-  id: number
-}
+import db, { JobCreateArgs, Job, Company } from "db"
 
 const createJob = async (args: JobCreateArgs) => {
   if (!args.data) return false
   if (!args.data.company) return false
+  // Find job if exists
   let jobFound: Job
   if (args.data.aggId) {
     const jobQuery = await db.job.findMany({
@@ -18,6 +15,7 @@ const createJob = async (args: JobCreateArgs) => {
     })
     if (jobQuery.length) jobFound = jobQuery[0]
   }
+  // Find or create a company to connect job with
   const companyQuery = await db.company.findMany({
     where: {
       name: {
@@ -36,6 +34,9 @@ const createJob = async (args: JobCreateArgs) => {
       },
     })
   }
+  // Get tags for searching
+  const tags = await db.tag.findMany()
+  // Job data to create or update with
   const jobData = {
     ...args,
     data: {
@@ -44,6 +45,13 @@ const createJob = async (args: JobCreateArgs) => {
         connect: {
           id: company.id,
         },
+      },
+      tags: {
+        upsert: args.data.tags.map((tag) => ({
+          create: { name: tag },
+          update: { name: tag },
+          where: { id: tags.find((t) => t.name === tag).id || 0 },
+        })),
       },
     },
   }
