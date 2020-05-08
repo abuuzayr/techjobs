@@ -84,7 +84,7 @@ const Job = (props) => {
                 </Level.Item>
               </Level.Side>
             </Level>
-            <div>{tags && tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}</div>
+            <div>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</div>
           </Content>
         </Media.Item>
         <Media.Item position="right">
