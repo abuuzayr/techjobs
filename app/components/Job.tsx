@@ -92,7 +92,7 @@ const Job = (props) => {
                   <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
                 </Level.Item>
                 <Level.Item>{source && "via "}</Level.Item>
-                <Level.Item>{source && <Source src={`/${source}-logo.svg`} />}</Level.Item>
+                <Level.Item>{source && <Source src={`/${source.replace(/\s/g, "")}-logo.svg`} />}</Level.Item>
               </Level.Side>
             </Level>
             <Tag.Group>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</Tag.Group>
