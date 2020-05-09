@@ -1,8 +1,9 @@
 // Imports from libraries
 import { Suspense } from "react"
 import { useQuery } from "blitz"
-import { Container, Hero, Tabs, Columns, Level } from "react-bulma-components"
+import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch } from "react-icons/fi"
+import styled from "styled-components"
 
 // Import components
 import NavBar from "./NavBar"
@@ -11,9 +12,13 @@ import { Title, HeroBody, Sun } from "../styles/common"
 // Import queries
 import getJobsCount from "app/jobs/queries/getJobsCount"
 
+const Logo = styled.img`
+  max-height: 30px;
+  filter: brightness(0) invert(1);
+`
+
 const JobsCount = (props) => {
   const [jobsCount] = useQuery(getJobsCount, props.args)
-
   return <span style={{ marginLeft: 5 }}>({jobsCount})</span>
 }
 
@@ -66,6 +71,34 @@ const HeroComponent = (props) => {
                 </p>
                 {/* TODO: Add quick search buttons for languages, etc. */}
               </div>
+            </Columns.Column>
+          </Columns>
+        </Container>
+        <Container>
+          <Columns>
+            <Columns.Column>
+              <Level>
+                <Level.Item>
+                  <Heading subtitle size={6}>
+                    <small>Including jobs from</small>
+                  </Heading>
+                </Level.Item>
+              </Level>
+              <Level>
+                {[
+                  "/TechInAsia-logo.svg",
+                  "/Adzuna-logo.svg",
+                  "/StackOverflow-logo.svg",
+                  "/eFinancialCareers-logo.svg",
+                  "/jobsDb.png",
+                  "/jobsCentral.png",
+                  "/jobstreet.png",
+                ].map((path) => (
+                  <Level.Item>
+                    <Logo src={path} key={path} />
+                  </Level.Item>
+                ))}
+              </Level>
             </Columns.Column>
           </Columns>
         </Container>
