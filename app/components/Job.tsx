@@ -30,8 +30,12 @@ const Placeholder = styled.div`
   font-weight: 700;
 `
 
+const Source = styled.img`
+  max-height: 16px;
+`
+
 const Job = (props) => {
-  const { avatar, name, company, salary, tags, postedDate, description } = props.data
+  const { avatar, name, company, salary, tags, postedDate, description, source } = props.data
   const [like, setLike] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
@@ -82,6 +86,8 @@ const Job = (props) => {
                 <Level.Item>
                   <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
                 </Level.Item>
+                <Level.Item>{source && "via "}</Level.Item>
+                <Level.Item>{source && <Source src={`/${source}-logo.svg`} />}</Level.Item>
               </Level.Side>
             </Level>
             <div>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</div>
