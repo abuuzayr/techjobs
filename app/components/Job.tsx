@@ -80,9 +80,11 @@ const Job = (props) => {
             </div>
             <Level style={{ margin: "0.5em 0", fontSize: "0.8em" }}>
               <Level.Side align="left">
-                <Level.Item>
-                  <FaRegMoneyBillAlt size="1.5em" style={{ marginRight: 5 }} /> {salary}
-                </Level.Item>
+                {salary && (
+                  <Level.Item>
+                    <FaRegMoneyBillAlt size="1.5em" style={{ marginRight: 5 }} /> {salary}
+                  </Level.Item>
+                )}
                 <Level.Item>
                   <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
                 </Level.Item>
