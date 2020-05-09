@@ -92,7 +92,7 @@ const Job = (props) => {
                 <Level.Item>{source && <Source src={`/${source}-logo.svg`} />}</Level.Item>
               </Level.Side>
             </Level>
-            <div>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</div>
+            <Tag.Group>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</Tag.Group>
           </Content>
         </Media.Item>
         <Media.Item position="right">
