@@ -7,7 +7,7 @@ import styled from "styled-components"
 
 // Import components
 import NavBar from "./NavBar"
-import { Title, HeroBody, Sun } from "../styles/common"
+import { Title, HeroBody, Sun, FillCode } from "../styles/common"
 
 // Import queries
 import getJobsCount from "app/jobs/queries/getJobsCount"
@@ -56,7 +56,7 @@ const HeroComponent = (props) => {
         </div>
         <Container>
           <Title size={1} renderAs="h1" className="has-text-centered">
-            Find a job in <Sun /> Singapore
+            Find a <FillCode /> job in <Sun /> Singapore
           </Title>
         </Container>
         <Container>

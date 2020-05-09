@@ -3,6 +3,7 @@ import { Heading, Hero } from "react-bulma-components"
 import { AiOutlineCode, AiFillBell } from "react-icons/ai"
 import { IoIosSend } from "react-icons/io"
 import { FiSun } from "react-icons/fi"
+import { AiFillCode } from "react-icons/ai"
 
 export const Code = styled(AiOutlineCode)`
   width: 30px;
@@ -26,6 +27,10 @@ export const Bell = styled(AiFillBell)`
 
 export const Sun = styled(FiSun)`
   color: hsl(48, 100%, 67%);
+  vertical-align: middle;
+`
+
+export const FillCode = styled(AiFillCode)`
   vertical-align: middle;
 `
 
