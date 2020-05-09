@@ -12,6 +12,9 @@ export default async function getJobs(args: FindManyJobArgs) {
       },
       tags: true,
     },
+    orderBy: {
+      postedDate: "desc",
+    },
   })
 
   return jobs
