@@ -12,7 +12,9 @@ const JobBox = styled(Box)`
   border: 2px solid transparent;
   :hover {
     border: 2px solid gray;
+    opacity: 1;
   }
+  ${(props) => (props.old ? "opacity: 0.6;" : "")}
 `
 
 const IconSlot = styled(Icon)`
@@ -50,9 +52,10 @@ const Job = (props) => {
 
   // Handle job age string
   let postedAgeStr = ""
+  let postedDays = 0
   if (postedDate) {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
-    const postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
+    postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
     if (postedDays < 1) {
       postedAgeStr = `${postedDays * 24} hours ago`
     } else {
@@ -60,7 +63,7 @@ const Job = (props) => {
     }
   }
   return (
-    <JobBox>
+    <JobBox old={postedDays > 31}>
       <Media renderAs="article" onClick={() => setShowModal(true)}>
         <Media.Item position="left">
           <figure className="image is-64x64">
@@ -85,7 +88,7 @@ const Job = (props) => {
                     <FaRegMoneyBillAlt size="1.5em" style={{ marginRight: 5 }} /> {salary}
                   </Level.Item>
                 )}
-                <Level.Item>
+                <Level.Item style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}>
                   <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
                 </Level.Item>
                 <Level.Item>{source && "via "}</Level.Item>
