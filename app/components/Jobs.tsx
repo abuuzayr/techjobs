@@ -3,8 +3,10 @@ import { useQuery } from "blitz"
 import Job from "./Job"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
-import { Container, Columns } from "react-bulma-components"
+import { Container, Columns, Level, Button } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
+import { IoMdHappy } from "react-icons/io"
+import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
   const JOBS_TO_SHOW = 20
@@ -24,12 +26,21 @@ const Jobs = (props) => {
           {jobs.map((job) => (
             <Job key={job.id} data={job} />
           ))}
+          <Level>
+            {jobs.length === jobsCount ? (
+              <Level.Item>
+                <IoMdHappy /> You have loaded all jobs!
+              </Level.Item>
+            ) : (
+              <Level.Item>
+                <Button outlined={true} color="info" onClick={() => setPage(page + 1)}>
+                  <RiDownloadLine style={{ marginRight: 5 }} /> Load more jobs
+                </Button>
+              </Level.Item>
+            )}
+          </Level>
         </Columns.Column>
       </Columns>
-
-      <button disabled={jobs.length === jobsCount} onClick={() => setPage(page + 1)}>
-        Load more
-      </button>
     </Container>
   )
 }
