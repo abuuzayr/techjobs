@@ -69,9 +69,9 @@ const Job = (props) => {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
     if (postedDays < 1) {
-      postedAgeStr = `${postedDays * 24} hours ago`
+      postedAgeStr = `${postedDays * 24} hour${postedDays * 24 > 1 ? "s" : ""} ago`
     } else {
-      postedAgeStr = `${postedDays} days ago`
+      postedAgeStr = `${postedDays} day${postedDays > 1 ? "s" : ""} ago`
     }
   }
   return (
