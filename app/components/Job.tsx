@@ -37,7 +37,7 @@ const Source = styled.img`
 `
 
 const Job = (props) => {
-  const { avatar, name, company, salary, tags, postedDate, description, source } = props.data
+  const { avatar, name, company, salary, tags, postedDate, description, source, url } = props.data
   const [like, setLike] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
@@ -107,10 +107,13 @@ const Job = (props) => {
           </IconSlot>
           <Container>
             <Button
+              renderAs="a"
               color="info"
               outlined={true}
               rounded={true}
               style={{ borderWidth: 2, fontWeight: 600 }}
+              href={url}
+              target="_blank"
               onClick={(e) => e.stopPropagation()}
             >
               Apply
