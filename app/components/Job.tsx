@@ -7,6 +7,17 @@ import { MdDateRange, MdClose } from "react-icons/md"
 import Modal from "react-modal"
 import styled from "styled-components"
 
+const LOGO_PATHS = {
+  Adzuna: "/Adzuna-logo.svg",
+  eFinancialCareers: "/eFinancialCareers-logo.svg",
+  "eFinancial Careers": "/eFinancialCareers-logo.svg",
+  "Tech In Asia": "/TechInAsia-logo.svg",
+  "Stack Overflow": "/StackOverflow-logo.svg",
+  "Zoho Recruit": "/ZohoRecruit-logo.png",
+  eQuest: "/eQuest-logo.png",
+  Hirebridge: "/Hirebridge-logo.png",
+}
+
 const JobBox = styled(Box)`
   cursor: pointer;
   border: 2px solid transparent;
@@ -34,6 +45,7 @@ const Placeholder = styled.div`
 
 const Source = styled.img`
   max-height: 16px;
+  margin-left: 5px;
 `
 
 const Job = (props) => {
@@ -91,8 +103,20 @@ const Job = (props) => {
                 <Level.Item style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}>
                   <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
                 </Level.Item>
-                <Level.Item>{source && "via "}</Level.Item>
-                <Level.Item>{source && <Source src={`/${source.replace(/\s/g, "")}-logo.svg`} />}</Level.Item>
+                <Level.Item>
+                  {source && LOGO_PATHS[source.split(",")[0]] && (
+                    <>
+                      by <Source src={LOGO_PATHS[source.split(",")[0]]} />
+                    </>
+                  )}
+                </Level.Item>
+                <Level.Item>
+                  {source && source.includes(",") && (
+                    <>
+                      via <Source src={LOGO_PATHS[source.split(",")[1]]} />
+                    </>
+                  )}
+                </Level.Item>
               </Level.Side>
             </Level>
             <Tag.Group>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</Tag.Group>
