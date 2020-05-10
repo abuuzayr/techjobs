@@ -34,10 +34,8 @@ const createJob = async (args: JobCreateArgs) => {
       },
     })
   }
-  // Get tags for searching
-  const tags = await db.tag.findMany()
   // Job data to create or update with
-  const jobData = {
+  let jobData = {
     ...args,
     data: {
       ...args.data,
@@ -46,14 +44,37 @@ const createJob = async (args: JobCreateArgs) => {
           id: company.id,
         },
       },
-      tags: {
-        upsert: args.data.tags.map((tag) => ({
-          create: { name: tag },
-          update: { name: tag },
-          where: { id: tags.find((t) => t.name === tag).id || 0 },
+    },
+  }
+  // Get tags for searching
+  if (args.data.tags.length) {
+    const tagObj = {}
+    const existingTags = await db.tag.findMany({
+      where: {
+        OR: args.data.tags.map((tag) => ({
+          name: {
+            equals: tag,
+          },
         })),
       },
-    },
+    })
+    if (existingTags.length) {
+      tagObj["connect"] = existingTags.map((t) => ({ id: t.id }))
+      if (existingTags.length !== args.data.tags.length) {
+        tagObj["create"] = args.data.tags
+          .filter((tag) => !existingTags.map((t) => t.name).includes(tag))
+          .map((t) => ({ name: t }))
+      }
+    } else {
+      tagObj["create"] = args.data.tags.map((t) => ({ name: t }))
+    }
+    jobData = {
+      ...jobData,
+      data: {
+        ...jobData.data,
+        tags: tagObj,
+      },
+    }
   }
   if (jobFound) {
     return await db.job.update({
