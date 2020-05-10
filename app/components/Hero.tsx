@@ -1,5 +1,5 @@
 // Imports from libraries
-import { Suspense } from "react"
+import { Suspense, useState } from "react"
 import { useQuery } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch } from "react-icons/fi"
@@ -24,6 +24,18 @@ const JobsCount = (props) => {
 }
 
 const HeroComponent = (props) => {
+  const [search, setSearch] = useState("")
+
+  const handleChange = (e) => {
+    setSearch(e.currentTarget.value)
+  }
+
+  const keyDown = (e) => {
+    if (e.key === "Enter") {
+      props.setSearch(search)
+    }
+  }
+
   const tabProps = (tab) => ({
     tabIndex: 0,
     role: "button",
@@ -47,7 +59,14 @@ const HeroComponent = (props) => {
             <Columns.Column size="half" offset="one-quarter">
               <div className="field" style={{ marginTop: 15 }}>
                 <p className="control has-icons-left">
-                  <input type="text" className="input is-large" placeholder="e.g. python, javascript" />
+                  <input
+                    type="text"
+                    className="input is-large"
+                    placeholder="e.g. python, javascript"
+                    value={search}
+                    onChange={handleChange}
+                    onKeyDown={keyDown}
+                  />
                   <span className="icon is-left">
                     <FiSearch />
                   </span>
@@ -94,7 +113,9 @@ const HeroComponent = (props) => {
                 <a {...tabProps("featured")}>
                   Featured{" "}
                   <Suspense fallback={<></>}>
-                    <JobsCount args={{ where: { type: { equals: "featured" } } }} />
+                    <JobsCount
+                      args={{ where: { type: { equals: "featured" }, name: { contains: props.search } } }}
+                    />
                   </Suspense>
                 </a>
               </li>
@@ -102,7 +123,9 @@ const HeroComponent = (props) => {
                 <a {...tabProps("aggregated")}>
                   Aggregated{" "}
                   <Suspense fallback={<></>}>
-                    <JobsCount args={{ where: { type: { equals: "aggregated" } } }} />
+                    <JobsCount
+                      args={{ where: { type: { equals: "aggregated" }, name: { contains: props.search } } }}
+                    />
                   </Suspense>
                 </a>
               </li>
