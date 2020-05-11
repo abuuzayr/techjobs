@@ -7,6 +7,8 @@ const Home = () => {
   const [tab, setTab] = useState("all")
   const [search, setSearch] = useState("")
   const [liked, setLiked] = useState([])
+  const [scrollTo, setScrollTo] = useState(0)
+
   let args = {
     where: {
       AND: [{ type: { equals: tab } }, { name: { contains: search } }],
@@ -29,9 +31,9 @@ const Home = () => {
         <title>techjobs</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Hero {...{ tab, setTab, search, setSearch, liked }} />
+      <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
       {["featured", "all", "liked"].includes(tab) ? (
-        <Jobs {...{ args, liked, setLiked }} />
+        <Jobs {...{ args, liked, setLiked, scrollTo }} />
       ) : (
         <div>{tab}</div>
       )}

@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react"
+import { Suspense, useState, useEffect } from "react"
 import { useQuery } from "blitz"
 import Job from "./Job"
 import getJobs from "../jobs/queries/getJobs"
@@ -10,8 +10,17 @@ import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
   const JOBS_TO_SHOW = 20
+  const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [jobsCount] = useQuery(getJobsCount, props.args)
+
+  useEffect(() => {
+    if (props.scrollTo)
+      window.scrollTo({
+        top: props.scrollTo - SCROLL_OFFSET,
+        behavior: "smooth",
+      })
+  })
 
   const [jobs] = useQuery(
     getJobs,

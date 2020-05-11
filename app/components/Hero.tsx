@@ -1,5 +1,5 @@
 // Imports from libraries
-import { Suspense, useState, useRef } from "react"
+import { Suspense, useState, useRef, useEffect } from "react"
 import { useQuery } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch } from "react-icons/fi"
@@ -26,6 +26,13 @@ const JobsCount = (props) => {
 
 const HeroComponent = (props) => {
   const [search, setSearch] = useState("")
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    if (heroRef.current) {
+      props.setScrollTo(heroRef.current.closest(".hero").offsetHeight)
+    }
+  }, [heroRef])
 
   const handleChange = (e) => {
     setSearch(e.currentTarget.value)
@@ -58,7 +65,7 @@ const HeroComponent = (props) => {
         <Container>
           <Columns>
             <Columns.Column size="half" offset="one-quarter">
-              <div className="field" style={{ marginTop: 15 }}>
+              <div className="field" style={{ marginTop: 15 }} ref={heroRef}>
                 <p className="control has-icons-left has-icons-right">
                   <input
                     type="text"
