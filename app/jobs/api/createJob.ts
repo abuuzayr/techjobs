@@ -1,4 +1,4 @@
-import db, { JobCreateArgs, Job, Company } from "db"
+import db, { JobCreateArgs, Job } from "db"
 
 const createJob = async (args: JobCreateArgs) => {
   if (!args.data) return false
@@ -6,27 +6,19 @@ const createJob = async (args: JobCreateArgs) => {
   // Find job if exists
   let jobFound: Job
   if (args.data.aggId) {
-    const jobQuery = await db.job.findMany({
+    jobFound = await db.job.findOne({
       where: {
-        aggId: {
-          equals: `${args.data.aggId}`,
-        },
+        aggId: `${args.data.aggId}`,
       },
     })
-    if (jobQuery.length) jobFound = jobQuery[0]
   }
   // Find or create a company to connect job with
-  const companyQuery = await db.company.findMany({
+  let company = await db.company.findOne({
     where: {
-      name: {
-        equals: `${args.data.company}`,
-      },
+      name: `${args.data.company}`,
     },
   })
-  let company: Company
-  if (companyQuery.length) {
-    company = companyQuery[0]
-  } else {
+  if (!company) {
     company = await db.company.create({
       data: {
         name: `${args.data.company}`,
@@ -47,7 +39,7 @@ const createJob = async (args: JobCreateArgs) => {
     },
   }
   // Get tags for searching
-  if (args.data.tags.length) {
+  if (args.data.tags && args.data.tags.length) {
     const tagObj = {}
     const existingTags = await db.tag.findMany({
       where: {
