@@ -49,8 +49,7 @@ const Source = styled.img`
 `
 
 const Job = (props) => {
-  const { avatar, name, company, salary, tags, postedDate, description, source, url } = props.data
-  const [like, setLike] = useState(false)
+  const { id, avatar, name, company, salary, tags, postedDate, description, source, url } = props.data
   const [showModal, setShowModal] = useState(false)
 
   const closeModal = () => {
@@ -59,7 +58,10 @@ const Job = (props) => {
 
   const clickLike = (e) => {
     e.stopPropagation()
-    setLike((prevLike) => !prevLike)
+    props.setLiked((prevLiked) => {
+      if (prevLiked.includes(id)) return prevLiked.filter((l) => l !== id)
+      return [...prevLiked, id]
+    })
   }
 
   // Handle job age string
@@ -125,7 +127,7 @@ const Job = (props) => {
         </Media.Item>
         <Media.Item position="right">
           <IconSlot onClick={clickLike} title="Like">
-            {like ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
+            {props.liked.includes(id) ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
           </IconSlot>
           <IconSlot title="Share">
             <RiShareLine size="2em" />

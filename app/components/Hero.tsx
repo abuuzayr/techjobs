@@ -1,5 +1,5 @@
 // Imports from libraries
-import { Suspense, useState } from "react"
+import { Suspense, useState, useRef } from "react"
 import { useQuery } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch } from "react-icons/fi"
@@ -123,18 +123,27 @@ const HeroComponent = (props) => {
                   </Suspense>
                 </a>
               </li>
-              <li className={props.tab === "aggregated" ? "is-active" : ""}>
-                <a {...tabProps("aggregated")}>
-                  Aggregated{" "}
+              <li className={props.tab === "all" ? "is-active" : ""}>
+                <a {...tabProps("all")}>
+                  All Jobs{" "}
                   <Suspense fallback={<></>}>
                     <JobsCount
-                      args={{ where: { type: { equals: "aggregated" }, name: { contains: props.search } } }}
+                      args={{
+                        where: {
+                          name: { contains: props.search },
+                        },
+                      }}
                     />
                   </Suspense>
                 </a>
               </li>
               <li className={props.tab === "liked" ? "is-active" : ""}>
-                <a {...tabProps("liked")}>Liked (0)</a>
+                <a {...tabProps("liked")}>
+                  Liked{" "}
+                  <Suspense fallback={<></>}>
+                    <JobsCount args={{ where: { OR: props.liked.map((id) => ({ id })) } }} />
+                  </Suspense>
+                </a>
               </li>
               <li className={props.tab === "resources" ? "is-active" : ""}>
                 <a {...tabProps("resources")}>Resources</a>

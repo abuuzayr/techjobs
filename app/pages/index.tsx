@@ -6,24 +6,35 @@ import Jobs from "../components/Jobs"
 const Home = () => {
   const [tab, setTab] = useState("all")
   const [search, setSearch] = useState("")
+  const [liked, setLiked] = useState([])
   let args = {
     where: {
       AND: [{ type: { equals: tab } }, { name: { contains: search } }],
+      OR: liked.map((id) => ({
+        id,
+      })),
     },
   }
   if (tab === "all") {
     args["where"]["AND"] = args["where"]["AND"].filter((arg) => {
       return !Object.keys(arg).includes("type")
     })
+  } else if (tab === "liked") {
+    delete args["where"]["AND"]
   }
+  if (tab !== "liked") delete args["where"]["OR"]
   return (
     <div>
       <Head>
         <title>techjobs</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <Hero {...{ tab, setTab, search, setSearch }} />
-      {["featured", "all"].includes(tab) ? <Jobs args={args} /> : <div>{tab}</div>}
+      <Hero {...{ tab, setTab, search, setSearch, liked }} />
+      {["featured", "all", "liked"].includes(tab) ? (
+        <Jobs {...{ args, liked, setLiked }} />
+      ) : (
+        <div>{tab}</div>
+      )}
     </div>
   )
 }

@@ -24,7 +24,7 @@ const Jobs = (props) => {
       <Columns>
         <Columns.Column size={10} offset={1}>
           {jobs.map((job) => (
-            <Job key={job.id} data={job} />
+            <Job key={job.id} data={job} liked={props.liked} setLiked={props.setLiked} />
           ))}
           <Level>
             {jobs.length === jobsCount ? (
@@ -49,7 +49,7 @@ const WrappedJobs = (props) => {
   return (
     <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
       <Suspense fallback={<div>Loading...</div>}>
-        <Jobs args={props.args} />
+        <Jobs {...props} />
       </Suspense>
     </ErrorBoundary>
   )
