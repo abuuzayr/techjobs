@@ -69,7 +69,8 @@ const Job = (props) => {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
     if (postedDays < 1) {
-      postedAgeStr = `${postedDays * 24} hour${postedDays * 24 > 1 ? "s" : ""} ago`
+      const postedHours = Math.round(postedAge / 1000 / 60 / 60)
+      postedAgeStr = `${postedHours || "< 0"} hour${postedHours > 1 || !postedHours ? "s" : ""} ago`
     } else {
       postedAgeStr = `${postedDays} day${postedDays > 1 ? "s" : ""} ago`
     }
@@ -79,7 +80,7 @@ const Job = (props) => {
       <Media renderAs="article" onClick={() => setShowModal(true)}>
         <Media.Item position="left">
           <figure className="image is-64x64">
-            {avatar || (company && company.imgUrl) ? (
+            {avatar || (company && company.imgUrl && company.imgUrl !== "https://") ? (
               <img src={avatar || (company && company.imgUrl)} alt="Company logo" />
             ) : (
               <Placeholder>{company ? company.name.slice(0, 1) : name.slice(0, 1)}</Placeholder>
