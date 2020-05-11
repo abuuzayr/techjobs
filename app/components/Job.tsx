@@ -70,7 +70,7 @@ const Job = (props) => {
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
     if (postedDays < 1) {
       const postedHours = Math.round(postedAge / 1000 / 60 / 60)
-      postedAgeStr = `${postedHours || "< 0"} hour${postedHours > 1 || !postedHours ? "s" : ""} ago`
+      postedAgeStr = `${postedHours || "< 1"} hour${postedHours > 1 ? "s" : ""} ago`
     } else {
       postedAgeStr = `${postedDays} day${postedDays > 1 ? "s" : ""} ago`
     }
