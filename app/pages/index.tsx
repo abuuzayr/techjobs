@@ -9,6 +9,8 @@ const Home = () => {
   const [liked, setLiked] = useState([])
   const [scrollTo, setScrollTo] = useState(0)
 
+  // arguments for database searching
+  // we declare all so we won't have a problem with types
   let args = {
     where: {
       AND: [{ type: { equals: tab } }, { name: { contains: search } }],
@@ -17,6 +19,7 @@ const Home = () => {
       })),
     },
   }
+  // we remove the keys that we do not need based on the tab
   if (tab === "all") {
     args["where"]["AND"] = args["where"]["AND"].filter((arg) => {
       return !Object.keys(arg).includes("type")
@@ -25,6 +28,7 @@ const Home = () => {
     delete args["where"]["AND"]
   }
   if (tab !== "liked") delete args["where"]["OR"]
+
   return (
     <div>
       <Head>
@@ -33,7 +37,7 @@ const Home = () => {
       </Head>
       <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
       {["featured", "all", "liked"].includes(tab) ? (
-        <Jobs {...{ args, liked, setLiked, scrollTo }} />
+        <Jobs {...{ args, liked, setLiked, scrollTo: search ? scrollTo : 0 }} />
       ) : (
         <div>{tab}</div>
       )}
