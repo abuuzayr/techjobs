@@ -50,7 +50,6 @@ const createJob = async (args: JobCreateArgs) => {
         })),
       },
     })
-    console.log(existingTags)
     if (existingTags.length) {
       tagObj["connect"] = existingTags.map((t) => ({ id: t.id }))
       if (existingTags.length !== args.data.tags.length) {
@@ -61,12 +60,13 @@ const createJob = async (args: JobCreateArgs) => {
     } else {
       tagObj["create"] = args.data.tags.map((t) => ({ name: t }))
     }
-    console.log(tagObj)
+    // Compile everything into a data object for creation
     jobData = {
       ...jobData,
       data: {
         ...jobData.data,
         tags: tagObj,
+        searchStr: `${args.data.name} ${company.name} ${args.data.tags.join(" ")}`.toLowerCase(),
       },
     }
   }
