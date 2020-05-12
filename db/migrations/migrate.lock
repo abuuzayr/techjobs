@@ -13,3 +13,5 @@
 20200510171048-make-company-name-unique
 20200510173030-make-job-aggid-unique
 20200511081545-make-tag-name-unique
+20200513043125-add-search-string-column
+20200513053240-search-string-required

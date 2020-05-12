@@ -3,7 +3,7 @@
 
 datasource postgresql {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -27,7 +27,7 @@ model Job {
   type        String   @default("aggregated")
   tags        Tag[]    @relation(references: [id])
   source      String?
-  searchStr   String   @default("")
+  searchStr   String?
 }
 
 model Tag {
