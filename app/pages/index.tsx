@@ -13,7 +13,7 @@ const Home = () => {
   // we declare all so we won't have a problem with types
   let args = {
     where: {
-      AND: [{ type: { equals: tab } }, { name: { contains: search } }],
+      AND: [{ type: { equals: tab } }, { searchStr: { contains: search.toLowerCase() } }],
       OR: liked.map((id) => ({
         id,
       })),
