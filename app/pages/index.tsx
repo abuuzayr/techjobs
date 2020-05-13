@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Head, Link } from "blitz"
 import Hero from "../components/Hero"
 import Jobs from "../components/Jobs"
+import Footer from "../components/Footer"
 
 const Home = () => {
   const [tab, setTab] = useState("all")
@@ -41,6 +42,7 @@ const Home = () => {
       ) : (
         <div>{tab}</div>
       )}
+      <Footer />
     </div>
   )
 }
