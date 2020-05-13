@@ -6,6 +6,7 @@ import getJobsCount from "../jobs/queries/getJobsCount"
 import { Container, Columns, Level, Button, Loader } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import { IoMdHappy } from "react-icons/io"
+import { FiX } from "react-icons/fi"
 import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
@@ -13,6 +14,7 @@ const Jobs = (props) => {
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [jobsCount] = useQuery(getJobsCount, props.args)
+  const [selectedTags, setSelectedTags] = useState(["devops"])
 
   useEffect(() => {
     if (props.scrollTo)
@@ -28,10 +30,47 @@ const Jobs = (props) => {
     { paginated: true }
   )
 
+  // Get unique array of all tags in current job query
+  const tags: String[] = jobs.reduce((arr, job) => {
+    job.tags.forEach((tag) => {
+      if (!arr.includes(tag.name)) arr.push(tag.name)
+    })
+    return arr.sort()
+  }, [])
+
   return (
     <Container style={{ padding: "3rem" }}>
       <Columns>
         <Columns.Column size={10} offset={1}>
+          <Level>
+            {tags.length ? (
+              <Level.Side align="left" style={{ alignSelf: "flex-start" }}>
+                <p className="heading" style={{ margin: "0 10px 0 0" }}>
+                  Filter by tags:{" "}
+                </p>
+              </Level.Side>
+            ) : (
+              <></>
+            )}
+            <div className="field is-grouped is-grouped-multiline">
+              {tags.map((tag) => (
+                <div className="control">
+                  <div className="tags has-addons">
+                    {selectedTags.includes(`${tag}`) ? (
+                      <>
+                        <a className="tag is-link">{tag}</a>
+                        <a className="tag">
+                          <FiX />
+                        </a>
+                      </>
+                    ) : (
+                      <a className="tag">{tag}</a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Level>
           {jobs.map((job) => (
             <Job key={job.id} data={job} liked={props.liked} setLiked={props.setLiked} />
           ))}
