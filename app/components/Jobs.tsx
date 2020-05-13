@@ -15,7 +15,29 @@ const Jobs = (props) => {
   const [page, setPage] = useState(0)
   const [jobsCount] = useQuery(getJobsCount, props.args)
   const [selectedTags, setSelectedTags] = useState(["devops"])
+  const [jobs] = useQuery(
+    getJobs,
+    { ...props.args, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
+    { paginated: true }
+  )
 
+  const addTag = (tag) => {
+    setSelectedTags((tags) => [...tags, tag])
+  }
+
+  const removeTag = (tag) => {
+    setSelectedTags((tags) => tags.filter((t) => t !== tag))
+  }
+
+  const tagProps = (fn) => ({
+    role: "button",
+    className: "tag",
+    tabIndex: 0,
+    onClick: fn,
+    onKeyDown: fn,
+  })
+
+  // Set scroll to behavior
   useEffect(() => {
     if (props.scrollTo)
       window.scrollTo({
@@ -23,12 +45,6 @@ const Jobs = (props) => {
         behavior: "smooth",
       })
   })
-
-  const [jobs] = useQuery(
-    getJobs,
-    { ...props.args, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
-    { paginated: true }
-  )
 
   // Get unique array of all tags in current job query
   const tags: String[] = jobs.reduce((arr, job) => {
@@ -58,13 +74,13 @@ const Jobs = (props) => {
                   <div className="tags has-addons">
                     {selectedTags.includes(`${tag}`) ? (
                       <>
-                        <a className="tag is-link">{tag}</a>
-                        <a className="tag">
+                        <span className="tag is-link">{tag}</span>
+                        <a {...tagProps(() => removeTag(tag))}>
                           <FiX />
                         </a>
                       </>
                     ) : (
-                      <a className="tag">{tag}</a>
+                      <a {...tagProps(() => addTag(tag))}>{tag}</a>
                     )}
                   </div>
                 </div>
