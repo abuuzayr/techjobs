@@ -80,7 +80,7 @@ const Job = (props) => {
     }
   }
   return (
-    <JobBox old={postedDays > 31}>
+    <JobBox old={postedDays > 31 ? 1 : 0}>
       <Media renderAs="article" onClick={() => setShowModal(true)}>
         <Media.Item position="left">
           <figure className="image is-64x64">
