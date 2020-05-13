@@ -26,13 +26,20 @@ const Footer = () => {
             </Level.Side>
             <Level.Item>
               <p className="">
-                Built in <FiSun /> with <FiZap />{" "}
-                <Link href="https://github.com/blitz-js/blitz/">Blitz.js</Link>
+                Built in <FiSun /> with{" "}
+                <Link href="https://github.com/blitz-js/blitz/">
+                  <a>
+                    <FiZap />
+                    Blitz.js
+                  </a>
+                </Link>
               </p>
             </Level.Item>
             <Level.Side align="right">
               <Link href="https://www.github.com/abuuzayr/techjobs">
-                <FiGithub />
+                <a>
+                  <FiGithub />
+                </a>
               </Link>
             </Level.Side>
           </Level>
