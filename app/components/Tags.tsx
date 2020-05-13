@@ -24,7 +24,7 @@ const Tag = (props) => {
   return (
     <div className="field is-grouped is-grouped-multiline">
       {tags.map((tag) => (
-        <div className="control">
+        <div className="control" key={tag}>
           <div className="tags has-addons">
             {selectedTags.includes(`${tag}`) ? (
               <>
