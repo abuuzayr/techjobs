@@ -1,47 +1,32 @@
 import { Suspense, useState, useEffect } from "react"
 import { useQuery } from "blitz"
 import Job from "./Job"
+import Tags from "./Tags"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
 import { Container, Columns, Level, Button, Loader } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import { IoMdHappy } from "react-icons/io"
-import { FiX } from "react-icons/fi"
 import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
+  const { args, scrollTo, liked, setLiked } = props
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
-  const [jobsCount] = useQuery(getJobsCount, props.args)
+  const [jobsCount] = useQuery(getJobsCount, args)
   const [selectedTags, setSelectedTags] = useState(["devops"])
   const [jobs] = useQuery(
     getJobs,
-    { ...props.args, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
+    { ...args, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
     { paginated: true }
   )
 
-  const addTag = (tag) => {
-    setSelectedTags((tags) => [...tags, tag])
-  }
-
-  const removeTag = (tag) => {
-    setSelectedTags((tags) => tags.filter((t) => t !== tag))
-  }
-
-  const tagProps = (fn) => ({
-    role: "button",
-    className: "tag",
-    tabIndex: 0,
-    onClick: fn,
-    onKeyDown: fn,
-  })
-
   // Set scroll to behavior
   useEffect(() => {
-    if (props.scrollTo)
+    if (scrollTo)
       window.scrollTo({
-        top: props.scrollTo - SCROLL_OFFSET,
+        top: scrollTo - SCROLL_OFFSET,
         behavior: "smooth",
       })
   })
@@ -68,27 +53,10 @@ const Jobs = (props) => {
             ) : (
               <></>
             )}
-            <div className="field is-grouped is-grouped-multiline">
-              {tags.map((tag) => (
-                <div className="control">
-                  <div className="tags has-addons">
-                    {selectedTags.includes(`${tag}`) ? (
-                      <>
-                        <span className="tag is-link">{tag}</span>
-                        <a {...tagProps(() => removeTag(tag))}>
-                          <FiX />
-                        </a>
-                      </>
-                    ) : (
-                      <a {...tagProps(() => addTag(tag))}>{tag}</a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <Tags {...{ tags, selectedTags, setSelectedTags }} />
           </Level>
           {jobs.map((job) => (
-            <Job key={job.id} data={job} liked={props.liked} setLiked={props.setLiked} />
+            <Job key={job.id} data={job} {...{ liked, setLiked, selectedTags, setSelectedTags }} />
           ))}
           <Level>
             {jobs.length === jobsCount ? (

@@ -6,6 +6,7 @@ import { FaRegMoneyBillAlt } from "react-icons/fa"
 import { MdDateRange, MdClose } from "react-icons/md"
 import Modal from "react-modal"
 import styled from "styled-components"
+import Tags from "./Tags"
 
 const LOGO_PATHS = {
   Adzuna: "/Adzuna-logo.svg",
@@ -49,6 +50,7 @@ const Source = styled.img`
 `
 
 const Job = (props) => {
+  const { selectedTags, setSelectedTags } = props
   const { id, avatar, name, company, salary, tags, postedDate, description, source, url } = props.data
   const [showModal, setShowModal] = useState(false)
 
@@ -122,7 +124,7 @@ const Job = (props) => {
                 </Level.Item>
               </Level.Side>
             </Level>
-            <Tag.Group>{tags && tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)}</Tag.Group>
+            {tags && <Tags {...{ tags: tags.map((t) => t.name), selectedTags, setSelectedTags }} />}
           </Content>
         </Media.Item>
         <Media.Item position="right">
