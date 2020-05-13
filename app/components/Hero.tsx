@@ -107,7 +107,7 @@ const HeroComponent = (props) => {
                   "/jobsCentral.png",
                   "/jobstreet.png",
                 ].map((path) => (
-                  <Level.Item>
+                  <Level.Item key={path}>
                     <Logo src={path} key={path} />
                   </Level.Item>
                 ))}
