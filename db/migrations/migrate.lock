@@ -15,3 +15,4 @@
 20200511081545-make-tag-name-unique
 20200513043125-add-search-string-column
 20200513053240-search-string-required
+20200514114615-add-likes--cools-and-views-fields-to-schema
