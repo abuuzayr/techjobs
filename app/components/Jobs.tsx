@@ -15,10 +15,29 @@ const Jobs = (props) => {
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [jobsCount] = useQuery(getJobsCount, args)
-  const [selectedTags, setSelectedTags] = useState(["devops"])
+  const [selectedTags, setSelectedTags] = useState([])
+
+  // Update args to include
+  const updatedArgs = {
+    ...args,
+    where: {
+      ...args.where,
+      AND: [
+        ...args.where.AND,
+        ...[
+          selectedTags.length
+            ? {
+                OR: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+              }
+            : [],
+        ],
+      ],
+    },
+  }
+
   const [jobs] = useQuery(
     getJobs,
-    { ...args, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
+    { ...updatedArgs, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
     { paginated: true }
   )
 
