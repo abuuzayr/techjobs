@@ -41,6 +41,20 @@ const Jobs = (props) => {
     { paginated: true }
   )
 
+  // Remove tags filters if they do not exist in the jobs returned
+  const availableTags = jobs.reduce((arr, job) => {
+    job.tags.forEach((j) => {
+      if (!arr.includes(j.name)) arr.push(j.name)
+    })
+    return arr
+  }, [])
+
+  useEffect(() => {
+    setSelectedTags((tags) => {
+      return tags.filter((tag) => availableTags.includes(tag))
+    })
+  }, [availableTags])
+
   // Set scroll to behavior
   useEffect(() => {
     if (scrollTo)
