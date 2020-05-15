@@ -21,10 +21,11 @@ const Tag = (props) => {
     onKeyDown: fn,
   })
 
-  return (
+  return tags.length ? (
     <div className="field is-grouped is-grouped-multiline">
+      {props.children}
       {tags.map((tag) => (
-        <div className="control" key={tag}>
+        <div className="control" key={tag} style={{ margin: "0 0.5rem 0.5rem 0" }}>
           <div className="tags has-addons">
             {selectedTags.includes(`${tag}`) ? (
               <>
@@ -40,6 +41,8 @@ const Tag = (props) => {
         </div>
       ))}
     </div>
+  ) : (
+    <></>
   )
 }
 
