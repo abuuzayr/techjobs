@@ -98,7 +98,7 @@ const Jobs = (props) => {
               <Level.Side align="right">
                 <Content size="small">
                   <p style={{ margin: "0 10px 0 0" }}>
-                    {jobsCount} / {totalJobsCount} jobs
+                    {jobsCount} / {totalJobsCount} job{totalJobsCount > 1 ? "s" : ""}
                   </p>
                 </Content>
               </Level.Side>
