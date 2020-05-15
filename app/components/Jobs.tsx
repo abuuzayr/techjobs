@@ -78,16 +78,11 @@ const Jobs = (props) => {
       <Columns>
         <Columns.Column size={10} offset={1}>
           <Level>
-            {tags.length ? (
-              <Level.Side align="left" style={{ alignSelf: "flex-start" }}>
-                <p className="heading" style={{ margin: "0 10px 0 0" }}>
-                  Filter by tags:{" "}
-                </p>
-              </Level.Side>
-            ) : (
-              <></>
-            )}
-            <Tags {...{ tags, selectedTags, setSelectedTags }} />
+            <Tags {...{ tags, selectedTags, setSelectedTags }}>
+              <p className="heading" style={{ marginRight: 10, alignSelf: "center" }}>
+                Filter by tags:
+              </p>
+            </Tags>
           </Level>
           {selectedTags.length > 0 && (
             <Level>
