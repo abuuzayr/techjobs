@@ -18,22 +18,30 @@ const Jobs = (props) => {
   const [selectedTags, setSelectedTags] = useState([])
 
   // Update args to include
-  const updatedArgs = {
-    ...args,
-    where: {
-      ...args.where,
-      AND: [
-        ...args.where.AND,
-        ...[
-          selectedTags.length
-            ? {
-                OR: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
-              }
-            : [],
-        ],
-      ],
-    },
-  }
+  const updatedArgs = args["where"]["AND"]
+    ? {
+        ...args,
+        where: {
+          ...args.where,
+          AND: [
+            ...args.where.AND,
+            ...[
+              selectedTags.length
+                ? {
+                    OR: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+                  }
+                : [],
+            ],
+          ],
+        },
+      }
+    : {
+        ...args,
+        where: {
+          ...args.where,
+          OR: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+        },
+      }
 
   const [jobs] = useQuery(
     getJobs,
