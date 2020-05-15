@@ -7,6 +7,7 @@ import { MdDateRange, MdClose } from "react-icons/md"
 import Modal from "react-modal"
 import styled from "styled-components"
 import Tags from "./Tags"
+import incrementJob from "app/jobs/mutations/incrementJob"
 
 const LOGO_PATHS = {
   Adzuna: "/Adzuna-logo.svg",
@@ -64,6 +65,17 @@ const Job = (props) => {
       if (prevLiked.includes(id)) return prevLiked.filter((l) => l !== id)
       return [...prevLiked, id]
     })
+    incrementJob({ key: "likes", id })
+  }
+
+  const clickShare = (e) => {
+    e.stopPropagation()
+    incrementJob({ key: "shares", id })
+  }
+
+  const handleClick = () => {
+    setShowModal(true)
+    incrementJob({ key: "views", id })
   }
 
   // Handle job age string
@@ -81,7 +93,7 @@ const Job = (props) => {
   }
   return (
     <JobBox old={postedDays > 31 ? 1 : 0}>
-      <Media renderAs="article" onClick={() => setShowModal(true)}>
+      <Media renderAs="article" onClick={handleClick}>
         <Media.Item position="left">
           <figure className="image is-64x64">
             {avatar || (company && company.imgUrl && company.imgUrl !== "https://") ? (
@@ -131,7 +143,7 @@ const Job = (props) => {
           <IconSlot onClick={clickLike} title="Like">
             {props.liked.includes(id) ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
           </IconSlot>
-          <IconSlot title="Share">
+          <IconSlot onClick={clickShare} title="Share">
             <RiShareLine size="2em" />
           </IconSlot>
           <Container>
