@@ -4,7 +4,7 @@ import Job from "./Job"
 import Tags from "./Tags"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
-import { Container, Columns, Level, Button, Loader } from "react-bulma-components"
+import { Container, Columns, Level, Button, Loader, Content } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
@@ -14,7 +14,7 @@ const Jobs = (props) => {
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
-  const [jobsCount] = useQuery(getJobsCount, args)
+  const [totalJobsCount] = useQuery(getJobsCount, args)
   const [selectedTags, setSelectedTags] = useState([])
 
   // Update args to include
@@ -40,6 +40,7 @@ const Jobs = (props) => {
     { ...updatedArgs, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
     { paginated: true }
   )
+  const [jobsCount] = useQuery(getJobsCount, updatedArgs)
 
   // Remove tags filters if they do not exist in the jobs returned
   const availableTags = jobs.reduce((arr, job) => {
@@ -88,6 +89,18 @@ const Jobs = (props) => {
             )}
             <Tags {...{ tags, selectedTags, setSelectedTags }} />
           </Level>
+          {selectedTags.length > 0 && (
+            <Level>
+              <Level.Side align="left"></Level.Side>
+              <Level.Side align="right">
+                <Content size="small">
+                  <p style={{ margin: "0 10px 0 0" }}>
+                    {jobsCount} / {totalJobsCount} jobs
+                  </p>
+                </Content>
+              </Level.Side>
+            </Level>
+          )}
           {jobs.map((job) => (
             <Job key={job.id} data={job} {...{ liked, setLiked, selectedTags, setSelectedTags }} />
           ))}
