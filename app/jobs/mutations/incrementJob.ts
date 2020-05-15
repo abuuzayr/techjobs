@@ -17,7 +17,7 @@ export default async function incrementJob(args: IncrementJobArgs) {
   if (job) {
     job = await db.job.update({
       data: {
-        [args.key]: job.likes + 1,
+        [args.key]: job[args.key] + 1,
       },
       where: {
         id: args.id,
