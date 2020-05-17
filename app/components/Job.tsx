@@ -1,24 +1,20 @@
 import React, { useState } from "react"
-import { Box, Media, Content, Tag, Icon, Level, Heading, Container, Button } from "react-bulma-components"
+import { Box, Media, Content, Icon, Level, Heading, Container, Button, Columns } from "react-bulma-components"
 import { FcLikePlaceholder, FcLike } from "react-icons/fc"
 import { RiShareLine } from "react-icons/ri"
-import { FaRegMoneyBillAlt } from "react-icons/fa"
-import { MdDateRange, MdClose } from "react-icons/md"
+import { FiExternalLink } from "react-icons/fi"
+import { MdClose } from "react-icons/md"
+import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs"
+import { IconContext } from "react-icons"
 import Modal from "react-modal"
 import styled from "styled-components"
-import Tags from "./Tags"
+import JobMeta from "./JobMeta"
 import incrementJob from "app/jobs/mutations/incrementJob"
+import Logo from "./Logo"
+import { RemoveScroll } from "react-remove-scroll"
 
-const LOGO_PATHS = {
-  Adzuna: "/Adzuna-logo.svg",
-  eFinancialCareers: "/eFinancialCareers-logo.svg",
-  "eFinancial Careers": "/eFinancialCareers-logo.svg",
-  "Tech In Asia": "/TechInAsia-logo.svg",
-  "Stack Overflow": "/StackOverflow-logo.svg",
-  "Zoho Recruit": "/ZohoRecruit-logo.png",
-  eQuest: "/eQuest-logo.png",
-  Hirebridge: "/Hirebridge-logo.png",
-}
+// Change Modal default styles
+Modal.defaultStyles.content.overflow = ""
 
 const JobBox = styled(Box)`
   cursor: pointer;
@@ -34,25 +30,53 @@ const IconSlot = styled(Icon)`
   margin-left: 10px;
 `
 
-const Placeholder = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-  border-radius: 10px;
-  background: aliceblue;
-  font-weight: 700;
+const ContentBox = styled(Box)`
+  font-size: 0.8rem;
+  br {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    overflow-y: scroll;
+    max-height: calc(100vh - 250px);
+  }
 `
 
-const Source = styled.img`
-  max-height: 16px;
-  margin-left: 5px;
+const A = styled.a`
+  color: #333;
 `
+
+const Apply = (url) => (
+  <Button
+    renderAs="a"
+    color="info"
+    outlined={true}
+    rounded={true}
+    style={{ borderWidth: 2, fontWeight: 600 }}
+    href={url}
+    target="_blank"
+    onClick={(e) => e.stopPropagation()}
+  >
+    Apply
+  </Button>
+)
+
+const Like = ({ liked, onClick }) => {
+  return (
+    <IconSlot onClick={onClick} title="Like">
+      {liked ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
+    </IconSlot>
+  )
+}
+
+const Share = ({ onClick }) => (
+  <IconSlot onClick={onClick} title="Share">
+    <RiShareLine size="2em" />
+  </IconSlot>
+)
 
 const Job = (props) => {
-  const { selectedTags, setSelectedTags } = props
-  const { id, avatar, name, company, salary, tags, postedDate, description, source, url } = props.data
+  const { liked } = props
+  const { id, name, company, postedDate, description } = props.data
   const [showModal, setShowModal] = useState(false)
 
   const closeModal = () => {
@@ -79,107 +103,154 @@ const Job = (props) => {
   }
 
   // Handle job age string
-  let postedAgeStr = ""
   let postedDays = 0
   if (postedDate) {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
-    if (postedDays < 1) {
-      const postedHours = Math.round(postedAge / 1000 / 60 / 60)
-      postedAgeStr = `${postedHours || "< 1"} hour${postedHours > 1 ? "s" : ""} ago`
-    } else {
-      postedAgeStr = `${postedDays} day${postedDays > 1 ? "s" : ""} ago`
-    }
   }
   return (
     <JobBox old={postedDays > 31 ? 1 : 0}>
       <Media renderAs="article" onClick={handleClick}>
         <Media.Item position="left">
-          <figure className="image is-64x64">
-            {avatar || (company && company.imgUrl && company.imgUrl !== "https://") ? (
-              <img src={avatar || (company && company.imgUrl)} alt="Company logo" />
-            ) : (
-              <Placeholder>{company ? company.name.slice(0, 1) : name.slice(0, 1)}</Placeholder>
-            )}
-          </figure>
+          <Logo job={props.data} />
         </Media.Item>
         <Media.Item>
           <Content>
             <div>
               <strong>{name}</strong> @ <small>{company && company.name}</small>
-              <br />
-              {description}
             </div>
-            <Level style={{ margin: "0.5em 0", fontSize: "0.8em" }}>
-              <Level.Side align="left">
-                {salary && (
-                  <Level.Item>
-                    <FaRegMoneyBillAlt size="1.5em" style={{ marginRight: 5 }} /> {salary}
-                  </Level.Item>
-                )}
-                <Level.Item style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}>
-                  <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
-                </Level.Item>
-                <Level.Item>
-                  {source && LOGO_PATHS[source.split(",")[0]] && (
-                    <>
-                      by <Source src={LOGO_PATHS[source.split(",")[0]]} />
-                    </>
-                  )}
-                </Level.Item>
-                <Level.Item>
-                  {source && source.includes(",") && (
-                    <>
-                      via <Source src={LOGO_PATHS[source.split(",")[1]]} />
-                    </>
-                  )}
-                </Level.Item>
-              </Level.Side>
-            </Level>
-            {tags && <Tags {...{ tags: tags.map((t) => t.name), selectedTags, setSelectedTags }} />}
+            <JobMeta {...props} postedDays={postedDays} />
           </Content>
         </Media.Item>
         <Media.Item position="right">
-          <IconSlot onClick={clickLike} title="Like">
-            {props.liked.includes(id) ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
-          </IconSlot>
-          <IconSlot onClick={clickShare} title="Share">
-            <RiShareLine size="2em" />
-          </IconSlot>
+          <Like liked={liked.includes(id)} onClick={clickLike} />
+          <Share onClick={clickShare} />
           <Container>
-            <Button
-              renderAs="a"
-              color="info"
-              outlined={true}
-              rounded={true}
-              style={{ borderWidth: 2, fontWeight: 600 }}
-              href={url}
-              target="_blank"
-              onClick={(e) => e.stopPropagation()}
-            >
-              Apply
-            </Button>
+            <Apply />
           </Container>
         </Media.Item>
       </Media>
-      <Modal isOpen={showModal} onRequestClose={closeModal}>
-        <Container>
+      <RemoveScroll enabled={showModal}>
+        <Modal isOpen={showModal} onRequestClose={closeModal}>
           <Level>
             <Level.Side align="left">
-              <figure className="image is-64x64">
-                <img src={avatar} alt="Company logo" />
-              </figure>
-              <Heading>{name}</Heading>
+              <Level.Item>
+                <Logo job={props.data} />
+              </Level.Item>
+              <Level.Item>
+                <Content>
+                  <Heading size={4}>{name}</Heading>
+                  <p>{company.name}</p>
+                </Content>
+              </Level.Item>
             </Level.Side>
             <Level.Side align="right">
-              <MdClose onClick={closeModal} />
+              <Level.Item>
+                <Share onClick={clickShare} />
+              </Level.Item>
+              <Level.Item>
+                <Like liked={liked.includes(id)} onClick={clickLike} />
+              </Level.Item>
+              <Level.Item>
+                <Apply />
+              </Level.Item>
+              <Level.Item>
+                <MdClose size={30} onClick={closeModal} />
+              </Level.Item>
             </Level.Side>
           </Level>
-        </Container>
-      </Modal>
+          <Columns>
+            <Columns.Column size="6">
+              <Heading size="6">About the job</Heading>
+              <ContentBox>
+                <JobMeta {...props} postedDays={postedDays} />
+                <Content size="small" dangerouslySetInnerHTML={{ __html: description }}></Content>
+              </ContentBox>
+            </Columns.Column>
+            <Columns.Column size="6">
+              <Heading size="6">About the company</Heading>
+              <ContentBox>
+                <Content>{company.about}</Content>
+                {company.url && (
+                  <Content>
+                    <A href={company.url}>
+                      <Heading size="6" as="h6">
+                        {company.url}
+                        <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
+                      </Heading>
+                    </A>
+                  </Content>
+                )}
+                {company.gdUrl && company.gdRating && (
+                  <Level>
+                    <Level.Side align="left">
+                      <Level.Item>
+                        <IconContext.Provider value={{ size: "25px", color: "#0CAA41" }}>
+                          {[...Array(parseInt(company.gdRating))].map((e, i) => (
+                            <BsStarFill key={i} />
+                          ))}
+                          {parseFloat(company.gdRating) - parseInt(company.gdRating) > 0 ? (
+                            <BsStarHalf />
+                          ) : (
+                            <></>
+                          )}
+                          {[...Array(5 - Math.ceil(parseFloat(company.gdRating)))].map((e, i) => (
+                            <BsStar key={i} />
+                          ))}
+                        </IconContext.Provider>
+                      </Level.Item>
+                      <Level.Item>
+                        <Heading subtitle size={6} renderAs="h6">
+                          rating on
+                        </Heading>
+                        <A href={company.gdUrl} target="_blank">
+                          <img
+                            src="./glassdoor.png"
+                            alt="Glassdoor logo"
+                            style={{ width: 100, margin: "0 10px" }}
+                          />
+                          <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
+                        </A>
+                      </Level.Item>
+                    </Level.Side>
+                  </Level>
+                )}
+                {company.liUrl && company.liEmpCount && (
+                  <Level>
+                    <Level.Side align="left">
+                      <Level.Item>
+                        <Heading>{company.liEmpCount}</Heading>
+                      </Level.Item>
+                      <Level.Item>
+                        <Heading subtitle size={6} renderAs="h6">
+                          employees on
+                        </Heading>
+                        <A href={company.liUrl} target="_blank">
+                          <img
+                            src="./linkedin.png"
+                            alt="LinkedIn logo"
+                            style={{ width: 100, margin: "0 10px" }}
+                          />
+                          <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
+                        </A>
+                      </Level.Item>
+                    </Level.Side>
+                  </Level>
+                )}
+              </ContentBox>
+            </Columns.Column>
+          </Columns>
+        </Modal>
+      </RemoveScroll>
       <style jsx global>{`
         .ReactModal__Overlay.ReactModal__Overlay--after-open {
           z-index: 99;
+          overflow: hidden;
+        }
+        @media screen and (max-width: 760px) {
+          .ReactModal__Content.ReactModal__Content--after-open {
+            overflow: auto;
+          }
         }
       `}</style>
     </JobBox>
