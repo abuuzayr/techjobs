@@ -71,7 +71,7 @@ const Jobs = (props) => {
         top: scrollTo - SCROLL_OFFSET,
         behavior: "smooth",
       })
-  })
+  }, [])
 
   // Get unique array of all tags in current job query
   const tags: String[] = jobs.reduce((arr, job) => {
