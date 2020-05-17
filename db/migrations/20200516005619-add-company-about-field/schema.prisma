@@ -3,7 +3,7 @@
 
 datasource postgresql {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -44,7 +44,6 @@ model Company {
   id         Int      @default(autoincrement()) @id
   name       String   @unique
   about      String?  @default("")
-  url        String?  @default("")
   imgUrl     String
   gdUrl      String?
   gdRating   String?

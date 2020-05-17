@@ -17,3 +17,5 @@
 20200513053240-search-string-required
 20200514114615-add-likes--cools-and-views-fields-to-schema
 20200515104410-add-shares-to-job-model
+20200516005619-add-company-about-field
+20200517093547-add-company-url-field
