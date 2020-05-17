@@ -119,7 +119,7 @@ const Job = (props) => {
             <div>
               <strong>{name}</strong> @ <small>{company && company.name}</small>
             </div>
-            <JobMeta {...props} postedDays={postedDays} />
+            <JobMeta {...props} postedDays={postedDays} select={true} />
           </Content>
         </Media.Item>
         <Media.Item position="right">

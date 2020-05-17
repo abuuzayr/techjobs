@@ -26,18 +26,22 @@ const Tag = (props) => {
       {props.children}
       {tags.map((tag) => (
         <div className="control" key={tag} style={{ margin: "0 0.5rem 0.5rem 0" }}>
-          <div className="tags has-addons">
-            {selectedTags.includes(`${tag}`) ? (
-              <>
-                <span className="tag is-link">{tag}</span>
-                <a {...tagProps((e) => removeTag(e, tag))}>
-                  <FiX />
-                </a>
-              </>
-            ) : (
-              <a {...tagProps((e) => addTag(e, tag))}>{tag}</a>
-            )}
-          </div>
+          {selectedTags && setSelectedTags ? (
+            <div className="tags has-addons">
+              {selectedTags.includes(`${tag}`) ? (
+                <>
+                  <span className="tag is-link">{tag}</span>
+                  <a {...tagProps((e) => removeTag(e, tag))}>
+                    <FiX />
+                  </a>
+                </>
+              ) : (
+                <a {...tagProps((e) => addTag(e, tag))}>{tag}</a>
+              )}
+            </div>
+          ) : (
+            <span className="tag">{tag}</span>
+          )}
         </div>
       ))}
     </div>

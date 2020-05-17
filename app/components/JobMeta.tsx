@@ -21,7 +21,7 @@ const Source = styled.img`
 `
 
 const JobMeta = (props) => {
-  const { selectedTags, setSelectedTags, postedDays } = props
+  const { selectedTags, setSelectedTags, postedDays, select } = props
   const { salary, tags, source } = props.data
 
   let postedAgeStr = ""
@@ -60,7 +60,13 @@ const JobMeta = (props) => {
           </Level.Item>
         </Level.Side>
       </Level>
-      {tags && <Tags {...{ tags: tags.map((t) => t.name), selectedTags, setSelectedTags }} />}
+      {tags && (
+        <Tags
+          tags={tags.map((t) => t.name)}
+          selectedTags={select && selectedTags}
+          setSelectedTags={select && setSelectedTags}
+        />
+      )}
     </>
   )
 }
