@@ -8,6 +8,8 @@ export default async function getJobs(args: FindManyJobArgs) {
         select: {
           name: true,
           imgUrl: true,
+          about: true,
+          url: true,
         },
       },
       tags: true,
