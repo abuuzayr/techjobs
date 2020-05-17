@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Box, Media, Content, Icon, Level, Heading, Container, Button, Columns } from "react-bulma-components"
 import { FcLikePlaceholder, FcLike } from "react-icons/fc"
 import { RiShareLine } from "react-icons/ri"
-import { FiExternalLink } from "react-icons/fi"
+import { FiExternalLink, FiArrowRight } from "react-icons/fi"
 import { MdClose } from "react-icons/md"
 import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs"
 import { IconContext } from "react-icons"
@@ -164,7 +164,13 @@ const Job = (props) => {
               <Heading size="6">About the job</Heading>
               <ContentBox>
                 <JobMeta {...props} postedDays={postedDays} />
+                <hr />
                 <Content size="small" dangerouslySetInnerHTML={{ __html: description }}></Content>
+                <a href={url} target="_blank">
+                  <Button size="small" color="info" outlined={true}>
+                    Read more <FiArrowRight />
+                  </Button>
+                </a>
               </ContentBox>
             </Columns.Column>
             <Columns.Column size="6">
