@@ -45,7 +45,7 @@ const A = styled.a`
   color: #333;
 `
 
-const Apply = (url) => (
+const Apply = ({ url }) => (
   <Button
     renderAs="a"
     color="info"
@@ -76,7 +76,7 @@ const Share = ({ onClick }) => (
 
 const Job = (props) => {
   const { liked } = props
-  const { id, name, company, postedDate, description } = props.data
+  const { id, url, name, company, postedDate, description } = props.data
   const [showModal, setShowModal] = useState(false)
 
   const closeModal = () => {
@@ -126,7 +126,7 @@ const Job = (props) => {
           <Like liked={liked.includes(id)} onClick={clickLike} />
           <Share onClick={clickShare} />
           <Container>
-            <Apply />
+            <Apply url={url} />
           </Container>
         </Media.Item>
       </Media>
@@ -152,7 +152,7 @@ const Job = (props) => {
                 <Like liked={liked.includes(id)} onClick={clickLike} />
               </Level.Item>
               <Level.Item>
-                <Apply />
+                <Apply url={url} />
               </Level.Item>
               <Level.Item>
                 <MdClose size={30} onClick={closeModal} />
