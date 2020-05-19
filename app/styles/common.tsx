@@ -4,6 +4,7 @@ import { AiOutlineCode, AiFillBell } from "react-icons/ai"
 import { IoIosSend } from "react-icons/io"
 import { FiSun } from "react-icons/fi"
 import { AiFillCode } from "react-icons/ai"
+import { Box, Icon } from "react-bulma-components"
 
 export const Code = styled(AiOutlineCode)`
   width: 30px;
@@ -40,4 +41,23 @@ export const HeroBody = styled(Hero.Body)`
   background-position: center;
   background-color: rgba(0, 0, 0, 0.2);
   background-blend-mode: color;
+`
+
+export const ContentBox = styled(Box)`
+  font-size: 0.8rem;
+  br {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    overflow-y: scroll;
+    max-height: calc(100vh - 250px);
+  }
+`
+
+export const A = styled.a`
+  color: #333;
+`
+
+export const IconSlot = styled(Icon)`
+  margin-left: 10px;
 `
