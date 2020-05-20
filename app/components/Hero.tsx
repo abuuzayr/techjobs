@@ -1,6 +1,6 @@
 // Imports from libraries
 import { Suspense, useState, useRef, useEffect } from "react"
-import { useQuery, useRouter } from "blitz"
+import { useQuery, Link } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch } from "react-icons/fi"
 import { AiOutlineEnter } from "react-icons/ai"
@@ -25,7 +25,6 @@ const JobsCount = (props) => {
 }
 
 const HeroComponent = (props) => {
-  const router = useRouter()
   const [search, setSearch] = useState("")
   const heroRef = useRef(null)
 
@@ -45,12 +44,6 @@ const HeroComponent = (props) => {
     }
   }
 
-  const tabProps = (tab) => ({
-    tabIndex: 0,
-    role: "button",
-    onClick: () => router.push(`/?tab=${tab}`),
-    onKeyUp: () => router.push(`/?tab=${tab}`),
-  })
   return (
     <Hero color="info" size="medium">
       <Hero.Head>
@@ -122,39 +115,47 @@ const HeroComponent = (props) => {
           <Container>
             <ul>
               <li className={props.tab === "featured" ? "is-active" : ""}>
-                <a {...tabProps("featured")}>
-                  Featured{" "}
-                  <Suspense fallback={<></>}>
-                    <JobsCount
-                      args={{ where: { type: { equals: "featured" }, name: { contains: props.search } } }}
-                    />
-                  </Suspense>
-                </a>
+                <Link href={`/?tab=featured`} as={`/?tab=featured`}>
+                  <a>
+                    Featured{" "}
+                    <Suspense fallback={<></>}>
+                      <JobsCount
+                        args={{ where: { type: { equals: "featured" }, name: { contains: props.search } } }}
+                      />
+                    </Suspense>
+                  </a>
+                </Link>
               </li>
               <li className={props.tab === "all" ? "is-active" : ""}>
-                <a {...tabProps("all")}>
-                  All Jobs{" "}
-                  <Suspense fallback={<></>}>
-                    <JobsCount
-                      args={{
-                        where: {
-                          name: { contains: props.search },
-                        },
-                      }}
-                    />
-                  </Suspense>
-                </a>
+                <Link href={`/?tab=all`} as={`/?tab=all`}>
+                  <a>
+                    All Jobs{" "}
+                    <Suspense fallback={<></>}>
+                      <JobsCount
+                        args={{
+                          where: {
+                            name: { contains: props.search },
+                          },
+                        }}
+                      />
+                    </Suspense>
+                  </a>
+                </Link>
               </li>
               <li className={props.tab === "liked" ? "is-active" : ""}>
-                <a {...tabProps("liked")}>
-                  Liked{" "}
-                  <Suspense fallback={<></>}>
-                    <JobsCount args={{ where: { OR: props.liked.map((id) => ({ id })) } }} />
-                  </Suspense>
-                </a>
+                <Link href={`/?tab=liked`} as={`/?tab=liked`}>
+                  <a>
+                    Liked{" "}
+                    <Suspense fallback={<></>}>
+                      <JobsCount args={{ where: { OR: props.liked.map((id) => ({ id })) } }} />
+                    </Suspense>
+                  </a>
+                </Link>
               </li>
               <li className={props.tab === "resources" ? "is-active" : ""}>
-                <a {...tabProps("resources")}>Resources</a>
+                <Link href={`/?tab=liked`} as={`/?tab=liked`}>
+                  <a>Resources</a>
+                </Link>
               </li>
             </ul>
           </Container>
