@@ -49,13 +49,17 @@ const Home = () => {
         <div>{tab}</div>
       )}
       <Footer />
-      {router?.query?.jobId && (
-        <RemoveScroll enabled={!!router.query.jobId}>
-          <Modal isOpen={!!router.query.jobId} onRequestClose={() => router.push("/")}>
-            <JobContent id={router.query.jobId} />
+      {
+        <RemoveScroll enabled={router?.query?.jobId ? !!router.query.jobId : false}>
+          <Modal
+            isOpen={router?.query?.jobId ? !!router.query.jobId : false}
+            onRequestClose={() => router.push("/")}
+            closeTimeoutMS={1000}
+          >
+            {router?.query?.jobId && <JobContent id={router.query.jobId} />}
           </Modal>
         </RemoveScroll>
-      )}
+      }
       <style jsx global>{`
         .ReactModal__Overlay.ReactModal__Overlay--after-open {
           z-index: 99;
@@ -65,6 +69,19 @@ const Home = () => {
           .ReactModal__Content.ReactModal__Content--after-open {
             overflow: auto;
           }
+        }
+        .ReactModal__Overlay {
+          opacity: 0;
+          margin-top: 50px;
+          transition: all 1000ms ease-in-out;
+        }
+        .ReactModal__Overlay--after-open {
+          opacity: 1;
+          margin-top: 0;
+        }
+        .ReactModal__Overlay--before-close {
+          opacity: 0;
+          margin-top: 50px;
         }
       `}</style>
     </LikedContext.Provider>
