@@ -42,11 +42,6 @@ const Job = (props) => {
     incrementJob({ key: "likes", id })
   }
 
-  const clickShare = (e) => {
-    e.stopPropagation()
-    incrementJob({ key: "shares", id })
-  }
-
   // Handle job age string
   let postedDays = 0
   if (postedDate) {
@@ -71,7 +66,7 @@ const Job = (props) => {
             </Media.Item>
             <Media.Item position="right">
               <Like liked={liked.includes(id)} onClick={clickLike} />
-              <Share onClick={clickShare} />
+              <Share id={id} />
               <Container>
                 <Apply url={url} />
               </Container>

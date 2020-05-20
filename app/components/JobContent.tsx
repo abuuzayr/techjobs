@@ -51,11 +51,6 @@ const Job = ({ id, liked, setLiked }) => {
     incrementJob({ key: "likes", id })
   }
 
-  const clickShare = (e) => {
-    e.stopPropagation()
-    incrementJob({ key: "shares", id })
-  }
-
   return (
     <>
       <Level>
@@ -72,7 +67,7 @@ const Job = ({ id, liked, setLiked }) => {
         </Level.Side>
         <Level.Side align="right">
           <Level.Item>
-            <Share onClick={clickShare} />
+            <Share id={id} />
           </Level.Item>
           <Level.Item>
             <Like liked={liked && liked.includes(id)} onClick={clickLike} />
