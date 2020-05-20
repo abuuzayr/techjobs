@@ -28,7 +28,7 @@ const Jobs = (props) => {
             ...[
               selectedTags.length
                 ? {
-                    OR: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+                    AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
                   }
                 : [],
             ],
@@ -39,10 +39,7 @@ const Jobs = (props) => {
         ...args,
         where: {
           ...args.where,
-          OR: [
-            ...(args.where.OR || []),
-            ...selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
-          ],
+          AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
         },
       }
 
