@@ -23,11 +23,15 @@ const JobBox = styled(Box)`
     opacity: 1;
   }
   ${(props) => (props.old ? "opacity: 0.6;" : "")}
+  a {
+    color: black;
+  }
 `
 
 const Job = (props) => {
   const { liked } = props
-  const { id, url, name, company, postedDate } = props.data
+  let { id, url, name, company, postedDate } = props.data
+  const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
   const clickLike = (e) => {
     e.stopPropagation()
@@ -51,7 +55,7 @@ const Job = (props) => {
   }
   return (
     <JobBox old={postedDays > 31 ? 1 : 0}>
-      <Link href={`/?jobId=${id}`} as={`/jobs/${id}`}>
+      <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`}>
         <a>
           <Media renderAs="article">
             <Media.Item position="left">
