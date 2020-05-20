@@ -28,7 +28,6 @@ const JobBox = styled(Box)`
 `
 
 const Job = (props) => {
-  const { liked } = props
   let { id, url, name, company, postedDate } = props.data
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
