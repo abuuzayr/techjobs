@@ -34,6 +34,7 @@ const Job = ({ id }) => {
   }, [])
 
   const { name, company, description, postedDate, url } = job
+  const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
   // Handle job age string
   let postedDays = 0
@@ -58,7 +59,7 @@ const Job = ({ id }) => {
         </Level.Side>
         <Level.Side align="right">
           <Level.Item>
-            <Share id={id} />
+            <Share id={id} slug={slug} />
           </Level.Item>
           <Level.Item>
             <Like id={id} />
