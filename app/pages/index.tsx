@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Head, useRouter } from "blitz"
 import Modal from "react-modal"
 import { RemoveScroll } from "react-remove-scroll"
@@ -12,10 +12,15 @@ Modal.setAppElement("#__next")
 
 const Home = () => {
   const router = useRouter()
-  const [tab, setTab] = useState("all")
+  const [tab, setTab] = useState((router?.query?.tab as string) || "all")
   const [search, setSearch] = useState("")
   const [liked, setLiked] = useState([])
   const [scrollTo, setScrollTo] = useState(0)
+
+  useEffect(() => {
+    const tab = router?.query?.tab as string
+    if (tab) setTab(tab)
+  }, [router])
 
   // arguments for database searching
   // we declare all so we won't have a problem with types

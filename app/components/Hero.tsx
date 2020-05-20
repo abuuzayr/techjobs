@@ -1,6 +1,6 @@
 // Imports from libraries
 import { Suspense, useState, useRef, useEffect } from "react"
-import { useQuery } from "blitz"
+import { useQuery, useRouter } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch } from "react-icons/fi"
 import { AiOutlineEnter } from "react-icons/ai"
@@ -25,6 +25,7 @@ const JobsCount = (props) => {
 }
 
 const HeroComponent = (props) => {
+  const router = useRouter()
   const [search, setSearch] = useState("")
   const heroRef = useRef(null)
 
@@ -47,8 +48,8 @@ const HeroComponent = (props) => {
   const tabProps = (tab) => ({
     tabIndex: 0,
     role: "button",
-    onClick: () => props.setTab(tab),
-    onKeyUp: () => props.setTab(tab),
+    onClick: () => router.push(`/?tab=${tab}`),
+    onKeyUp: () => router.push(`/?tab=${tab}`),
   })
   return (
     <Hero color="info" size="medium">
