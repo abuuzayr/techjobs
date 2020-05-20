@@ -48,11 +48,13 @@ const Home = () => {
         <div>{tab}</div>
       )}
       <Footer />
-      <RemoveScroll enabled={!!router?.query.jobId}>
-        <Modal isOpen={!!router?.query.jobId} onRequestClose={() => router.push("/")}>
-          <JobContent id={router?.query.jobId} liked={liked} setLiked={setLiked} />
-        </Modal>
-      </RemoveScroll>
+      {router?.query?.jobId && (
+        <RemoveScroll enabled={!!router.query.jobId}>
+          <Modal isOpen={!!router.query.jobId} onRequestClose={() => router.push("/")}>
+            <JobContent id={router.query.jobId} liked={liked} setLiked={setLiked} />
+          </Modal>
+        </RemoveScroll>
+      )}
       <style jsx global>{`
         .ReactModal__Overlay.ReactModal__Overlay--after-open {
           z-index: 99;
