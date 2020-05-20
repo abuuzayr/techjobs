@@ -10,7 +10,7 @@ import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
-  const { args, scrollTo, liked, setLiked } = props
+  const { args, scrollTo } = props
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
@@ -39,7 +39,10 @@ const Jobs = (props) => {
         ...args,
         where: {
           ...args.where,
-          OR: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+          OR: [
+            ...(args.where.OR || []),
+            ...selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+          ],
         },
       }
 
@@ -50,19 +53,18 @@ const Jobs = (props) => {
   )
   const [jobsCount] = useQuery(getJobsCount, updatedArgs)
 
-  // Remove tags filters if they do not exist in the jobs returned
-  const availableTags = jobs.reduce((arr, job) => {
-    job.tags.forEach((j) => {
-      if (!arr.includes(j.name)) arr.push(j.name)
-    })
-    return arr
-  }, [])
-
   useEffect(() => {
     setSelectedTags((tags) => {
+      // Remove tags filters if they do not exist in the jobs returned
+      const availableTags = jobs.reduce((arr, job) => {
+        job.tags.forEach((j) => {
+          if (!arr.includes(j.name)) arr.push(j.name)
+        })
+        return arr
+      }, [])
       return tags.filter((tag) => availableTags.includes(tag))
     })
-  }, [availableTags])
+  }, [jobs])
 
   // Set scroll to behavior
   useEffect(() => {
@@ -105,7 +107,7 @@ const Jobs = (props) => {
             </Level>
           )}
           {jobs.map((job) => (
-            <Job key={job.id} data={job} {...{ liked, setLiked, selectedTags, setSelectedTags }} />
+            <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
           ))}
           <Level>
             {jobs.length === jobsCount ? (

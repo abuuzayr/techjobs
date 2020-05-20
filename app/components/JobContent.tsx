@@ -15,7 +15,7 @@ import JobMeta from "../components/JobMeta"
 import Logo from "./Logo"
 import incrementJob from "app/jobs/mutations/incrementJob"
 
-const Job = ({ id, liked, setLiked }) => {
+const Job = ({ id }) => {
   // Get the ID in integer
   // Parse int strips from the first non-number
   id = parseInt(id)
@@ -42,15 +42,6 @@ const Job = ({ id, liked, setLiked }) => {
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
   }
 
-  const clickLike = (e) => {
-    e.stopPropagation()
-    setLiked((prevLiked) => {
-      if (prevLiked.includes(id)) return prevLiked.filter((l) => l !== id)
-      return [...prevLiked, id]
-    })
-    incrementJob({ key: "likes", id })
-  }
-
   return (
     <>
       <Level>
@@ -70,13 +61,13 @@ const Job = ({ id, liked, setLiked }) => {
             <Share id={id} />
           </Level.Item>
           <Level.Item>
-            <Like liked={liked && liked.includes(id)} onClick={clickLike} />
+            <Like id={id} />
           </Level.Item>
           <Level.Item>
             <Apply url={url} />
           </Level.Item>
           <Level.Item>
-            <Link href="/" as="/">
+            <Link href="/" as="/" scroll={false}>
               <a style={{ color: "black" }}>
                 <MdClose size={30} />
               </a>

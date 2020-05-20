@@ -6,6 +6,7 @@ import Hero from "../components/Hero"
 import Jobs from "../components/Jobs"
 import Footer from "../components/Footer"
 import JobContent from "../components/JobContent"
+import LikedContext from "../components/LikedContext"
 
 Modal.setAppElement("#__next")
 
@@ -36,14 +37,14 @@ const Home = () => {
   }
   if (tab !== "liked") delete args["where"]["OR"]
   return (
-    <div>
+    <LikedContext.Provider value={{ liked, setLiked }}>
       <Head>
         <title>techjobs</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
       <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
       {["featured", "all", "liked"].includes(tab) ? (
-        <Jobs {...{ args, liked, setLiked, scrollTo: search ? scrollTo : 0 }} />
+        <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />
       ) : (
         <div>{tab}</div>
       )}
@@ -51,7 +52,7 @@ const Home = () => {
       {router?.query?.jobId && (
         <RemoveScroll enabled={!!router.query.jobId}>
           <Modal isOpen={!!router.query.jobId} onRequestClose={() => router.push("/")}>
-            <JobContent id={router.query.jobId} liked={liked} setLiked={setLiked} />
+            <JobContent id={router.query.jobId} />
           </Modal>
         </RemoveScroll>
       )}
@@ -66,7 +67,7 @@ const Home = () => {
           }
         }
       `}</style>
-    </div>
+    </LikedContext.Provider>
   )
 }
 

@@ -3,7 +3,6 @@ import { Link } from "blitz"
 import { Box, Media, Content, Container } from "react-bulma-components"
 import Modal from "react-modal"
 import styled from "styled-components"
-import incrementJob from "app/jobs/mutations/incrementJob"
 
 // Components
 import Logo from "./Logo"
@@ -33,15 +32,6 @@ const Job = (props) => {
   let { id, url, name, company, postedDate } = props.data
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
-  const clickLike = (e) => {
-    e.stopPropagation()
-    props.setLiked((prevLiked) => {
-      if (prevLiked.includes(id)) return prevLiked.filter((l) => l !== id)
-      return [...prevLiked, id]
-    })
-    incrementJob({ key: "likes", id })
-  }
-
   // Handle job age string
   let postedDays = 0
   if (postedDate) {
@@ -50,7 +40,7 @@ const Job = (props) => {
   }
   return (
     <JobBox old={postedDays > 31 ? 1 : 0}>
-      <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`}>
+      <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
         <a>
           <Media renderAs="article">
             <Media.Item position="left">
@@ -65,7 +55,7 @@ const Job = (props) => {
               </Content>
             </Media.Item>
             <Media.Item position="right">
-              <Like liked={liked.includes(id)} onClick={clickLike} />
+              <Like id={id} />
               <Share id={id} />
               <Container>
                 <Apply url={url} />
