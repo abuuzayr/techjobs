@@ -55,7 +55,7 @@ const Job = (props) => {
             </Media.Item>
             <Media.Item position="right">
               <Like id={id} />
-              <Share id={id} />
+              <Share id={id} slug={slug} />
               <Container>
                 <Apply url={url} />
               </Container>
