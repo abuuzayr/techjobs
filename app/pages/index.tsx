@@ -18,6 +18,12 @@ const Home = () => {
   const [scrollTo, setScrollTo] = useState(0)
 
   useEffect(() => {
+    if (localStorage && localStorage.getItem("_liked")) {
+      setLiked(JSON.parse(localStorage.getItem("_liked")))
+    }
+  }, [])
+
+  useEffect(() => {
     const tab = router?.query?.tab as string
     if (tab) setTab(tab)
   }, [router])

@@ -11,6 +11,7 @@ const Like = (props) => {
     e.nativeEvent.stopImmediatePropagation()
     setLiked((prevLiked) => {
       if (prevLiked.includes(id)) return prevLiked.filter((l) => l !== id)
+      localStorage.setItem("_liked", JSON.stringify([...prevLiked, id]))
       return [...prevLiked, id]
     })
     incrementJob({ key: "likes", id })
