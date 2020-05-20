@@ -27,6 +27,23 @@ const JobsCount = (props) => {
 const HeroComponent = (props) => {
   const [search, setSearch] = useState("")
   const heroRef = useRef(null)
+  const tabs = [
+    {
+      id: "featured",
+      title: "Featured",
+      query: { where: { type: { equals: "featured" }, name: { contains: props.search } } },
+    },
+    {
+      id: "all",
+      title: "All Jobs",
+      query: { where: { name: { contains: props.search } } },
+    },
+    {
+      id: "liked",
+      title: "Liked",
+      query: { where: { OR: props.liked.map((id) => ({ id })) } },
+    },
+  ]
 
   useEffect(() => {
     if (heroRef.current) {
@@ -114,46 +131,20 @@ const HeroComponent = (props) => {
         <Tabs type="boxed" fullwidth={true}>
           <Container>
             <ul>
-              <li className={props.tab === "featured" ? "is-active" : ""}>
-                <Link href={`/?tab=featured`} as={`/?tab=featured`}>
-                  <a>
-                    Featured{" "}
-                    <Suspense fallback={<></>}>
-                      <JobsCount
-                        args={{ where: { type: { equals: "featured" }, name: { contains: props.search } } }}
-                      />
-                    </Suspense>
-                  </a>
-                </Link>
-              </li>
-              <li className={props.tab === "all" ? "is-active" : ""}>
-                <Link href={`/?tab=all`} as={`/?tab=all`}>
-                  <a>
-                    All Jobs{" "}
-                    <Suspense fallback={<></>}>
-                      <JobsCount
-                        args={{
-                          where: {
-                            name: { contains: props.search },
-                          },
-                        }}
-                      />
-                    </Suspense>
-                  </a>
-                </Link>
-              </li>
-              <li className={props.tab === "liked" ? "is-active" : ""}>
-                <Link href={`/?tab=liked`} as={`/?tab=liked`}>
-                  <a>
-                    Liked{" "}
-                    <Suspense fallback={<></>}>
-                      <JobsCount args={{ where: { OR: props.liked.map((id) => ({ id })) } }} />
-                    </Suspense>
-                  </a>
-                </Link>
-              </li>
+              {tabs.map((li) => (
+                <li className={props.tab === li.id ? "is-active" : ""}>
+                  <Link href={`/?tab=${li.id}`} as={`/?tab=${li.id}`}>
+                    <a>
+                      {li.title}{" "}
+                      <Suspense fallback={<></>}>
+                        <JobsCount args={li.query} />
+                      </Suspense>
+                    </a>
+                  </Link>
+                </li>
+              ))}
               <li className={props.tab === "resources" ? "is-active" : ""}>
-                <Link href={`/?tab=liked`} as={`/?tab=liked`}>
+                <Link href={`/?tab=resources`} as={`/?tab=resources`}>
                   <a>Resources</a>
                 </Link>
               </li>
