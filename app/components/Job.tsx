@@ -40,7 +40,7 @@ const Job = (props) => {
   return (
     <JobBox old={postedDays > 31 ? 1 : 0}>
       <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
-        <a>
+        <div>
           <Media renderAs="article">
             <Media.Item position="left">
               <Logo job={props.data} />
@@ -61,7 +61,7 @@ const Job = (props) => {
               </Container>
             </Media.Item>
           </Media>
-        </a>
+        </div>
       </Link>
     </JobBox>
   )
