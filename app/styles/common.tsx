@@ -60,4 +60,5 @@ export const A = styled.a`
 
 export const IconSlot = styled(Icon)`
   margin-left: 10px;
+  cursor: pointer;
 `
