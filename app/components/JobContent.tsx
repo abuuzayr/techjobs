@@ -77,7 +77,7 @@ const Job = ({ id }) => {
         </Level.Side>
       </Level>
       <Columns>
-        <Columns.Column size="6">
+        <Columns.Column size={6}>
           <Heading size="6">About the job</Heading>
           <ContentBox>
             <JobMeta postedDays={postedDays} data={job} />
@@ -90,8 +90,8 @@ const Job = ({ id }) => {
             </a>
           </ContentBox>
         </Columns.Column>
-        <Columns.Column size="6">
-          <Heading size="6">About the company</Heading>
+        <Columns.Column size={6}>
+          <Heading size={6}>About the company</Heading>
           <ContentBox>
             <Content>{company.about}</Content>
             {company.url && (
