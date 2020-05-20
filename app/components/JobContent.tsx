@@ -16,9 +16,12 @@ import Logo from "./Logo"
 import incrementJob from "app/jobs/mutations/incrementJob"
 
 const Job = ({ id, liked, setLiked }) => {
+  // Get the ID in integer
+  // Parse int strips from the first non-number
+  id = parseInt(id)
   const [job] = useQuery(getJob, {
     where: {
-      id: parseInt(id),
+      id,
     },
     include: {
       company: true,
@@ -28,7 +31,7 @@ const Job = ({ id, liked, setLiked }) => {
 
   useEffect(() => {
     incrementJob({ key: "views", id })
-  })
+  }, [])
 
   const { name, company, description, postedDate, url } = job
 
@@ -79,7 +82,7 @@ const Job = ({ id, liked, setLiked }) => {
           </Level.Item>
           <Level.Item>
             <Link href="/" as="/">
-              <a>
+              <a style={{ color: "black" }}>
                 <MdClose size={30} />
               </a>
             </Link>
@@ -134,7 +137,7 @@ const Job = ({ id, liked, setLiked }) => {
                     </Heading>
                     <A href={company.gdUrl} target="_blank">
                       <img
-                        src="./glassdoor.png"
+                        src="../glassdoor.png"
                         alt="Glassdoor logo"
                         style={{ width: 100, margin: "0 10px" }}
                       />
@@ -156,7 +159,7 @@ const Job = ({ id, liked, setLiked }) => {
                     </Heading>
                     <A href={company.liUrl} target="_blank">
                       <img
-                        src="./linkedin.png"
+                        src="../linkedin.png"
                         alt="LinkedIn logo"
                         style={{ width: 100, margin: "0 10px" }}
                       />
