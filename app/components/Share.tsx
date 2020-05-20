@@ -32,23 +32,21 @@ const Share = ({ id, slug }) => {
   const [showBubble, setShowBubble] = useState(false)
   const link = `https://techjobs.sg/jobs/${id}-${slug}`
 
-  const clickShare = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    e.nativeEvent.stopImmediatePropagation()
-    setShowBubble(true)
-    incrementJob({ key: "shares", id })
-  }
-
   const stopPropagation = (e) => {
     e.stopPropagation()
     e.nativeEvent.stopImmediatePropagation()
   }
 
+  const clickShare = (e) => {
+    e.preventDefault()
+    stopPropagation(e)
+    setShowBubble(true)
+    incrementJob({ key: "shares", id })
+  }
+
   const closeBubble = (e) => {
     e.preventDefault()
-    e.stopPropagation()
-    e.nativeEvent.stopImmediatePropagation()
+    stopPropagation(e)
     setShowBubble(false)
   }
 
