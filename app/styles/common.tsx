@@ -4,7 +4,7 @@ import { AiOutlineCode, AiFillBell } from "react-icons/ai"
 import { IoIosSend } from "react-icons/io"
 import { FiSun } from "react-icons/fi"
 import { AiFillCode } from "react-icons/ai"
-import { Box, Icon } from "react-bulma-components"
+import { Box } from "react-bulma-components"
 
 export const Code = styled(AiOutlineCode)`
   width: 30px;
@@ -58,7 +58,12 @@ export const A = styled.a`
   color: #333;
 `
 
-export const IconSlot = styled(Icon)`
+export const IconSlot = styled.span`
   margin-left: 10px;
   cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
 `
