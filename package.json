@@ -37,6 +37,7 @@
     "react-icons": "3.10.0",
     "react-modal": "3.11.2",
     "react-remove-scroll": "2.3.0",
+    "react-social-sharing": "3.0.1",
     "styled-components": "5.1.0",
     "typescript": "3.8.3"
   },
