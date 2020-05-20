@@ -44,6 +44,15 @@ const HeroComponent = (props) => {
       query: { where: { OR: props.liked.map((id) => ({ id })) } },
     },
   ]
+  const jobsiteLogos = [
+    "/TechInAsia-logo.svg",
+    "/Adzuna-logo.svg",
+    "/StackOverflow-logo.svg",
+    "/eFinancialCareers-logo.svg",
+    "/jobsDb.png",
+    "/jobsCentral.png",
+    "/jobstreet.png",
+  ]
 
   useEffect(() => {
     if (heroRef.current) {
@@ -109,15 +118,7 @@ const HeroComponent = (props) => {
                 </Level.Item>
               </Level>
               <Level>
-                {[
-                  "/TechInAsia-logo.svg",
-                  "/Adzuna-logo.svg",
-                  "/StackOverflow-logo.svg",
-                  "/eFinancialCareers-logo.svg",
-                  "/jobsDb.png",
-                  "/jobsCentral.png",
-                  "/jobstreet.png",
-                ].map((path) => (
+                {jobsiteLogos.map((path) => (
                   <Level.Item key={path}>
                     <Logo src={path} key={path} />
                   </Level.Item>
@@ -132,7 +133,7 @@ const HeroComponent = (props) => {
           <Container>
             <ul>
               {tabs.map((li) => (
-                <li className={props.tab === li.id ? "is-active" : ""}>
+                <li key={li.id} className={props.tab === li.id ? "is-active" : ""}>
                   <Link href={`/?tab=${li.id}`} as={`/?tab=${li.id}`}>
                     <a>
                       {li.title}{" "}
