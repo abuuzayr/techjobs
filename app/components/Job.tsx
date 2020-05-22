@@ -22,13 +22,14 @@ const JobBox = styled(Box)`
     opacity: 1;
   }
   ${(props) => (props.old ? "opacity: 0.6;" : "")}
+  ${(props) => (props.featured ? "background: rgba(32, 156, 238,0.2);" : "")}
   a {
     color: black;
   }
 `
 
 const Job = (props) => {
-  let { id, url, name, company, postedDate } = props.data
+  let { id, url, name, company, postedDate, type } = props.data
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
   // Handle job age string
@@ -38,7 +39,7 @@ const Job = (props) => {
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
   }
   return (
-    <JobBox old={postedDays > 31 ? 1 : 0}>
+    <JobBox old={postedDays > 31 ? 1 : 0} featured={type !== "featured"}>
       <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
         <div>
           <Media renderAs="article">
@@ -47,6 +48,7 @@ const Job = (props) => {
             </Media.Item>
             <Media.Item>
               <Content>
+                {type !== "featured" && <div className="heading">featured</div>}
                 <div>
                   <strong>{name}</strong> @ <small>{company && company.name}</small>
                 </div>
