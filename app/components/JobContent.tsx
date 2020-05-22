@@ -46,13 +46,15 @@ const Job = ({ id }) => {
   return (
     <>
       <Level>
-        <Level.Side align="left">
+        <Level.Side align="left" style={{ maxWidth: "calc(100% - 215px)" }}>
           <Level.Item>
             <Logo job={job} />
           </Level.Item>
-          <Level.Item>
+          <Level.Item style={{ flexShrink: 1 }}>
             <Content>
-              <Heading size={4}>{name}</Heading>
+              <Heading size={4} style={{ wordBreak: "break-word" }}>
+                {name}
+              </Heading>
               <p>{company.name}</p>
             </Content>
           </Level.Item>
