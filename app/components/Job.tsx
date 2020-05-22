@@ -39,7 +39,7 @@ const Job = (props) => {
     postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
   }
   return (
-    <JobBox old={postedDays > 31 ? 1 : 0} featured={type !== "featured"}>
+    <JobBox old={postedDays > 31 ? 1 : 0} featured={type === "featured"}>
       <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
         <div>
           <Media renderAs="article">
@@ -48,7 +48,7 @@ const Job = (props) => {
             </Media.Item>
             <Media.Item>
               <Content>
-                {type !== "featured" && <div className="heading">featured</div>}
+                {type === "featured" && <div className="heading">featured</div>}
                 <div>
                   <strong>{name}</strong> @ <small>{company && company.name}</small>
                 </div>
