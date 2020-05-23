@@ -11,6 +11,9 @@ const Foot = styled.footer`
   a {
     color: black;
   }
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+  }
 `
 
 const Footer = () => {
@@ -19,7 +22,7 @@ const Footer = () => {
       <IconContext.Provider value={{ style: { margin: "0 5px", verticalAlign: "middle" } }}>
         <Container>
           <Level>
-            <Level.Side align="left">
+            <Level.Side align="left" className="level-item">
               <Link href="/">
                 <a className="heading">About</a>
               </Link>
@@ -33,7 +36,7 @@ const Footer = () => {
                 </a>
               </p>
             </Level.Item>
-            <Level.Side align="right">
+            <Level.Side align="right" className="level-item">
               <a href="https://www.github.com/abuuzayr">
                 <FiGithub />
               </a>

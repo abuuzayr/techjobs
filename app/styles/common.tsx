@@ -41,6 +41,9 @@ export const HeroBody = styled(Hero.Body)`
   background-position: center;
   background-color: rgba(0, 0, 0, 0.2);
   background-blend-mode: color;
+  @media screen and (min-width: 768px) {
+    margintop: -41px;
+  }
 `
 
 export const ContentBox = styled(Box)`

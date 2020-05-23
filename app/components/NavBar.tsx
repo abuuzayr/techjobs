@@ -15,20 +15,7 @@ const NavBar = () => (
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
-      <Navbar.Container position="end">
-        <Navbar.Item href="#">
-          <Button.Group size="small">
-            <Button color="warning">
-              <Bell />
-              Subscribe
-            </Button>
-            <Button color="danger">
-              <Send />
-              Post a job
-            </Button>
-          </Button.Group>
-        </Navbar.Item>
-      </Navbar.Container>
+      <Navbar.Container position="end"></Navbar.Container>
     </Container>
   </Navbar>
 )

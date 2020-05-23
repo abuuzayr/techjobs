@@ -20,6 +20,15 @@ const Source = styled.img`
   margin-left: 5px;
 `
 
+const Item = styled(Level.Item)`
+  @media screen and (max-width: 768px) {
+    display: inline-block;
+    & + & {
+      margin-left: 5px;
+    }
+  }
+`
+
 const JobMeta = (props) => {
   const { selectedTags, setSelectedTags, postedDays, select } = props
   const { salary, tags, source } = props.data
@@ -37,27 +46,27 @@ const JobMeta = (props) => {
       <Level style={{ margin: "0.5em 0", fontSize: "0.8em" }}>
         <Level.Side align="left">
           {salary && (
-            <Level.Item>
+            <Item>
               <FaRegMoneyBillAlt size="1.5em" style={{ marginRight: 5 }} /> {salary}
-            </Level.Item>
+            </Item>
           )}
-          <Level.Item style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}>
+          <Item style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}>
             <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
-          </Level.Item>
-          <Level.Item>
+          </Item>
+          <Item>
             {source && LOGO_PATHS[source.split(",")[0]] && (
               <>
                 by <Source src={LOGO_PATHS[source.split(",")[0]]} />
               </>
             )}
-          </Level.Item>
-          <Level.Item>
+          </Item>
+          <Item>
             {source && source.includes(",") && (
               <>
                 via <Source src={LOGO_PATHS[source.split(",")[1]]} />
               </>
             )}
-          </Level.Item>
+          </Item>
         </Level.Side>
       </Level>
       {tags && (

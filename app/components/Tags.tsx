@@ -1,4 +1,14 @@
 import { FiX } from "react-icons/fi"
+import styled from "styled-components"
+
+const Tags = styled.div`
+  @media screen and (max-width: 768px) {
+    &.field.is-grouped {
+      display: flex;
+      justify-content: center;
+    }
+  }
+`
 
 const Tag = (props) => {
   const { tags, selectedTags, setSelectedTags } = props
@@ -22,7 +32,7 @@ const Tag = (props) => {
   })
 
   return tags.length ? (
-    <div className="field is-grouped is-grouped-multiline">
+    <Tags className="field is-grouped is-grouped-multiline">
       {props.children}
       {tags.map((tag) => (
         <div className="control" key={tag} style={{ margin: "0 0.5rem 0.5rem 0" }}>
@@ -44,7 +54,7 @@ const Tag = (props) => {
           )}
         </div>
       ))}
-    </div>
+    </Tags>
   ) : (
     <></>
   )

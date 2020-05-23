@@ -11,10 +11,10 @@ const Placeholder = styled.div`
   font-weight: 700;
 `
 
-const Logo = ({ job }) => {
-  const { avatar, company, name } = job
+const Logo = (props) => {
+  const { avatar, company, name } = props.job
   return (
-    <figure className="image is-64x64">
+    <figure className="image is-64x64" {...props}>
       {avatar || (company && company.imgUrl && company.imgUrl !== "https://") ? (
         <img src={avatar || (company && company.imgUrl)} alt="Company logo" />
       ) : (

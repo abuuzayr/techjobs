@@ -75,7 +75,7 @@ const HeroComponent = (props) => {
       <Hero.Head>
         <NavBar />
       </Hero.Head>
-      <HeroBody style={{ marginTop: -41 }}>
+      <HeroBody>
         <UnsplashCredit />
         <Container>
           <Title size={1} renderAs="h1" className="has-text-centered">
@@ -109,7 +109,7 @@ const HeroComponent = (props) => {
         </Container>
         <Container>
           <Columns>
-            <Columns.Column>
+            <Columns.Column className="is-hidden-mobile">
               <Level>
                 <Level.Item>
                   <Heading subtitle size={6}>
@@ -118,12 +118,15 @@ const HeroComponent = (props) => {
                 </Level.Item>
               </Level>
               <Level>
-                {jobsiteLogos.map((path) => (
-                  <Level.Item key={path}>
+                {jobsiteLogos.map((path, index) => (
+                  <Level.Item key={path} className={index > 4 ? "is-hidden-touch" : ""}>
                     <Logo src={path} key={path} />
                   </Level.Item>
                 ))}
               </Level>
+            </Columns.Column>
+            <Columns.Column className="is-hidden-tablet">
+              <div style={{ marginTop: 30 }} />
             </Columns.Column>
           </Columns>
         </Container>

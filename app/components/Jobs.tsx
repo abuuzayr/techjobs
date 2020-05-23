@@ -81,7 +81,7 @@ const Jobs = (props) => {
   }, [])
 
   return (
-    <Container style={{ padding: "3rem" }}>
+    <Container style={{ padding: "2rem" }}>
       <Columns>
         <Columns.Column size={10} offset={1}>
           <Level>

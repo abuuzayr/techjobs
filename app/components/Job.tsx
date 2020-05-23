@@ -28,6 +28,12 @@ const JobBox = styled(Box)`
   }
 `
 
+const MobileActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const Job = (props) => {
   let { id, url, name, company, postedDate, type } = props.data
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
@@ -42,7 +48,7 @@ const Job = (props) => {
     <JobBox old={postedDays > 31 ? 1 : 0} featured={type === "featured"}>
       <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
         <div>
-          <Media renderAs="article">
+          <Media renderAs="article" className="is-hidden-mobile">
             <Media.Item position="left">
               <Logo job={props.data} />
             </Media.Item>
@@ -63,6 +69,21 @@ const Job = (props) => {
               </Container>
             </Media.Item>
           </Media>
+          <div className="is-hidden-tablet" style={{ textAlign: "center" }}>
+            <Logo job={props.data} style={{ margin: "0 auto" }} />
+            <Content style={{ marginTop: 10 }}>
+              {type === "featured" && <div className="heading">featured</div>}
+              <div>
+                <strong>{name}</strong> @ <small>{company && company.name}</small>
+              </div>
+              <JobMeta {...props} postedDays={postedDays} select={true} />
+            </Content>
+            <MobileActions>
+              <Apply url={url} />
+              <Like id={id} />
+              <Share id={id} slug={slug} />
+            </MobileActions>
+          </div>
         </div>
       </Link>
     </JobBox>
