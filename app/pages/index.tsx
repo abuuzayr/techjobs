@@ -66,6 +66,9 @@ const Home = () => {
             isOpen={router?.query?.jobId ? !!router.query.jobId : false}
             onRequestClose={() => router.push("/")}
             closeTimeoutMS={1000}
+            style={{
+              content: { top: "", right: "", left: "", bottom: "" },
+            }}
           >
             {router?.query?.jobId && <JobContent id={router.query.jobId} />}
           </Modal>
@@ -76,9 +79,13 @@ const Home = () => {
           z-index: 99;
           overflow: hidden;
         }
-        @media screen and (max-width: 760px) {
+        @media screen and (max-width: 768px) {
           .ReactModal__Content.ReactModal__Content--after-open {
             overflow: auto;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
           }
         }
         .ReactModal__Overlay {
@@ -89,6 +96,10 @@ const Home = () => {
         .ReactModal__Overlay--after-open {
           opacity: 1;
           margin-top: 0;
+          top: 40px;
+          left: 40px;
+          right: 40px;
+          bottom: 40px;
         }
         .ReactModal__Overlay--before-close {
           opacity: 0;
