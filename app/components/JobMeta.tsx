@@ -29,6 +29,14 @@ const Item = styled(Level.Item)`
   }
 `
 
+const Job = styled(Level)`
+  margin: 0.5em 0;
+  font-size: 0.8em;
+  @media screen and (max-width: 768px) {
+    text-align: center;
+  }
+`
+
 const JobMeta = (props) => {
   const { selectedTags, setSelectedTags, postedDays, select } = props
   const { salary, tags, source } = props.data
@@ -43,7 +51,7 @@ const JobMeta = (props) => {
 
   return (
     <>
-      <Level style={{ margin: "0.5em 0", fontSize: "0.8em" }}>
+      <Job>
         <Level.Side align="left">
           {salary && (
             <Item>
@@ -68,7 +76,7 @@ const JobMeta = (props) => {
             )}
           </Item>
         </Level.Side>
-      </Level>
+      </Job>
       {tags && (
         <Tags
           tags={tags.map((t) => t.name)}

@@ -3,6 +3,7 @@ import { Link } from "blitz"
 import { Box, Media, Content, Container } from "react-bulma-components"
 import Modal from "react-modal"
 import styled from "styled-components"
+import { MobileActions } from "../styles/common"
 
 // Components
 import Logo from "./Logo"
@@ -26,12 +27,6 @@ const JobBox = styled(Box)`
   a {
     color: black;
   }
-`
-
-const MobileActions = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const Job = (props) => {

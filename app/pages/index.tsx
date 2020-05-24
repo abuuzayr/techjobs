@@ -87,6 +87,9 @@ const Home = () => {
             right: 0;
             bottom: 0;
           }
+          .level-item {
+            text-align: center;
+          }
         }
         .ReactModal__Overlay {
           opacity: 0;

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Heading, Hero } from "react-bulma-components"
+import { Heading, Hero, Level } from "react-bulma-components"
 import { AiOutlineCode, AiFillBell } from "react-icons/ai"
 import { IoIosSend } from "react-icons/io"
 import { FiSun } from "react-icons/fi"
@@ -69,4 +69,18 @@ export const IconSlot = styled.span`
   justify-content: center;
   height: 1.5rem;
   width: 1.5rem;
+`
+
+export const MobileActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+`
+
+export const LevelItem = styled(Level.Item)`
+  @media screen and (max-width: 768px) {
+    text-align: center;
+    display: flex !important;
+  }
 `

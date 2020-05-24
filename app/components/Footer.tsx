@@ -12,7 +12,9 @@ const Foot = styled.footer`
     color: black;
   }
   @media screen and (max-width: 768px) {
-    justify-content: center;
+    .level-item {
+      justify-content: center;
+    }
   }
 `
 
