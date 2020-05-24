@@ -172,7 +172,7 @@ const Job = ({ id }) => {
             )}
           </ContentBox>
         </Columns.Column>
-        <Level>
+        <Level className="is-hidden-tablet">
           <LevelItem>
             <Link href="/" as="/" scroll={false}>
               <Button renderAs="a" color="info" size="small" outlined={true}>
@@ -182,7 +182,7 @@ const Job = ({ id }) => {
           </LevelItem>
         </Level>
       </Columns>
-      <style jsx>
+      <style jsx global>
         {`
           @media screen and (min-width: 768px) {
             .job-name {

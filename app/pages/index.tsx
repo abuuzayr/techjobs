@@ -79,18 +79,6 @@ const Home = () => {
           z-index: 99;
           overflow: hidden;
         }
-        @media screen and (max-width: 768px) {
-          .ReactModal__Content.ReactModal__Content--after-open {
-            overflow: auto;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-          }
-          .level-item {
-            text-align: center;
-          }
-        }
         .ReactModal__Overlay {
           opacity: 0;
           margin-top: 50px;
@@ -99,14 +87,33 @@ const Home = () => {
         .ReactModal__Overlay--after-open {
           opacity: 1;
           margin-top: 0;
-          top: 40px;
-          left: 40px;
-          right: 40px;
-          bottom: 40px;
+        }
+        .ReactModal__Content.ReactModal__Content--after-open {
+          overflow: auto;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
         }
         .ReactModal__Overlay--before-close {
           opacity: 0;
           margin-top: 50px;
+        }
+        @media screen and (max-width: 768px) {
+          .ReactModal__Content.ReactModal__Content--after-open {
+            overflow: auto;
+          }
+          .level-item {
+            text-align: center;
+          }
+        }
+        @media screen and (min-width: 768px) {
+          .ReactModal__Content.ReactModal__Content--after-open {
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+          }
         }
       `}</style>
     </LikedContext.Provider>
