@@ -135,7 +135,7 @@ const HeroComponent = (props) => {
             <ul>
               {tabs.map((li) => (
                 <li key={li.id} className={props.tab === li.id ? "is-active" : ""}>
-                  <Link href={`/?tab=${li.id}`} as={`/?tab=${li.id}`}>
+                  <Link href={`/?tab=${li.id}`} as={`/category/${li.id}`} scroll={false}>
                     <a>
                       {li.title}{" "}
                       <Suspense fallback={<></>}>
