@@ -107,29 +107,27 @@ const HeroComponent = (props) => {
             </Columns.Column>
           </Columns>
         </Container>
-        <Container>
-          <Columns>
-            <Columns.Column className="is-hidden-mobile">
-              <Level>
-                <Level.Item>
-                  <Heading subtitle size={6}>
-                    <small>Including jobs from</small>
-                  </Heading>
+        <Columns>
+          <Columns.Column className="is-hidden-mobile">
+            <Level>
+              <Level.Item>
+                <Heading subtitle size={6}>
+                  <small>Including jobs from</small>
+                </Heading>
+              </Level.Item>
+            </Level>
+            <Level>
+              {jobsiteLogos.map((path, index) => (
+                <Level.Item key={path} className={index > 4 ? "is-hidden-touch" : ""}>
+                  <Logo src={path} key={path} />
                 </Level.Item>
-              </Level>
-              <Level>
-                {jobsiteLogos.map((path, index) => (
-                  <Level.Item key={path} className={index > 4 ? "is-hidden-touch" : ""}>
-                    <Logo src={path} key={path} />
-                  </Level.Item>
-                ))}
-              </Level>
-            </Columns.Column>
-            <Columns.Column className="is-hidden-tablet">
-              <div style={{ marginTop: 30 }} />
-            </Columns.Column>
-          </Columns>
-        </Container>
+              ))}
+            </Level>
+          </Columns.Column>
+          <Columns.Column className="is-hidden-tablet">
+            <div style={{ marginTop: 30 }} />
+          </Columns.Column>
+        </Columns>
       </HeroBody>
       <Hero.Footer style={{ marginTop: -41 }}>
         <Tabs type="boxed" fullwidth={true}>
