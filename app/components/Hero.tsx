@@ -2,8 +2,7 @@
 import { Suspense, useState, useRef, useEffect } from "react"
 import { useQuery, Link } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
-import { FiSearch } from "react-icons/fi"
-import { AiOutlineEnter } from "react-icons/ai"
+import { FiSearch, FiDelete } from "react-icons/fi"
 import styled from "styled-components"
 
 // Import components
@@ -98,8 +97,15 @@ const HeroComponent = (props) => {
                   <span className="icon is-left">
                     <FiSearch />
                   </span>
-                  <span className="icon is-right">
-                    <AiOutlineEnter color={search ? "red" : "white"} />
+                  <span
+                    className="icon is-right"
+                    style={{ pointerEvents: "initial" }}
+                    onClick={() => setSearch("")}
+                    onKeyDown={() => setSearch("")}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <FiDelete />
                   </span>
                 </p>
                 {/* TODO: Add quick search buttons for languages, etc. */}
