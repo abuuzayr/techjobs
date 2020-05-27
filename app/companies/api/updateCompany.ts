@@ -1,6 +1,6 @@
-import db, { CompanyUpdateArgs } from "db"
+import db from "db"
 
-async function updateCompany(args: CompanyUpdateArgs) {
+async function updateCompany(args) {
   // Don't allow updating unique fields
   delete args.data.id
   delete args.data.name

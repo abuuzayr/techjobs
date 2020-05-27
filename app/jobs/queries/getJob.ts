@@ -1,6 +1,6 @@
-import db, { FindOneJobArgs } from "db"
+import db from "db"
 
-export default async function getJob(args: FindOneJobArgs) {
+export default async function getJob(args) {
   const job = await db.job.findOne({
     ...args,
     include: {

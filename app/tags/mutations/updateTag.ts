@@ -1,6 +1,6 @@
-import db, {TagUpdateArgs} from 'db'
+import db from "db"
 
-export default async function updateTag(args: TagUpdateArgs) {
+export default async function updateTag(args) {
   // Don't allow updating ID
   delete args.data.id
 

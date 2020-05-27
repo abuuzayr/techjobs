@@ -1,6 +1,6 @@
-import db, {FindManyTagArgs} from 'db'
+import db from "db"
 
-export default async function getTags(args: FindManyTagArgs) {
+export default async function getTags(args) {
   const tags = await db.tag.findMany(args)
 
   return tags
