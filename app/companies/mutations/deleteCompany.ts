@@ -1,6 +1,6 @@
-import db, { CompanyDeleteArgs } from "db"
+import db from "db"
 
-export default async function deleteCompany(args: CompanyDeleteArgs) {
+export default async function deleteCompany(args) {
   const company = await db.company.delete(args)
 
   return company

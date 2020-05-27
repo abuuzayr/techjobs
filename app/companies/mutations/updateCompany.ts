@@ -1,6 +1,6 @@
-import db, { CompanyUpdateArgs } from "db"
+import db from "db"
 
-export default async function updateCompany(args: CompanyUpdateArgs) {
+export default async function updateCompany(args) {
   // Don't allow updating ID
   delete args.data.id
 
