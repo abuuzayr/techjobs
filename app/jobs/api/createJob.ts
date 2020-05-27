@@ -1,6 +1,6 @@
-import db, { Job } from "db"
+import db, { JobCreateArgs, Job } from "db"
 
-const createJob = async (args) => {
+const createJob = async (args: JobCreateArgs) => {
   if (!args.data) return false
   if (!args.data.company) return false
   // Find job if exists
