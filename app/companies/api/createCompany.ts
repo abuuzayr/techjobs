@@ -1,6 +1,6 @@
-import db from "db"
+import db, { CompanyCreateArgs } from "db"
 
-async function createCompany(args) {
+async function createCompany(args: CompanyCreateArgs) {
   const company = await db.company.create(args)
 
   return company
