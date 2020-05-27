@@ -1,6 +1,6 @@
-import db from "db"
+import db, {JobUpdateArgs} from 'db'
 
-export default async function updateJob(args) {
+export default async function updateJob(args: JobUpdateArgs) {
   // Don't allow updating ID
   delete args.data.id
 

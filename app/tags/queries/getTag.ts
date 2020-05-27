@@ -1,6 +1,6 @@
-import db from "db"
+import db, {FindOneTagArgs} from 'db'
 
-export default async function getTag(args) {
+export default async function getTag(args: FindOneTagArgs) {
   const tag = await db.tag.findOne(args)
 
   return tag

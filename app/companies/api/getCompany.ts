@@ -1,6 +1,6 @@
-import db from "db"
+import db, { FindOneCompanyArgs } from "db"
 
-async function getCompany(args) {
+async function getCompany(args: FindOneCompanyArgs) {
   const company = await db.company.findOne(args)
 
   return company
