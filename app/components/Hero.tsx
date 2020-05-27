@@ -48,7 +48,7 @@ const HeroComponent = (props) => {
     "/Adzuna-logo.svg",
     "/StackOverflow-logo.svg",
     "/eFinancialCareers-logo.svg",
-    "/jobsDb.png",
+    "/jobsDB.png",
     "/jobsCentral.png",
     "/jobstreet.png",
   ]
