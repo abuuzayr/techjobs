@@ -1,10 +1,10 @@
-import db from "db"
+import db, { Job } from "db"
 
 const createJob = async (args) => {
   if (!args.data) return false
   if (!args.data.company) return false
   // Find job if exists
-  let jobFound
+  let jobFound: Job
   if (args.data.aggId) {
     jobFound = await db.job.findOne({
       where: {
