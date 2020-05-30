@@ -2,7 +2,7 @@ import { Suspense, useEffect } from "react"
 import { useQuery, Link } from "blitz"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import getJob from "../jobs/queries/getJob"
-import { FiExternalLink, FiArrowRight } from "react-icons/fi"
+import { FiExternalLink, FiArrowRight, FiFrown } from "react-icons/fi"
 import { MdClose } from "react-icons/md"
 import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs"
 import { IconContext } from "react-icons"
@@ -40,7 +40,7 @@ const Job = ({ id }) => {
   let postedDays = 0
   if (postedDate) {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
-    postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
+    postedDays = postedAge / 1000 / 60 / 60 / 24
   }
 
   return (
@@ -91,12 +91,21 @@ const Job = ({ id }) => {
         </MobileActions>
       </Level>
       <Columns>
-        <Columns.Column size={6}>
+        <Columns.Column size={company.about ? 6 : 12}>
           <Heading size="6">About the job</Heading>
           <ContentBox>
             <JobMeta postedDays={postedDays} data={job} />
             <hr />
-            <Content size="small" dangerouslySetInnerHTML={{ __html: description }}></Content>
+            {description ? (
+              <Content size="small" dangerouslySetInnerHTML={{ __html: description }}></Content>
+            ) : (
+              <Content>
+                We got nothing <FiFrown size={20} style={{ verticalAlign: "middle" }} color="orange" />
+                <p>
+                  Click the <strong>Read More</strong> button below to see the Job posting
+                </p>
+              </Content>
+            )}
             <a href={url} target="_blank">
               <Button size="small" color="info" outlined={true}>
                 Read more <FiArrowRight />
@@ -104,74 +113,80 @@ const Job = ({ id }) => {
             </a>
           </ContentBox>
         </Columns.Column>
-        <Columns.Column size={6}>
-          <Heading size={6}>About the company</Heading>
-          <ContentBox>
-            <Content>{company.about}</Content>
-            {company.url && (
-              <Content>
-                <A href={company.url}>
-                  <Heading size="6" as="h6">
-                    {company.url}
-                    <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
-                  </Heading>
-                </A>
-              </Content>
-            )}
-            {company.gdUrl && company.gdRating && (
-              <Level>
-                <Level.Side align="left">
-                  <LevelItem>
-                    <IconContext.Provider value={{ size: "25px", color: "#0CAA41" }}>
-                      {[...Array(parseInt(company.gdRating))].map((e, i) => (
-                        <BsStarFill key={i} />
-                      ))}
-                      {parseFloat(company.gdRating) - parseInt(company.gdRating) > 0 ? <BsStarHalf /> : <></>}
-                      {[...Array(5 - Math.ceil(parseFloat(company.gdRating)))].map((e, i) => (
-                        <BsStar key={i} />
-                      ))}
-                    </IconContext.Provider>
-                  </LevelItem>
-                  <LevelItem>
-                    <Heading subtitle size={6} renderAs="h6">
-                      rating on
+        {company.about && (
+          <Columns.Column size={6}>
+            <Heading size={6}>About the company</Heading>
+            <ContentBox>
+              <Content>{company.about}</Content>
+              {company.url && (
+                <Content>
+                  <A href={company.url}>
+                    <Heading size="6" as="h6">
+                      {company.url}
+                      <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
                     </Heading>
-                    <A href={company.gdUrl} target="_blank">
-                      <img
-                        src="../glassdoor.png"
-                        alt="Glassdoor logo"
-                        style={{ width: 100, margin: "0 10px" }}
-                      />
-                      <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
-                    </A>
-                  </LevelItem>
-                </Level.Side>
-              </Level>
-            )}
-            {company.liUrl && company.liEmpCount && (
-              <Level>
-                <Level.Side align="left">
-                  <LevelItem>
-                    <Heading>{company.liEmpCount}</Heading>
-                  </LevelItem>
-                  <LevelItem>
-                    <Heading subtitle size={6} renderAs="h6">
-                      employees on
-                    </Heading>
-                    <A href={company.liUrl} target="_blank">
-                      <img
-                        src="../linkedin.png"
-                        alt="LinkedIn logo"
-                        style={{ width: 100, margin: "0 10px" }}
-                      />
-                      <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
-                    </A>
-                  </LevelItem>
-                </Level.Side>
-              </Level>
-            )}
-          </ContentBox>
-        </Columns.Column>
+                  </A>
+                </Content>
+              )}
+              {company.gdUrl && company.gdRating && (
+                <Level>
+                  <Level.Side align="left">
+                    <LevelItem>
+                      <IconContext.Provider value={{ size: "25px", color: "#0CAA41" }}>
+                        {[...Array(parseInt(company.gdRating))].map((e, i) => (
+                          <BsStarFill key={i} />
+                        ))}
+                        {parseFloat(company.gdRating) - parseInt(company.gdRating) > 0 ? (
+                          <BsStarHalf />
+                        ) : (
+                          <></>
+                        )}
+                        {[...Array(5 - Math.ceil(parseFloat(company.gdRating)))].map((e, i) => (
+                          <BsStar key={i} />
+                        ))}
+                      </IconContext.Provider>
+                    </LevelItem>
+                    <LevelItem>
+                      <Heading subtitle size={6} renderAs="h6">
+                        rating on
+                      </Heading>
+                      <A href={company.gdUrl} target="_blank">
+                        <img
+                          src="../glassdoor.png"
+                          alt="Glassdoor logo"
+                          style={{ width: 100, margin: "0 10px" }}
+                        />
+                        <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
+                      </A>
+                    </LevelItem>
+                  </Level.Side>
+                </Level>
+              )}
+              {company.liUrl && company.liEmpCount && (
+                <Level>
+                  <Level.Side align="left">
+                    <LevelItem>
+                      <Heading>{company.liEmpCount}</Heading>
+                    </LevelItem>
+                    <LevelItem>
+                      <Heading subtitle size={6} renderAs="h6">
+                        employees on
+                      </Heading>
+                      <A href={company.liUrl} target="_blank">
+                        <img
+                          src="../linkedin.png"
+                          alt="LinkedIn logo"
+                          style={{ width: 100, margin: "0 10px" }}
+                        />
+                        <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
+                      </A>
+                    </LevelItem>
+                  </Level.Side>
+                </Level>
+              )}
+            </ContentBox>
+          </Columns.Column>
+        )}
         <Level className="is-hidden-tablet">
           <LevelItem>
             <Link href="/" as="/" scroll={false}>
