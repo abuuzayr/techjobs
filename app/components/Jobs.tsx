@@ -1,9 +1,10 @@
 import { Suspense, useState, useEffect } from "react"
 import { useQuery } from "blitz"
 import Job from "./Job"
-import Tags from "./Tags"
+import TagsSelect from "./TagsSelect"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
+import getTags from "../tags/queries/getTags"
 import { Container, Columns, Level, Button, Loader, Content } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import { IoMdHappy } from "react-icons/io"
@@ -15,6 +16,7 @@ const Jobs = (props) => {
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [totalJobsCount] = useQuery(getJobsCount, args)
+  const [allTags] = useQuery(getTags)
   const [selectedTags, setSelectedTags] = useState([])
 
   // Update args to include
@@ -50,19 +52,6 @@ const Jobs = (props) => {
   )
   const [jobsCount] = useQuery(getJobsCount, updatedArgs)
 
-  useEffect(() => {
-    setSelectedTags((tags) => {
-      // Remove tags filters if they do not exist in the jobs returned
-      const availableTags = jobs.reduce((arr, job) => {
-        job.tags.forEach((j) => {
-          if (!arr.includes(j.name)) arr.push(j.name)
-        })
-        return arr
-      }, [])
-      return tags.filter((tag) => availableTags.includes(tag))
-    })
-  }, [jobs])
-
   // Set scroll to behavior
   useEffect(() => {
     if (scrollTo)
@@ -72,23 +61,11 @@ const Jobs = (props) => {
       })
   }, [])
 
-  // Get unique array of all tags in current job query
-  const tags: String[] = jobs.reduce((arr, job) => {
-    job.tags.forEach((tag) => {
-      if (!arr.includes(tag.name)) arr.push(tag.name)
-    })
-    return arr.sort()
-  }, [])
+  const tags = allTags.map((tag) => tag.name)
 
   return (
     <Container style={{ padding: "2rem" }}>
-      <Level>
-        <Tags {...{ tags, selectedTags, setSelectedTags }} noFlex>
-          <p className="heading" style={{ marginRight: 10, alignSelf: "center" }}>
-            Filter by tags:
-          </p>
-        </Tags>
-      </Level>
+      <TagsSelect {...{ tags, selectedTags, setSelectedTags }} />
       {selectedTags.length > 0 && (
         <Level>
           <Level.Side align="left"></Level.Side>
