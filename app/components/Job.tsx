@@ -34,10 +34,10 @@ const Job = (props) => {
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
   // Handle job age string
-  let postedDays = 0
+  let postedDays: number = 0
   if (postedDate) {
     const postedAge = new Date().getTime() - new Date(postedDate).getTime()
-    postedDays = Math.round(postedAge / 1000 / 60 / 60 / 24)
+    postedDays = postedAge / 1000 / 60 / 60 / 24
   }
   return (
     <JobBox old={postedDays > 31 ? 1 : 0} featured={type === "featured"}>

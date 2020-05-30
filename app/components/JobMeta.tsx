@@ -46,7 +46,8 @@ const JobMeta = (props) => {
     const postedHours = Math.round(postedDays * 24)
     postedAgeStr = `${postedHours || "< 1"} hour${postedHours > 1 ? "s" : ""} ago`
   } else {
-    postedAgeStr = `${postedDays} day${postedDays > 1 ? "s" : ""} ago`
+    const days = Math.round(postedDays)
+    postedAgeStr = `${days} day${days > 1 ? "s" : ""} ago`
   }
 
   return (
