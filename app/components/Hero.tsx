@@ -83,7 +83,7 @@ const HeroComponent = (props) => {
         </Container>
         <Container>
           <Columns>
-            <Columns.Column size="half" offset="one-quarter">
+            <Columns.Column size={10} offset={1}>
               <div className="field" style={{ marginTop: 15 }} ref={heroRef}>
                 <p className="control has-icons-left has-icons-right">
                   <input
