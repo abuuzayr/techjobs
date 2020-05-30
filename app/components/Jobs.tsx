@@ -82,45 +82,41 @@ const Jobs = (props) => {
 
   return (
     <Container style={{ padding: "2rem" }}>
-      <Columns>
-        <Columns.Column size={10} offset={1}>
-          <Level>
-            <Tags {...{ tags, selectedTags, setSelectedTags }} noFlex>
-              <p className="heading" style={{ marginRight: 10, alignSelf: "center" }}>
-                Filter by tags:
+      <Level>
+        <Tags {...{ tags, selectedTags, setSelectedTags }} noFlex>
+          <p className="heading" style={{ marginRight: 10, alignSelf: "center" }}>
+            Filter by tags:
+          </p>
+        </Tags>
+      </Level>
+      {selectedTags.length > 0 && (
+        <Level>
+          <Level.Side align="left"></Level.Side>
+          <Level.Side align="right">
+            <Content size="small">
+              <p style={{ margin: "0 10px 0 0" }}>
+                {jobsCount} / {totalJobsCount} job{totalJobsCount > 1 ? "s" : ""}
               </p>
-            </Tags>
-          </Level>
-          {selectedTags.length > 0 && (
-            <Level>
-              <Level.Side align="left"></Level.Side>
-              <Level.Side align="right">
-                <Content size="small">
-                  <p style={{ margin: "0 10px 0 0" }}>
-                    {jobsCount} / {totalJobsCount} job{totalJobsCount > 1 ? "s" : ""}
-                  </p>
-                </Content>
-              </Level.Side>
-            </Level>
-          )}
-          {jobs.map((job) => (
-            <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-          ))}
-          <Level>
-            {jobs.length === jobsCount ? (
-              <Level.Item>
-                <IoMdHappy /> You have loaded all jobs!
-              </Level.Item>
-            ) : (
-              <Level.Item>
-                <Button outlined={true} color="info" onClick={() => setPage(page + 1)}>
-                  <RiDownloadLine style={{ marginRight: 5 }} /> Load more jobs
-                </Button>
-              </Level.Item>
-            )}
-          </Level>
-        </Columns.Column>
-      </Columns>
+            </Content>
+          </Level.Side>
+        </Level>
+      )}
+      {jobs.map((job) => (
+        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
+      ))}
+      <Level>
+        {jobs.length === jobsCount ? (
+          <Level.Item>
+            <IoMdHappy /> You have loaded all jobs!
+          </Level.Item>
+        ) : (
+          <Level.Item>
+            <Button outlined={true} color="info" onClick={() => setPage(page + 1)}>
+              <RiDownloadLine style={{ marginRight: 5 }} /> Load more jobs
+            </Button>
+          </Level.Item>
+        )}
+      </Level>
     </Container>
   )
 }
