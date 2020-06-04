@@ -36,7 +36,7 @@ export const FillCode = styled(AiFillCode)`
 `
 
 export const HeroBody = styled(Hero.Body)`
-  background-image: url(/bg.jpg);
+  background-image: url(${process.env.BACKGROUND_URL});
   background-size: cover;
   background-position: center;
   background-color: rgba(0, 0, 0, 0.2);
