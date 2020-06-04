@@ -142,7 +142,7 @@ const HeroComponent = (props) => {
               {tabs.map((li) => (
                 <li key={li.id} className={props.tab === li.id ? "is-active" : ""}>
                   <Link href={`/?tab=${li.id}`} as={`/category/${li.id}`} scroll={false}>
-                    <a>
+                    <a style={{ color: props.tab === li.id ? "#333" : "" }}>
                       {li.title}{" "}
                       <Suspense fallback={<></>}>
                         <JobsCount args={li.query} />
