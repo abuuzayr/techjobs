@@ -7,6 +7,8 @@ import Jobs from "../components/Jobs"
 import Footer from "../components/Footer"
 import JobContent from "../components/JobContent"
 import LikedContext from "../components/LikedContext"
+import ContentNotFound from "../components/ContentNotFound"
+import About from "../components/About"
 
 Modal.setAppElement("#__next")
 
@@ -16,6 +18,7 @@ const Home = () => {
   const [search, setSearch] = useState("")
   const [liked, setLiked] = useState([])
   const [scrollTo, setScrollTo] = useState(0)
+  const allowedTabs = ["featured", "all", "liked", "resources", "about"]
 
   useEffect(() => {
     if (localStorage && localStorage.getItem("_liked")) {
@@ -54,11 +57,9 @@ const Home = () => {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
-      {["featured", "all", "liked"].includes(tab) ? (
-        <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />
-      ) : (
-        <div>{tab}</div>
-      )}
+      {!allowedTabs.includes(tab) && <ContentNotFound />}
+      {["featured", "all", "liked"].includes(tab) && <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />}
+      {tab === "about" && <About />}
       <Footer />
       {
         <RemoveScroll enabled={router?.query?.jobId ? !!router.query.jobId : false}>
