@@ -40,10 +40,12 @@ const createJob = async (args) => {
   }
   // Get tags for searching
   if (args.data.tags && args.data.tags.length) {
+    // slugify all tags
+    const tags = args.data.tags.map((t) => t.replace(/[_*+~.()'"!:@ ]/g, "-").toLowerCase())
     const tagObj = {}
     const existingTags = await db.tag.findMany({
       where: {
-        OR: args.data.tags.map((tag) => ({
+        OR: tags.map((tag) => ({
           name: {
             equals: tag,
           },
@@ -52,13 +54,13 @@ const createJob = async (args) => {
     })
     if (existingTags.length) {
       tagObj["connect"] = existingTags.map((t) => ({ id: t.id }))
-      if (existingTags.length !== args.data.tags.length) {
-        tagObj["create"] = args.data.tags
+      if (existingTags.length !== tags.length) {
+        tagObj["create"] = tags
           .filter((tag) => !existingTags.map((t) => t.name).includes(tag))
           .map((t) => ({ name: t }))
       }
     } else {
-      tagObj["create"] = args.data.tags.map((t) => ({ name: t }))
+      tagObj["create"] = tags.map((t) => ({ name: t }))
     }
     // Compile everything into a data object for creation
     jobData = {
@@ -66,7 +68,7 @@ const createJob = async (args) => {
       data: {
         ...jobData.data,
         tags: tagObj,
-        searchStr: `${args.data.name} ${company.name} ${args.data.tags.join(" ")}`.toLowerCase(),
+        searchStr: `${args.data.name} ${company.name} ${tags.join(" ")}`.toLowerCase(),
       },
     }
   }
