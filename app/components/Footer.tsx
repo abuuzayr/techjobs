@@ -25,7 +25,7 @@ const Footer = () => {
         <Container>
           <Level>
             <Level.Side align="left" className="level-item">
-              <Link href="/">
+              <Link href="/?tab=about" as="/category/about">
                 <a className="heading">About</a>
               </Link>
             </Level.Side>
