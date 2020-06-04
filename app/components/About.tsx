@@ -1,4 +1,4 @@
-import { Section, Container, Content, Heading, Tile, Level } from "react-bulma-components"
+import { Section, Container, Heading, Tile, Level } from "react-bulma-components"
 
 const ContentNotFound = (props) => {
   return (

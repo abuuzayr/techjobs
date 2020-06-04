@@ -9,6 +9,7 @@ import JobContent from "../components/JobContent"
 import LikedContext from "../components/LikedContext"
 import ContentNotFound from "../components/ContentNotFound"
 import About from "../components/About"
+import Resources from "../components/Resources"
 
 Modal.setAppElement("#__next")
 
@@ -60,6 +61,7 @@ const Home = () => {
       {!allowedTabs.includes(tab) && <ContentNotFound />}
       {["featured", "all", "liked"].includes(tab) && <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />}
       {tab === "about" && <About />}
+      {tab === "resources" && <Resources />}
       <Footer />
       {
         <RemoveScroll enabled={router?.query?.jobId ? !!router.query.jobId : false}>
