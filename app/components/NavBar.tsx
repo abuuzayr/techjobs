@@ -1,6 +1,14 @@
 import React from "react"
-import { Navbar, Container, Button } from "react-bulma-components"
-import { Code, Title, Bell, Send } from "../styles/common"
+import { Link } from "blitz"
+import { Navbar, Container } from "react-bulma-components"
+import { Code, Title, Send } from "../styles/common"
+import styled from "styled-components"
+
+const Post = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+`
 
 const NavBar = () => (
   <Navbar color="info" fixed="top" transparent={true}>
@@ -13,9 +21,23 @@ const NavBar = () => (
           </Title>
           <img src="/sg.svg" width="15" alt="Singapore flag" />
         </Navbar.Item>
-        <Navbar.Burger />
       </Navbar.Brand>
-      <Navbar.Container position="end"></Navbar.Container>
+      <Navbar.Container position="end" className="is-hidden-touch">
+        <Navbar.Item style={{ backgroundColor: "transparent" }}>
+          <Link href="/?tab=post" as="/category/post" scroll={false}>
+            <a className="heading" style={{ color: "white" }}>
+              <Send /> Post a Job
+            </a>
+          </Link>
+        </Navbar.Item>
+      </Navbar.Container>
+      <Post className="is-hidden-desktop">
+        <Link href="/?tab=post" as="/category/post" scroll={false}>
+          <a className="heading" style={{ color: "white" }}>
+            <Send /> Post a Job
+          </a>
+        </Link>
+      </Post>
     </Container>
   </Navbar>
 )
