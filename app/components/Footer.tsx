@@ -32,14 +32,14 @@ const Footer = () => {
             <Level.Item>
               <p className="">
                 Built in <FiSun /> with{" "}
-                <a href="https://github.com/blitz-js/blitz/" rel="noopener noreferrer">
+                <a href="https://github.com/blitz-js/blitz/" rel="noopener noreferrer" target="_blank">
                   <FiZap />
                   Blitz
                 </a>
               </p>
             </Level.Item>
             <Level.Side align="right" className="level-item">
-              <a href="https://www.github.com/abuuzayr" rel="noopener noreferrer">
+              <a href="https://www.github.com/abuuzayr" rel="noopener noreferrer" target="_blank">
                 <FiGithub />
               </a>
             </Level.Side>
