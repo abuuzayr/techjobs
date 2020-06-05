@@ -153,7 +153,7 @@ const HeroComponent = (props) => {
               ))}
               <li className={props.tab === "resources" ? "is-active" : ""}>
                 <Link href={`/?tab=resources`} as={`/category/resources`}>
-                  <a>Resources</a>
+                  <a style={{ color: props.tab === "resources" ? "#333" : "" }}>Resources</a>
                 </Link>
               </li>
             </ul>
