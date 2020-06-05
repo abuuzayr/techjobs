@@ -106,7 +106,7 @@ const Job = ({ id }) => {
                 </p>
               </Content>
             )}
-            <a href={url} target="_blank">
+            <a href={url} target="_blank" rel="noopener noreferrer">
               <Button size="small" color="info" outlined={true}>
                 Read more <FiArrowRight />
               </Button>
@@ -120,7 +120,7 @@ const Job = ({ id }) => {
               <Content>{company.about}</Content>
               {company.url && (
                 <Content>
-                  <A href={company.url}>
+                  <A href={company.url} rel="noopener noreferrer" target="_blank">
                     <Heading size="6" as="h6">
                       {company.url}
                       <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
@@ -150,7 +150,7 @@ const Job = ({ id }) => {
                       <Heading subtitle size={6} renderAs="h6">
                         rating on
                       </Heading>
-                      <A href={company.gdUrl} target="_blank">
+                      <A href={company.gdUrl} target="_blank" rel="noopener noreferrer">
                         <img
                           src="../glassdoor.png"
                           alt="Glassdoor logo"
@@ -172,7 +172,7 @@ const Job = ({ id }) => {
                       <Heading subtitle size={6} renderAs="h6">
                         employees on
                       </Heading>
-                      <A href={company.liUrl} target="_blank">
+                      <A href={company.liUrl} target="_blank" rel="noopener noreferrer">
                         <img
                           src="../linkedin.png"
                           alt="LinkedIn logo"
