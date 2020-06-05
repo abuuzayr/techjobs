@@ -10,6 +10,7 @@ const Apply = ({ url }) => (
     href={url}
     target="_blank"
     onClick={(e) => e.stopPropagation()}
+    rel="noopener noreferrer"
   >
     Apply
   </Button>
