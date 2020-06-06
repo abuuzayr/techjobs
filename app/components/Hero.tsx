@@ -1,6 +1,6 @@
 // Imports from libraries
 import { Suspense, useState, useRef, useEffect } from "react"
-import { useQuery, Link } from "blitz"
+import { useQuery, Link, useRouter } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch, FiDelete } from "react-icons/fi"
 import styled from "styled-components"
@@ -26,16 +26,17 @@ const JobsCount = (props) => {
 const HeroComponent = (props) => {
   const [search, setSearch] = useState("")
   const heroRef = useRef(null)
+  const router = useRouter()
   const tabs = [
     {
       id: "featured",
       title: "Featured",
-      query: { where: { type: { equals: "featured" }, name: { contains: props.search } } },
+      query: { where: { type: { equals: "featured" }, searchStr: { contains: props.search.toLowerCase() } } },
     },
     {
       id: "all",
       title: "All Jobs",
-      query: { where: { name: { contains: props.search } } },
+      query: { where: { searchStr: { contains: props.search.toLowerCase() } } },
     },
     {
       id: "liked",
@@ -66,6 +67,8 @@ const HeroComponent = (props) => {
   const keyDown = (e) => {
     if (e.key === "Enter") {
       props.setSearch(search)
+      if (!["all", "featured"].includes(props.tab))
+        router.push("/?tab=all", "/category/all", { shallow: true })
     }
   }
 
@@ -152,7 +155,7 @@ const HeroComponent = (props) => {
                 </li>
               ))}
               <li className={props.tab === "resources" ? "is-active" : ""}>
-                <Link href={`/?tab=resources`} as={`/category/resources`}>
+                <Link href={`/?tab=resources`} as={`/category/resources`} scroll={false}>
                   <a style={{ color: props.tab === "resources" ? "#333" : "" }}>Resources</a>
                 </Link>
               </li>
