@@ -39,11 +39,13 @@ const createJob = async (args) => {
     },
   }
   // Get tags for searching
+  let existingTags = []
+  let tags = []
+  const tagObj = {}
   if (args.data.tags && args.data.tags.length) {
     // slugify all tags
-    const tags = args.data.tags.map((t) => t.replace(/[_*+~.()'"!:@ ]/g, "-").toLowerCase())
-    const tagObj = {}
-    const existingTags = await db.tag.findMany({
+    tags = args.data.tags.map((t) => t.replace(/[_*+~.()'"!:@ ]/g, "-").toLowerCase())
+    existingTags = await db.tag.findMany({
       where: {
         OR: tags.map((tag) => ({
           name: {
@@ -52,25 +54,37 @@ const createJob = async (args) => {
         })),
       },
     })
-    if (existingTags.length) {
-      tagObj["connect"] = existingTags.map((t) => ({ id: t.id }))
-      if (existingTags.length !== tags.length) {
-        tagObj["create"] = tags
-          .filter((tag) => !existingTags.map((t) => t.name).includes(tag))
-          .map((t) => ({ name: t }))
-      }
+  } else {
+    const allTags = await db.tag.findMany()
+    let toParse = ""
+    if (args.data.description) {
+      toParse = args.data.description.replace(/[\W]{1,99}/g, " ").toLowerCase()
     } else {
-      tagObj["create"] = tags.map((t) => ({ name: t }))
+      toParse = args.data.name.replace(/[\W]{1,99}/g, " ").toLowerCase()
     }
-    // Compile everything into a data object for creation
-    jobData = {
-      ...jobData,
-      data: {
-        ...jobData.data,
-        tags: tagObj,
-        searchStr: `${args.data.name} ${company.name} ${tags.join(" ")}`.toLowerCase(),
-      },
+    existingTags = allTags.filter((tag) => {
+      const casedTag = tag.name.replace(/-/g, " ")
+      return toParse.split(" ").includes(casedTag)
+    })
+  }
+  if (existingTags.length) {
+    tagObj["connect"] = existingTags.map((t) => ({ id: t.id }))
+    if (existingTags.length !== tags.length) {
+      tagObj["create"] = tags
+        .filter((tag) => !existingTags.map((t) => t.name).includes(tag))
+        .map((t) => ({ name: t }))
     }
+  } else {
+    tagObj["create"] = tags.map((t) => ({ name: t }))
+  }
+  // Compile everything into a data object for creation
+  jobData = {
+    ...jobData,
+    data: {
+      ...jobData.data,
+      tags: tagObj,
+      searchStr: `${args.data.name} ${company.name} ${tags.join(" ")}`.toLowerCase(),
+    },
   }
   if (jobFound) {
     return await db.job.update({
