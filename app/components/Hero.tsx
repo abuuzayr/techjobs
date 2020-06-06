@@ -64,8 +64,13 @@ const HeroComponent = (props) => {
     setSearch(e.currentTarget.value)
   }
 
-  const keyDown = (e) => {
-    if (e.key === "Enter") {
+  const clearSearch = () => {
+    props.setSearch("")
+    setSearch("")
+  }
+
+  const keyDown = (e, bypass = false) => {
+    if (e.key === "Enter" || bypass) {
       props.setSearch(search)
       if (!["all", "featured"].includes(props.tab))
         router.push("/?tab=all", "/category/all", { shallow: true })
@@ -96,6 +101,7 @@ const HeroComponent = (props) => {
                     value={search}
                     onChange={handleChange}
                     onKeyDown={keyDown}
+                    onBlur={(e) => keyDown(e, true)}
                   />
                   <span className="icon is-left">
                     <FiSearch />
@@ -103,8 +109,8 @@ const HeroComponent = (props) => {
                   <span
                     className="icon is-right"
                     style={{ pointerEvents: "initial" }}
-                    onClick={() => setSearch("")}
-                    onKeyDown={() => setSearch("")}
+                    onClick={clearSearch}
+                    onKeyDown={clearSearch}
                     role="button"
                     tabIndex={0}
                   >
