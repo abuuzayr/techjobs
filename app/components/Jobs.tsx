@@ -78,9 +78,19 @@ const Jobs = (props) => {
           </Level.Side>
         </Level>
       )}
-      {jobs.map((job) => (
-        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-      ))}
+      {jobs
+        .sort((a, b) => {
+          if (a.type === "featured" && b.type !== "featured") {
+            return -1
+          } else if (a.type !== "featured" && b.type === "featured") {
+            return 1
+          } else {
+            return 0
+          }
+        })
+        .map((job) => (
+          <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
+        ))}
       <Level>
         {jobs.length === jobsCount ? (
           <Level.Item>
