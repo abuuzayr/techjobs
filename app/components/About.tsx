@@ -1,3 +1,4 @@
+import { Link } from "blitz"
 import { Section, Container, Heading, Tile, Level } from "react-bulma-components"
 
 const ContentNotFound = (props) => {
@@ -35,7 +36,11 @@ const ContentNotFound = (props) => {
               <Tile renderAs="article" kind="child" notification color="danger">
                 <Heading>Want to list a job?</Heading>
                 <Heading subtitle>
-                  We're happy to help. Email us at <a href="mailto:hello@techjobs.sg">hello@techjobs.sg</a>
+                  We're happy to help. Post a job{" "}
+                  <Link href="/?tab=post" as="/category/post" scroll={false}>
+                    <a>here</a>
+                  </Link>{" "}
+                  and it will appear as a <strong>featured</strong> job at the top of searches.
                 </Heading>
                 <div className="content" />
               </Tile>
