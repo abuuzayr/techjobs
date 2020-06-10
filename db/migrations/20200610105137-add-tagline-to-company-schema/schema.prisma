@@ -3,7 +3,7 @@
 
 datasource postgresql {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -53,5 +53,4 @@ model Company {
   liEmpCount  Int?
   companySize String?
   jobs        Job[]
-  foundedYear Int?
 }
