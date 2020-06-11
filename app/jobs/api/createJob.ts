@@ -18,7 +18,16 @@ const createJob = async (args) => {
       name: `${args.data.company}`,
     },
   })
-  if (!company) {
+  if (company && !company.imgUrl) {
+    await db.company.update({
+      where: {
+        name: `${args.data.company}`,
+      },
+      data: {
+        imgUrl: `${args.data.avatar}`,
+      },
+    })
+  } else {
     company = await db.company.create({
       data: {
         name: `${args.data.company}`,
@@ -106,7 +115,7 @@ export default async (req, res) => {
     }
     const job = await createJob({ data: req.body })
     if (job) {
-      res.statusCode = 201
+      res.statusCode = 200
       res.setHeader("Content-Type", "application/json")
       res.end(JSON.stringify(job))
     } else {
