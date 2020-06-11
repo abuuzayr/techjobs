@@ -18,15 +18,17 @@ const createJob = async (args) => {
       name: `${args.data.company}`,
     },
   })
-  if (company && !company.imgUrl) {
-    await db.company.update({
-      where: {
-        name: `${args.data.company}`,
-      },
-      data: {
-        imgUrl: `${args.data.avatar}`,
-      },
-    })
+  if (company) {
+    if (!company.imgUrl) {
+      await db.company.update({
+        where: {
+          name: `${args.data.company}`,
+        },
+        data: {
+          imgUrl: `${args.data.avatar}`,
+        },
+      })
+    }
   } else {
     company = await db.company.create({
       data: {
