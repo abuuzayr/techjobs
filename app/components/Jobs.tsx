@@ -11,13 +11,15 @@ import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
-  const { args, scrollTo } = props
+  const { args } = props
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [totalJobsCount] = useQuery(getJobsCount, args)
   const [allTags] = useQuery(getTags)
   const [selectedTags, setSelectedTags] = useState([])
+  const [scrollTo, setScrollTo] = useState(props.scrollTo)
+  const [scrollBehavior, setScrollBehavior] = useState("smooth")
 
   // Update args to include
   const updatedArgs = args["where"]["AND"]
@@ -54,12 +56,14 @@ const Jobs = (props) => {
 
   // Set scroll to behavior
   useEffect(() => {
-    if (scrollTo)
+    if (scrollTo) {
+      const smooth = scrollBehavior === "smooth"
       window.scrollTo({
-        top: scrollTo - SCROLL_OFFSET,
-        behavior: "smooth",
+        top: scrollTo - (smooth ? SCROLL_OFFSET : 0),
+        behavior: smooth ? "smooth" : "auto",
       })
-  }, [])
+    }
+  }, [scrollTo])
 
   const tags = allTags.map((tag) => tag.name)
 
@@ -98,7 +102,15 @@ const Jobs = (props) => {
           </Level.Item>
         ) : (
           <Level.Item>
-            <Button outlined={true} color="info" onClick={() => setPage(page + 1)}>
+            <Button
+              outlined={true}
+              color="info"
+              onClick={() => {
+                setScrollTo(window.scrollY)
+                setScrollBehavior("auto")
+                setPage(page + 1)
+              }}
+            >
               <RiDownloadLine style={{ marginRight: 5 }} /> Load more jobs
             </Button>
           </Level.Item>
