@@ -19,12 +19,20 @@ const Tag = (props) => {
 
   const addTag = (e, tag) => {
     e.stopPropagation()
-    setSelectedTags((tags) => [...tags, tag])
+    setSelectedTags((tags) => {
+      const newTags = [...tags, tag]
+      localStorage.setItem("_tags", JSON.stringify(newTags))
+      return newTags
+    })
   }
 
   const removeTag = (e, tag) => {
     e.stopPropagation()
-    setSelectedTags((tags) => tags.filter((t) => t !== tag))
+    setSelectedTags((tags) => {
+      const newTags = tags.filter((t) => t !== tag)
+      localStorage.setItem("_tags", JSON.stringify(newTags))
+      return newTags
+    })
   }
 
   const tagProps = (fn) => ({

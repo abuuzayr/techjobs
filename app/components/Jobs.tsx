@@ -21,6 +21,12 @@ const Jobs = (props) => {
   const [scrollTo, setScrollTo] = useState(props.scrollTo)
   const [scrollBehavior, setScrollBehavior] = useState("smooth")
 
+  useEffect(() => {
+    if (localStorage && localStorage.getItem("_tags")) {
+      setSelectedTags(JSON.parse(localStorage.getItem("_tags")))
+    }
+  }, [])
+
   // Update args to include
   const updatedArgs = args["where"]["AND"]
     ? {

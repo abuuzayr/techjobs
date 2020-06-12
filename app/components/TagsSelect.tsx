@@ -25,7 +25,10 @@ const TagsSelect = (props) => {
             setSelectedTags((prevTags) => {
               if (!e) return []
               const newTags = e.map((t) => t.value)
-              if (prevTags !== newTags) return newTags
+              if (prevTags !== newTags) {
+                localStorage.setItem("_tags", JSON.stringify(newTags))
+                return newTags
+              }
             })
           }
           styles={{
