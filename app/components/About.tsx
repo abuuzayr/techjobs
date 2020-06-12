@@ -2,19 +2,19 @@ import { Link } from "blitz"
 import { Section, Container, Heading, Tile, Level } from "react-bulma-components"
 
 const About = (props) => {
-  const logos = [
-    "blitz.png",
-    "cf.svg",
-    "do.svg",
-    "docker.png",
-    "next.svg",
-    "nginx.png",
-    "node.svg",
-    "prisma.png",
-    "psql.png",
-    "react.svg",
-    "yarn.svg",
-  ]
+  const logos = {
+    "blitz.png": "https://blitzjs.com/",
+    "cloudflare.svg": "https://www.cloudflare.com/",
+    "digitalocean.svg": "https://www.digitalocean.com/",
+    "docker.png": "https://www.docker.com/",
+    "next.svg": "https://nextjs.org/",
+    "nginx.png": "https://www.nginx.com/",
+    "node.svg": "https://nodejs.org/en/",
+    "prisma.png": "https://www.prisma.io/",
+    "postgresql.png": "https://www.postgresql.org/",
+    "react.svg": "https://reactjs.org/",
+    "yarn.svg": "https://yarnpkg.com/",
+  }
   return (
     <Section>
       <Container>
@@ -62,18 +62,20 @@ const About = (props) => {
               <Tile renderAs="article" kind="child" notification color="light">
                 <Heading>Technologies used for this app</Heading>
                 <Heading subtitle style={{ marginBottom: 0, textAlign: "center" }}>
-                  {logos.map((path) => (
-                    <img
-                      src={`/${path}`}
-                      alt={path.split(".")[0]}
-                      style={{
-                        maxHeight: 100,
-                        maxWidth: 200,
-                        display: "inline-block",
-                        margin: 20,
-                        verticalAlign: "middle",
-                      }}
-                    />
+                  {Object.entries(logos).map(([path, url]) => (
+                    <a href={url} target="_blank">
+                      <img
+                        src={`/${path}`}
+                        alt={path.split(".")[0]}
+                        style={{
+                          maxHeight: 100,
+                          maxWidth: 200,
+                          display: "inline-block",
+                          margin: 20,
+                          verticalAlign: "middle",
+                        }}
+                      />
+                    </a>
                   ))}
                 </Heading>
                 <div className="content" />
