@@ -1,7 +1,20 @@
 import { Link } from "blitz"
 import { Section, Container, Heading, Tile, Level } from "react-bulma-components"
 
-const ContentNotFound = (props) => {
+const About = (props) => {
+  const logos = [
+    "blitz.png",
+    "cf.svg",
+    "do.svg",
+    "docker.png",
+    "next.svg",
+    "nginx.png",
+    "node.svg",
+    "prisma.png",
+    "psql.png",
+    "react.svg",
+    "yarn.svg",
+  ]
   return (
     <Section>
       <Container>
@@ -45,6 +58,27 @@ const ContentNotFound = (props) => {
                 <div className="content" />
               </Tile>
             </Tile>
+            <Tile kind="parent">
+              <Tile renderAs="article" kind="child" notification color="light">
+                <Heading>Technologies used for this app</Heading>
+                <Heading subtitle style={{ marginBottom: 0, textAlign: "center" }}>
+                  {logos.map((path) => (
+                    <img
+                      src={`/${path}`}
+                      alt={path.split(".")[0]}
+                      style={{
+                        maxHeight: 100,
+                        maxWidth: 200,
+                        display: "inline-block",
+                        margin: 20,
+                        verticalAlign: "middle",
+                      }}
+                    />
+                  ))}
+                </Heading>
+                <div className="content" />
+              </Tile>
+            </Tile>
           </Tile>
         </Tile>
       </Container>
@@ -52,4 +86,4 @@ const ContentNotFound = (props) => {
   )
 }
 
-export default ContentNotFound
+export default About
