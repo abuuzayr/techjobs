@@ -3,6 +3,9 @@ import { Suspense, useState, useRef, useEffect } from "react"
 import { useQuery, Link, useRouter } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch, FiDelete } from "react-icons/fi"
+import { GrStackOverflow } from "react-icons/gr"
+import { FcLike } from "react-icons/fc"
+import { AiFillLike, AiOutlineProfile } from "react-icons/ai"
 import styled from "styled-components"
 
 // Import components
@@ -18,6 +21,13 @@ const Logo = styled.img`
   filter: brightness(0) invert(1);
 `
 
+const IconWrapper = styled.div`
+  margin-right: 10px;
+  svg {
+    vertical-align: middle;
+  }
+`
+
 const JobsCount = (props) => {
   const [jobsCount] = useQuery(getJobsCount, props.args)
   return <span style={{ marginLeft: 5 }}>({jobsCount})</span>
@@ -31,16 +41,19 @@ const HeroComponent = (props) => {
     {
       id: "featured",
       title: "Featured",
+      icon: <AiFillLike />,
       query: { where: { type: { equals: "featured" }, searchStr: { contains: props.search.toLowerCase() } } },
     },
     {
       id: "all",
       title: "All Jobs",
+      icon: <GrStackOverflow />,
       query: { where: { searchStr: { contains: props.search.toLowerCase() } } },
     },
     {
       id: "liked",
       title: "Liked",
+      icon: <FcLike />,
       query: { where: { OR: props.liked.map((id) => ({ id })) } },
     },
   ]
@@ -152,6 +165,7 @@ const HeroComponent = (props) => {
                 <li key={li.id} className={props.tab === li.id ? "is-active" : ""}>
                   <Link href={`/?tab=${li.id}`} as={`/category/${li.id}`} scroll={false}>
                     <a style={{ color: props.tab === li.id ? "#333" : "" }}>
+                      <IconWrapper>{li.icon}</IconWrapper>
                       {li.title}{" "}
                       <Suspense fallback={<></>}>
                         <JobsCount args={li.query} />
@@ -162,7 +176,12 @@ const HeroComponent = (props) => {
               ))}
               <li className={props.tab === "resources" ? "is-active" : ""}>
                 <Link href={`/?tab=resources`} as={`/category/resources`} scroll={false}>
-                  <a style={{ color: props.tab === "resources" ? "#333" : "" }}>Resources</a>
+                  <a style={{ color: props.tab === "resources" ? "#333" : "" }}>
+                    <IconWrapper>
+                      <AiOutlineProfile />
+                    </IconWrapper>
+                    Resources
+                  </a>
                 </Link>
               </li>
             </ul>
