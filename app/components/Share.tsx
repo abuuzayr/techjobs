@@ -15,7 +15,7 @@ const ShareBubble = styled(Notification)`
   color: black;
   border: 1px solid rgba(10, 10, 10, 0.2);
   padding: 0.25rem 2rem 0.5rem 0.25rem;
-  width: max-content;
+  width: 210px;
   > a {
     > svg {
       height: 30px;
