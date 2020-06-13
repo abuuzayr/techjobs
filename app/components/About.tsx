@@ -14,6 +14,8 @@ const About = (props) => {
     "postgresql.png": "https://www.postgresql.org/",
     "react.svg": "https://reactjs.org/",
     "yarn.svg": "https://yarnpkg.com/",
+    "styledcomponents.png": "https://styled-components.com/",
+    "bulma.png": "https://bulma.io/",
   }
   return (
     <Section>
