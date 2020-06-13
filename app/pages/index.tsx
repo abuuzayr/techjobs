@@ -32,6 +32,17 @@ const Home = () => {
     if (tab) setTab(tab)
   }, [router])
 
+  // Initialize Fathom when the app loads
+  useEffect(() => {
+    let tracker = window.document.createElement("script")
+    let firstScript = window.document.getElementsByTagName("script")[0]
+    tracker.defer = true
+    tracker.setAttribute("site", process.env.NEXT_PUBLIC_FATHOM_SITE_ID)
+    tracker.setAttribute("spa", "auto")
+    tracker.src = "https://cdn.usefathom.com/script.js"
+    firstScript.parentNode.insertBefore(tracker, firstScript)
+  }, [])
+
   // arguments for database searching
   // we declare all so we won't have a problem with types
   let args = {
