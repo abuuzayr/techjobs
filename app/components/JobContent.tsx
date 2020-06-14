@@ -35,6 +35,7 @@ const Job = ({ id }) => {
 
   const { name, company, description, postedDate, url } = job
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
+  const showCompanyBlock = company.about || company.tagline || company.url || company.liUrl || company.gdUrl
 
   // Handle job age string
   let postedDays = 0
@@ -91,7 +92,7 @@ const Job = ({ id }) => {
         </MobileActions>
       </Level>
       <Columns>
-        <Columns.Column size={company.about ? 6 : 12}>
+        <Columns.Column size={showCompanyBlock ? 6 : 12}>
           <Heading size="6">About the job</Heading>
           <ContentBox>
             <JobMeta postedDays={postedDays} data={job} />
@@ -113,21 +114,50 @@ const Job = ({ id }) => {
             </a>
           </ContentBox>
         </Columns.Column>
-        {company.about && (
+        {showCompanyBlock && (
           <Columns.Column size={6}>
             <Heading size={6}>About the company</Heading>
             <ContentBox>
-              <Content>{company.about}</Content>
-              {company.url && (
-                <Content>
-                  <A href={company.url} rel="noopener noreferrer" target="_blank">
-                    <Heading size="6" as="h6">
-                      {company.url}
-                      <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
-                    </Heading>
-                  </A>
-                </Content>
+              {company.tagline && <Content>{company.tagline}</Content>}
+              {
+                <Heading size="6" as="h6">
+                  <Level>
+                    {company.companySize && (
+                      <Level.Item>
+                        <div className="tags has-addons">
+                          <span className="tag is-info">size</span>
+                          <span className="tag is-light">{company.companySize}</span>
+                        </div>
+                      </Level.Item>
+                    )}
+                    {company.foundedYear && (
+                      <Level.Item>
+                        <div className="tags has-addons">
+                          <span className="tag is-info">founded in</span>
+                          <span className="tag is-light">{company.foundedYear}</span>
+                        </div>
+                      </Level.Item>
+                    )}
+                    {company.url && (
+                      <Level.Item>
+                        <div className="tags">
+                          <span className="tag">
+                            <A href={company.url} rel="noopener noreferrer" target="_blank">
+                              {company.url}
+                              <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
+                            </A>
+                          </span>
+                        </div>
+                      </Level.Item>
+                    )}
+                  </Level>
+                </Heading>
+              }
+              {company.tagline !== company.about && (
+                <Content size="small" dangerouslySetInnerHTML={{ __html: company.about }}></Content>
               )}
+              {/* {company.companySize && <Content>{company.companySize}</Content>}
+              {company.foundedYear && <Content>Founded in: {company.foundedYear}</Content>} */}
               {company.gdUrl && company.gdRating && (
                 <Level>
                   <Level.Side align="left">
