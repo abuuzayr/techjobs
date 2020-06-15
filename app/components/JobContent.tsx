@@ -35,7 +35,12 @@ const Job = ({ id }) => {
 
   const { name, company, description, postedDate, url } = job
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
-  const showCompanyBlock = company.about || company.tagline || company.url || company.liUrl || company.gdUrl
+  const showCompanyBlock =
+    company.about ||
+    company.tagline ||
+    company.url ||
+    (company.liUrl && company.liEmpCount) ||
+    (company.gdUrl && company.gdRating)
 
   // Handle job age string
   let postedDays = 0
