@@ -4,34 +4,38 @@
 
 ### API
 
-| Site | API | Scrapable | 
-| jobscentral | Via Adzuna | NA |
-| jobstreet | Via Adzuna | NA |
-| jobsdb | Via Adzuna | NA |
-| STjobs | Via Adzuna | NA |
-| careers.gov.sg | Via Adzuna | NA |
-| monster | Via Adzuna | NA |
-| mycareersfuture.sg | Via Adzuna | NA |
+| Site               | API        | Scrapable |
+| ------------------ | ---------- | --------- |
+| jobscentral        | Via Adzuna | NA        |
+| jobstreet          | Via Adzuna | NA        |
+| jobsdb             | Via Adzuna | NA        |
+| STjobs             | Via Adzuna | NA        |
+| careers.gov.sg     | Via Adzuna | NA        |
+| monster            | Via Adzuna | NA        |
+| mycareersfuture.sg | Via Adzuna | NA        |
 
 ### Scrape
 
-| Site | API | Scrapable | 
-| techinasia jobs | No | Yes |
-| efinancialcareers | No | Yes |
-| stackoverflow | Yes, RSS | NA |
+| Site              | API      | Scrapable |
+| ----------------- | -------- | --------- |
+| techinasia jobs   | No       | Yes       |
+| efinancialcareers | No       | Yes       |
+| stackoverflow     | Yes, RSS | NA        |
 
 ### To check again
 
-| Site | API | Scrapable | 
-| linkedinjobs | Yes, need app ID | NA |
+| Site         | API              | Scrapable |
+| ------------ | ---------------- | --------- |
+| linkedinjobs | Yes, need app ID | NA        |
 
 ### Not using
 
-| Site | API | Scrapable | 
-| startupjobs.asia | No | Maybe later |
-| indeed | Yes, need publisher account, forget it | NA |
-| facebook jobs | No | No |
-| glassdoor jobs | Yes, need partner account | NA |
+| Site             | API                                    | Scrapable   |
+| ---------------- | -------------------------------------- | ----------- |
+| startupjobs.asia | No                                     | Maybe later |
+| indeed           | Yes, need publisher account, forget it | NA          |
+| facebook jobs    | No                                     | No          |
+| glassdoor jobs   | Yes, need partner account              | NA          |
 
 ## Getting Started
 
@@ -54,4 +58,6 @@ blitz db migrate
 blitz start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+TODO:
+
+1. add company data from google sheets
