@@ -13,8 +13,8 @@ export default function MyApp({ Component, pageProps }) {
       Fathom.trackPageview()
 
       // Record a pageview when route changes
-      Router.events.on("routeChangeComplete", () => {
-        Fathom.trackPageview()
+      Router.events.on("routeChangeComplete", (url) => {
+        Fathom.trackPageview({ url })
       })
     }
   }, [])
