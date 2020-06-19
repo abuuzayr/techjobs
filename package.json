@@ -41,8 +41,7 @@
     "react-select": "3.1.0",
     "react-social-sharing": "3.0.1",
     "styled-components": "5.1.0",
-    "typescript": "3.8.3",
-    "urlencoded-body-parser": "3.0.0"
+    "typescript": "3.8.3"
   },
   "NOTE": "Next.js dependency is currently only required for deploying to zeit",
   "devDependencies": {
