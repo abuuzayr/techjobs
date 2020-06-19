@@ -86,7 +86,9 @@ const Home = () => {
       {["featured", "all", "liked"].includes(tab) && <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />}
       {tab === "about" && <About />}
       {tab === "resources" && <Resources />}
-      {tab === "post" && <div dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_JOTFORM_IFRAME }} />}
+      {tab === "post" && (
+        <div dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME }} />
+      )}
       <Footer />
       {
         <RemoveScroll enabled={router?.query?.jobId ? !!router.query.jobId : false}>
