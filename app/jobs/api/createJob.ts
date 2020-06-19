@@ -55,7 +55,7 @@ const createJob = async (args) => {
   const tagObj = {}
   if (args.data.tags && args.data.tags.length) {
     // slugify all tags
-    tags = args.data.tags.map((t) => t.replace(/[_*~.()'"!:@,& ]{1,99}/g, "-").toLowerCase())
+    tags = args.data.tags.map((t) => t.replace(/[_*~()'"!:@,& ]{1,99}/g, "-").toLowerCase())
     existingTags = await db.tag.findMany({
       where: {
         OR: tags.map((tag) => ({
