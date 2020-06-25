@@ -30,6 +30,8 @@ const Home = () => {
   useEffect(() => {
     const tab = router?.query?.tab as string
     if (tab) setTab(tab)
+    const searchStr = router?.query?.search as string
+    if (searchStr) setSearch(searchStr)
   }, [router])
 
   // arguments for database searching
