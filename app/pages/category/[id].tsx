@@ -6,7 +6,16 @@ const Category = () => {
   if (router) {
     const { pathname, query } = router
     if (pathname === "/category/[id]" && query.id) {
-      router.push(`/?tab=${query.id}`, `/category/${query.id}`, { shallow: true })
+      const otherQuery = { ...query }
+      delete otherQuery.id
+      const otherQueryStr = Object.keys(otherQuery)
+        .reduce((str, key) => str + `${key}=${otherQuery[key]}&`, "")
+        .slice(0, -1)
+      router.push(
+        `/?tab=${query.id}&${otherQueryStr ? otherQueryStr : ""}`,
+        `/category/${query.id}?${otherQueryStr ? otherQueryStr : ""}`,
+        { shallow: true }
+      )
     }
     return (
       <Level.Item>
