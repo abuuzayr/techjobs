@@ -86,7 +86,11 @@ const HeroComponent = (props) => {
     if (e.key === "Enter" || bypass) {
       props.setSearch(search)
       if (!["all", "featured"].includes(props.tab))
-        router.push("/?tab=all", "/category/all", { shallow: true })
+        router.push(
+          `/?tab=all${search ? `&search=${search}` : ""}`,
+          `/category/all${search ? `?search=${search}` : ""}`,
+          { shallow: true }
+        )
     }
   }
 
@@ -111,7 +115,7 @@ const HeroComponent = (props) => {
                     type="text"
                     className="input is-large"
                     placeholder="e.g. python, javascript"
-                    value={search}
+                    value={search || props.search}
                     onChange={handleChange}
                     onKeyDown={keyDown}
                     onBlur={(e) => keyDown(e, true)}
