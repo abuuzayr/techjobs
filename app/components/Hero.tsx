@@ -80,18 +80,37 @@ const HeroComponent = (props) => {
   const clearSearch = () => {
     props.setSearch("")
     setSearch("")
+    pushRoute()
   }
 
   const keyDown = (e, bypass = false) => {
     if (e.key === "Enter" || bypass) {
       props.setSearch(search)
-      if (!["all", "featured"].includes(props.tab))
-        router.push(
-          `/?tab=all${search ? `&search=${search}` : ""}`,
-          `/category/all${search ? `?search=${search}` : ""}`,
-          { shallow: true }
-        )
+      pushRoute()
     }
+  }
+
+  const pushRoute = () => {
+    const query = { ...router.query }
+    delete query.tab
+    if (search) {
+      query["search"] = search
+    } else {
+      delete query.search
+    }
+    const queryStr = Object.keys(query)
+      .reduce((str, key) => {
+        if (key && query[key]) {
+          str += `${key}=${query[key]}&`
+        }
+        return str
+      }, "")
+      .slice(0, -1)
+    router.push(
+      `/?tab=${props.tab}&${queryStr ? queryStr : ""}`,
+      `/category/${props.tab}${queryStr ? `?${queryStr}` : ""}`,
+      { shallow: true }
+    )
   }
 
   return (
