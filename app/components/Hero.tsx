@@ -37,6 +37,7 @@ const HeroComponent = (props) => {
   const [search, setSearch] = useState(props.search)
   const heroRef = useRef(null)
   const router = useRouter()
+  const [queryStr, setQueryStr] = useState("")
   const tabs = [
     {
       id: "featured",
@@ -77,6 +78,27 @@ const HeroComponent = (props) => {
     setSearch(props.search)
   }, [props.search])
 
+  useEffect(() => {
+    if (!router) return
+    const query = { ...router.query }
+    delete query.tab
+    if (search) {
+      query["search"] = search
+    } else {
+      delete query.search
+    }
+    setQueryStr(
+      Object.keys(query)
+        .reduce((str, key) => {
+          if (key && query[key]) {
+            str += `${key}=${query[key]}&`
+          }
+          return str
+        }, "")
+        .slice(0, -1)
+    )
+  }, [router, search])
+
   const handleChange = (e) => {
     setSearch(e.currentTarget.value)
   }
@@ -84,7 +106,7 @@ const HeroComponent = (props) => {
   const clearSearch = () => {
     props.setSearch("")
     setSearch("")
-    pushRoute()
+    pushRoute(true)
   }
 
   const keyDown = (e, bypass = false) => {
@@ -94,25 +116,10 @@ const HeroComponent = (props) => {
     }
   }
 
-  const pushRoute = () => {
-    const query = { ...router.query }
-    delete query.tab
-    if (search) {
-      query["search"] = search
-    } else {
-      delete query.search
-    }
-    const queryStr = Object.keys(query)
-      .reduce((str, key) => {
-        if (key && query[key]) {
-          str += `${key}=${query[key]}&`
-        }
-        return str
-      }, "")
-      .slice(0, -1)
+  const pushRoute = (clear = false) => {
     router.push(
-      `/?tab=${props.tab}&${queryStr ? queryStr : ""}`,
-      `/category/${props.tab}${queryStr ? `?${queryStr}` : ""}`,
+      `/?tab=${props.tab}&${!clear && queryStr ? queryStr : ""}`,
+      `/category/${props.tab}${!clear && queryStr ? `?${queryStr}` : ""}`,
       { shallow: true }
     )
   }
@@ -192,7 +199,11 @@ const HeroComponent = (props) => {
             <ul>
               {tabs.map((li) => (
                 <li key={li.id} className={props.tab === li.id ? "is-active" : ""}>
-                  <Link href={`/?tab=${li.id}`} as={`/category/${li.id}`} scroll={false}>
+                  <Link
+                    href={`/?tab=${li.id}${queryStr ? `&${queryStr}` : ""}`}
+                    as={`/category/${li.id}${queryStr ? `?${queryStr}` : ""}`}
+                    scroll={false}
+                  >
                     <a style={{ color: props.tab === li.id ? "#333" : "" }}>
                       <IconWrapper>{li.icon}</IconWrapper>
                       {li.title}{" "}
