@@ -74,7 +74,7 @@ const Jobs = (props) => {
   const tags = allTags.map((tag) => tag.name)
 
   return (
-    <Container style={{ padding: "2rem" }}>
+    <Container style={{ padding: "2rem 2rem 0" }}>
       <TagsSelect {...{ tags, selectedTags, setSelectedTags }} />
       {selectedTags.length > 0 && (
         <Level>
