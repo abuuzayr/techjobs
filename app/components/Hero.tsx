@@ -34,7 +34,7 @@ const JobsCount = (props) => {
 }
 
 const HeroComponent = (props) => {
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState(props.search)
   const heroRef = useRef(null)
   const router = useRouter()
   const tabs = [
@@ -72,6 +72,10 @@ const HeroComponent = (props) => {
       props.setScrollTo(heroRef.current.closest(".hero").offsetHeight)
     }
   }, [heroRef])
+
+  useEffect(() => {
+    setSearch(props.search)
+  }, [props.search])
 
   const handleChange = (e) => {
     setSearch(e.currentTarget.value)
@@ -134,7 +138,7 @@ const HeroComponent = (props) => {
                     type="text"
                     className="input is-large"
                     placeholder="e.g. python, javascript"
-                    value={search || props.search}
+                    value={search}
                     onChange={handleChange}
                     onKeyDown={keyDown}
                     onBlur={(e) => keyDown(e, true)}
