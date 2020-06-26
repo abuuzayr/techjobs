@@ -23,7 +23,10 @@ const TagsSelect = (props) => {
           value={selectedTags.map((t) => ({ value: t, label: t }))}
           onChange={(e) =>
             setSelectedTags((prevTags) => {
-              if (!e) return []
+              if (!e) {
+                localStorage.setItem("_tags", JSON.stringify([]))
+                return []
+              }
               const newTags = e.map((t) => t.value)
               if (prevTags !== newTags) {
                 localStorage.setItem("_tags", JSON.stringify(newTags))
