@@ -146,7 +146,9 @@ const HeroComponent = (props) => {
                     className="icon is-right"
                     style={{ pointerEvents: "initial" }}
                     onClick={clearSearch}
-                    onKeyDown={clearSearch}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") clearSearch()
+                    }}
                     role="button"
                     tabIndex={0}
                   >
