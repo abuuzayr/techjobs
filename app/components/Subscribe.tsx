@@ -59,7 +59,6 @@ const Subscribe = () => {
   return (
     <Form className="email-octopus-form-wrapper">
       <Head>
-        <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/1.5/recaptcha.js"></script>
         <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/1.5/formEmbed.js"></script>
       </Head>
       <Level>
