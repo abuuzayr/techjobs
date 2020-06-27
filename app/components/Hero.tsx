@@ -50,7 +50,20 @@ const HeroComponent = (props) => {
       id: "all",
       title: "All Jobs",
       icon: <GrStackOverflow />,
-      query: { where: { searchStr: { contains: props.search.toLowerCase() } } },
+      query: {
+        where: {
+          AND: [
+            {
+              searchStr: { contains: props.search.toLowerCase() },
+            },
+            {
+              postedDate: {
+                gte: new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000),
+              },
+            },
+          ],
+        },
+      },
     },
     {
       id: "liked",
