@@ -183,7 +183,7 @@ const HeroComponent = (props) => {
             <Level>
               {jobsiteLogos.map((path, index) => (
                 <Level.Item key={path} className={index > 4 ? "is-hidden-touch" : ""}>
-                  <Logo src={path} key={path} />
+                  <Logo src={path} key={path} alt={path.slice(1).split(".")[0].split("-")[0] + " logo"} />
                 </Level.Item>
               ))}
             </Level>
