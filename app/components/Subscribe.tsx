@@ -60,7 +60,6 @@ const Subscribe = () => {
     <Form className="email-octopus-form-wrapper">
       <Head>
         <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/1.5/formEmbed.js" defer></script>
-        <script src="https://emailoctopus.com/bundles/emailoctopuslist/js/1.5/recaptcha.js" defer></script>
       </Head>
       <Heading size={4} renderAs="h4">
         <RiMailAddLine /> Get new jobs in your inbox weekly
