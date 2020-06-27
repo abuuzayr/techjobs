@@ -21,7 +21,7 @@ const Foot = styled.footer`
 
 const Footer = () => {
   return (
-    <>
+    <div>
       <Subscribe />
       <Foot>
         <IconContext.Provider value={{ style: { margin: "0 5px", verticalAlign: "middle" } }}>
@@ -50,7 +50,7 @@ const Footer = () => {
           </Container>
         </IconContext.Provider>
       </Foot>
-    </>
+    </div>
   )
 }
 
