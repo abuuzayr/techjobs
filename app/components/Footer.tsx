@@ -21,36 +21,34 @@ const Foot = styled.footer`
 
 const Footer = () => {
   return (
-    <div>
+    <Foot>
       <Subscribe />
-      <Foot>
-        <IconContext.Provider value={{ style: { margin: "0 5px", verticalAlign: "middle" } }}>
-          <Container>
-            <Level>
-              <Level.Side align="left" className="level-item">
-                <Link href="/?tab=about" as="/category/about" scroll={false}>
-                  <a className="heading">About</a>
-                </Link>
-              </Level.Side>
-              <Level.Item>
-                <p className="">
-                  Built in <FiSun /> with{" "}
-                  <a href="https://github.com/blitz-js/blitz/" rel="noopener noreferrer" target="_blank">
-                    <FiZap />
-                    Blitz
-                  </a>
-                </p>
-              </Level.Item>
-              <Level.Side align="right" className="level-item">
-                <a href="https://www.github.com/abuuzayr" rel="noopener noreferrer" target="_blank">
-                  <FiGithub />
+      <IconContext.Provider value={{ style: { margin: "0 5px", verticalAlign: "middle" } }}>
+        <Container>
+          <Level>
+            <Level.Side align="left" className="level-item">
+              <Link href="/?tab=about" as="/category/about" scroll={false}>
+                <a className="heading">About</a>
+              </Link>
+            </Level.Side>
+            <Level.Item>
+              <p className="">
+                Built in <FiSun /> with{" "}
+                <a href="https://github.com/blitz-js/blitz/" rel="noopener noreferrer" target="_blank">
+                  <FiZap />
+                  Blitz
                 </a>
-              </Level.Side>
-            </Level>
-          </Container>
-        </IconContext.Provider>
-      </Foot>
-    </div>
+              </p>
+            </Level.Item>
+            <Level.Side align="right" className="level-item">
+              <a href="https://www.github.com/abuuzayr" rel="noopener noreferrer" target="_blank">
+                <FiGithub />
+              </a>
+            </Level.Side>
+          </Level>
+        </Container>
+      </IconContext.Provider>
+    </Foot>
   )
 }
 
