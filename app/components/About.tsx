@@ -87,7 +87,6 @@ const About = (props) => {
           </Tile>
         </Tile>
       </Container>
-      <Subscribe />
     </Section>
   )
 }
