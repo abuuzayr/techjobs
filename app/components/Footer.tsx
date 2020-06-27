@@ -6,7 +6,7 @@ import { IconContext } from "react-icons"
 import Subscribe from "./Subscribe"
 
 const Foot = styled.footer`
-  .footer {
+  .foot {
     border-top: 1px solid #000;
     padding: 30px;
     margin: 50px 50px 0;
@@ -25,7 +25,7 @@ const Footer = () => {
   return (
     <Foot>
       <Subscribe />
-      <div className="footer">
+      <div className="foot">
         <IconContext.Provider value={{ style: { margin: "0 5px", verticalAlign: "middle" } }}>
           <Container>
             <Level>
