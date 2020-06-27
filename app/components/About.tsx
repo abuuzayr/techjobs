@@ -1,6 +1,5 @@
 import { Link } from "blitz"
 import { Section, Container, Heading, Tile, Level } from "react-bulma-components"
-import Subscribe from "./Subscribe"
 
 const About = (props) => {
   const logos = {
