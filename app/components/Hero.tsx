@@ -38,6 +38,7 @@ const HeroComponent = (props) => {
   const heroRef = useRef(null)
   const router = useRouter()
   const [queryStr, setQueryStr] = useState("")
+  const [jobsCount, setJobsCount] = useState(0)
   const tabs = [
     {
       id: "featured",
@@ -77,6 +78,14 @@ const HeroComponent = (props) => {
   useEffect(() => {
     setSearch(props.search)
   }, [props.search])
+
+  useEffect(() => {
+    async function getCount() {
+      const count = await getJobsCount(tabs.find((t) => t.id === "all")["query"])
+      setJobsCount(count)
+    }
+    getCount()
+  }, [])
 
   useEffect(() => {
     if (!router) return
@@ -144,7 +153,9 @@ const HeroComponent = (props) => {
                   <input
                     type="text"
                     className="input is-large"
-                    placeholder="e.g. python, javascript"
+                    placeholder={
+                      jobsCount ? `Search from ${jobsCount} recently posted jobs` : "e.g. python, javascript"
+                    }
                     value={search}
                     onChange={handleChange}
                     onKeyDown={keyDown}
