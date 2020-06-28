@@ -166,9 +166,7 @@ const HeroComponent = (props) => {
                   <input
                     type="text"
                     className="input is-large"
-                    placeholder={
-                      jobsCount ? `Search from ${jobsCount} recently posted jobs` : "e.g. python, javascript"
-                    }
+                    placeholder={jobsCount ? `Search ${jobsCount} recent jobs` : "e.g. python, javascript"}
                     value={search}
                     onChange={handleChange}
                     onKeyDown={keyDown}
