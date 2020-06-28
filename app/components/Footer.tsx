@@ -16,6 +16,13 @@ const Foot = styled.footer`
     @media screen and (max-width: 768px) {
       .level-item {
         justify-content: center;
+        align-items: end;
+      }
+      .level-left .level-item {
+        margin-bottom: 0;
+        + .level-item {
+          margin-left: 10px;
+        }
       }
     }
   }
