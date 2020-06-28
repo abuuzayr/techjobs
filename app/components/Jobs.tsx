@@ -28,36 +28,46 @@ const Jobs = (props) => {
   }, [])
 
   // Update args to include
-  const updatedArgs = args["where"]["AND"]
-    ? {
-        ...args,
-        where: {
-          ...args.where,
-          AND: [
-            ...args.where.AND,
-            ...[
-              selectedTags.length
-                ? {
-                    AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
-                  }
-                : [],
-            ],
-          ],
-        },
-      }
-    : {
-        ...args,
-        where: {
-          ...args.where,
-          AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
-        },
-      }
+  let updatedArgs = { ...args }
+  if (args["where"]["AND"]) {
+    if (!args["where"]["AND"].find((o) => o.hasOwnProperty("type"))) {
+      args["where"]["AND"].push({ type: "aggregated" })
+    }
+  } else {
+    args["where"]["AND"] = [{ type: "aggregated" }]
+  }
+  if (selectedTags.length) {
+    updatedArgs = {
+      ...args,
+      where: {
+        ...args.where,
+        AND: [
+          ...args.where.AND,
+          {
+            AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+          },
+        ],
+      },
+    }
+  }
 
   const [jobs] = useQuery(
     getJobs,
     { ...updatedArgs, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
     { paginated: true }
   )
+
+  // get featured jobs
+  let featuredArgs = JSON.parse(JSON.stringify(updatedArgs))
+  featuredArgs["where"]["AND"].find((o) => o.hasOwnProperty("type"))["type"] = "featured"
+  if (!featuredArgs["where"]["AND"].find((o) => o.hasOwnProperty("postedDate"))) {
+    featuredArgs["where"]["AND"].push({
+      postedDate: {
+        gte: new Date(new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000).toDateString()),
+      },
+    })
+  }
+  const [featuredJobs] = useQuery(getJobs, featuredArgs)
   const [jobsCount] = useQuery(getJobsCount, updatedArgs)
 
   // Set scroll to behavior
@@ -92,19 +102,12 @@ const Jobs = (props) => {
           </Level.Side>
         </Level>
       )}
-      {jobs
-        .sort((a, b) => {
-          if (a.type === "featured" && b.type !== "featured") {
-            return -1
-          } else if (a.type !== "featured" && b.type === "featured") {
-            return 1
-          } else {
-            return 0
-          }
-        })
-        .map((job) => (
-          <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-        ))}
+      {featuredJobs.map((job) => (
+        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
+      ))}
+      {jobs.map((job) => (
+        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
+      ))}
       <Level>
         {jobs.length === jobsCount ? (
           <Level.Item>
