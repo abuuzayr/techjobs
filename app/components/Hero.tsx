@@ -28,17 +28,13 @@ const IconWrapper = styled.div`
   }
 `
 
-const JobsCount = (props) => {
-  const [jobsCount] = useQuery(getJobsCount, props.args)
-  return <span style={{ marginLeft: 5 }}>({jobsCount})</span>
-}
-
 const HeroComponent = (props) => {
   const [search, setSearch] = useState(props.search)
   const heroRef = useRef(null)
   const router = useRouter()
   const [queryStr, setQueryStr] = useState("")
-  const [jobsCount, setJobsCount] = useState(0)
+  const [jobsCounts, setJobsCounts] = useState({})
+  const [allJobsCount, setAllJobsCount] = useState(0)
   const tabs = [
     {
       id: "featured",
@@ -93,12 +89,33 @@ const HeroComponent = (props) => {
   }, [props.search])
 
   useEffect(() => {
-    async function getCount() {
-      const count = await getJobsCount(tabs.find((t) => t.id === "all")["query"])
-      setJobsCount(count)
+    async function getAllJobsCount() {
+      const count = await getJobsCount({
+        where: {
+          postedDate: {
+            gte: new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000),
+          },
+        },
+      })
+      setAllJobsCount(count)
     }
-    getCount()
-  }, [])
+    getAllJobsCount()
+  }, [props.search])
+
+  useEffect(() => {
+    async function getCounts() {
+      await Promise.all(
+        tabs.map(async (tab) => {
+          const count = await getJobsCount(tab.query)
+          setJobsCounts((p) => ({
+            ...p,
+            [tab.id]: count,
+          }))
+        })
+      )
+    }
+    getCounts()
+  }, [props.search])
 
   useEffect(() => {
     if (!router) return
@@ -166,7 +183,9 @@ const HeroComponent = (props) => {
                   <input
                     type="text"
                     className="input is-large"
-                    placeholder={jobsCount ? `Search ${jobsCount} recent jobs` : "e.g. python, javascript"}
+                    placeholder={
+                      allJobsCount ? `Search ${allJobsCount} recent jobs` : "e.g. python, javascript"
+                    }
                     value={search}
                     onChange={handleChange}
                     onKeyDown={keyDown}
@@ -228,10 +247,7 @@ const HeroComponent = (props) => {
                   >
                     <a style={{ color: props.tab === li.id ? "#333" : "" }}>
                       <IconWrapper>{li.icon}</IconWrapper>
-                      {li.title}{" "}
-                      <Suspense fallback={<></>}>
-                        <JobsCount args={li.query} />
-                      </Suspense>
+                      {li.title} {jobsCounts.hasOwnProperty(li.id) ? `(${jobsCounts[li.id]})` : ""}
                     </a>
                   </Link>
                 </li>
