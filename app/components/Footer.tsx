@@ -30,9 +30,16 @@ const Footer = () => {
           <Container>
             <Level>
               <Level.Side align="left" className="level-item">
-                <Link href="/?tab=about" as="/category/about" scroll={false}>
-                  <a className="heading">About</a>
-                </Link>
+                <Level.Item>
+                  <Link href="/?tab=about" as="/category/about" scroll={false}>
+                    <a className="heading">About</a>
+                  </Link>
+                </Level.Item>
+                <Level.Item>
+                  <Link href="/stats">
+                    <a className="heading">Stats</a>
+                  </Link>
+                </Level.Item>
               </Level.Side>
               <Level.Item>
                 <p className="">
