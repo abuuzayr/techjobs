@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from "react"
-import { useQuery, Link } from "blitz"
+import { useQuery, Link, Head } from "blitz"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import getJob from "../jobs/queries/getJob"
 import { FiExternalLink, FiArrowRight, FiFrown } from "react-icons/fi"
@@ -51,6 +51,11 @@ const Job = ({ id }) => {
 
   return (
     <>
+      <Head>
+        <title>
+          {name} @ {company && company.name} | techjobs.sg
+        </title>
+      </Head>
       <div style={{ textAlign: "right" }} className="is-hidden-tablet">
         <Link href="/" as="/" scroll={false}>
           <a>
