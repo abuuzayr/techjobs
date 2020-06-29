@@ -13,6 +13,7 @@ const LOGO_PATHS = {
   "Zoho Recruit": "/ZohoRecruit-logo.png",
   eQuest: "/eQuest-logo.png",
   Hirebridge: "/Hirebridge-logo.png",
+  myCareersFuture: "/myCareersFuture-logo.png",
 }
 
 const Source = styled.img`
