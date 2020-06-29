@@ -36,7 +36,7 @@ const createJob = async (args) => {
     company = await db.company.create({
       data: {
         name: `${args.data.company}`,
-        imgUrl: `${args.data.avatar}`,
+        imgUrl: `${args.data.avatar || ""}`,
       },
     })
   }
