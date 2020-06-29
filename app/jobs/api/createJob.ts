@@ -1,4 +1,5 @@
 import db, { Job } from "db"
+import { v4 } from "uuid"
 
 const createJob = async (args) => {
   if (!args.data) return false
@@ -11,6 +12,8 @@ const createJob = async (args) => {
         aggId: `${args.data.aggId}`,
       },
     })
+  } else {
+    args.data["aggId"] = v4()
   }
   // Find or create a company to connect job with
   let company = await db.company.findOne({
