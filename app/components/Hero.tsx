@@ -1,6 +1,6 @@
 // Imports from libraries
-import { Suspense, useState, useRef, useEffect } from "react"
-import { useQuery, Link, useRouter } from "blitz"
+import { useState, useRef, useEffect } from "react"
+import { Link, useRouter } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
 import { FiSearch, FiDelete } from "react-icons/fi"
 import { GrStackOverflow } from "react-icons/gr"
