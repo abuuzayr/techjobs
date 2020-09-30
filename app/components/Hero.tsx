@@ -29,6 +29,7 @@ const IconWrapper = styled.div`
 `
 
 const HeroComponent = (props) => {
+  const FRESH_THRESHOLD = 31 * 24 * 60 * 60 * 1000
   const [search, setSearch] = useState(props.search)
   const heroRef = useRef(null)
   const router = useRouter()
@@ -49,7 +50,7 @@ const HeroComponent = (props) => {
             contains: props.search.toLowerCase(),
           },
           postedDate: {
-            gte: new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000),
+            gte: new Date(new Date().getTime() - FRESH_THRESHOLD),
           },
         },
       },
@@ -66,7 +67,7 @@ const HeroComponent = (props) => {
             },
             {
               postedDate: {
-                gte: new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000),
+                gte: new Date(new Date().getTime() - FRESH_THRESHOLD),
               },
             },
           ],
@@ -105,7 +106,7 @@ const HeroComponent = (props) => {
       const count = await getJobsCount({
         where: {
           postedDate: {
-            gte: new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000),
+            gte: new Date(new Date().getTime() - FRESH_THRESHOLD),
           },
         },
       })
