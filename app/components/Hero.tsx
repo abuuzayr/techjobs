@@ -40,7 +40,19 @@ const HeroComponent = (props) => {
       id: "featured",
       title: "Featured",
       icon: <AiFillLike />,
-      query: { where: { type: { equals: "featured" }, searchStr: { contains: props.search.toLowerCase() } } },
+      query: {
+        where: {
+          type: {
+            equals: "featured",
+          },
+          searchStr: {
+            contains: props.search.toLowerCase(),
+          },
+          postedDate: {
+            gte: new Date(new Date().getTime() - 31 * 24 * 60 * 60 * 1000),
+          },
+        },
+      },
     },
     {
       id: "all",
