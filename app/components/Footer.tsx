@@ -58,7 +58,7 @@ const Footer = () => {
                 </p>
               </Level.Item>
               <Level.Side align="right" className="level-item">
-                <a href="https://www.github.com/abuuzayr" rel="noopener noreferrer" target="_blank">
+                <a href="https://www.github.com/abuuzayr/techjobs" rel="noopener noreferrer" target="_blank">
                   <FiGithub />
                 </a>
               </Level.Side>
