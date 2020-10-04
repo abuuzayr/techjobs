@@ -58,71 +58,83 @@ We're happy to help. Post a job <a href="https://techjobs.sg/category/post" targ
 
 ## Stack
 
-<p style="display: inline-block;">    
-    <a href="https://blitzjs.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/blitz.png" alt="blitz" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://www.cloudflare.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/cloudflare.svg" alt="cloudflare" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://www.digitalocean.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/digitalocean.svg" alt="digitalocean" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://www.docker.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/docker.png" alt="docker" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://nextjs.org/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/next.svg" alt="next" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://www.nginx.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/nginx.png" alt="nginx" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://nodejs.org/en/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/node.svg" alt="node" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://www.prisma.io/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/prisma.png" alt="prisma" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://www.postgresql.org/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/postgresql.png" alt="postgresql" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://reactjs.org/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/react.svg" alt="react" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://yarnpkg.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/yarn.svg" alt="yarn" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://styled-components.com/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/styledcomponents.png" alt="styledcomponents" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
-<p style="display: inline-block;      
-    <a href="https://bulma.io/" target="_blank">
-        <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/bulma.png" alt="bulma" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
-    </a>
-</p>
+<table width="100%">
+    <tr>
+        <td align="center">
+            <a href="https://blitzjs.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/blitz.png" alt="blitz" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://www.cloudflare.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/cloudflare.svg" alt="cloudflare" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://www.digitalocean.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/digitalocean.svg" alt="digitalocean" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://www.docker.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/docker.png" alt="docker" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://nextjs.org/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/next.svg" alt="next" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://www.nginx.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/nginx.png" alt="nginx" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://nodejs.org/en/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/node.svg" alt="node" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://www.prisma.io/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/prisma.png" alt="prisma" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://www.postgresql.org/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/postgresql.png" alt="postgresql" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://reactjs.org/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/react.svg" alt="react" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://yarnpkg.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/yarn.svg" alt="yarn" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://styled-components.com/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/styledcomponents.png" alt="styledcomponents" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://bulma.io/" target="_blank">
+                <img height="50" src="https://github.com/abuuzayr/techjobs/blob/master/public/bulma.png" alt="bulma" style="max-height: 100px; max-width: 200px; display: inline-block; margin: 20px; vertical-align: middle;">
+            </a>
+        </td>
+    </tr>
+</table>
 
 ## Contributing
 
