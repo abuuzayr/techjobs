@@ -43,9 +43,9 @@ const Footer = () => {
                   </Link>
                 </Level.Item>
                 <Level.Item>
-                  <Link href="/stats">
-                    <a className="heading">Stats</a>
-                  </Link>
+                  <a href="/stats" rel="noopener noreferrer" target="_blank" className="heading">
+                    Stats
+                  </a>
                 </Level.Item>
               </Level.Side>
               <Level.Item>
