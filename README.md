@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-
+    <img alt="" src="https://imgur.com/898uoY6.png">
 </p>
 
 ### Who we are
