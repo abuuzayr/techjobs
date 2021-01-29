@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { Head, useRouter } from "blitz"
+import { Head, useRouter, BlitzPage } from "blitz"
+import Layout from "app/layouts/Layout"
 import Modal from "react-modal"
 import { RemoveScroll } from "react-remove-scroll"
 import Hero from "../components/Hero"
@@ -13,7 +14,7 @@ import Resources from "../components/Resources"
 
 Modal.setAppElement("#__next")
 
-const Home = () => {
+const Home: BlitzPage = () => {
   const router = useRouter()
   const [tab, setTab] = useState((router?.query?.tab as string) || "all")
   const [search, setSearch] = useState("")
@@ -55,34 +56,6 @@ const Home = () => {
   if (tab !== "liked") delete args["where"]["OR"]
   return (
     <LikedContext.Provider value={{ liked, setLiked }}>
-      <Head>
-        <title>Find a Tech Job in Singapore | techjobs.sg</title>
-        <link rel="icon" href="/favicon.png" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          name="description"
-          content="Search for your dream tech job on techjobs.sg, where our jobs are sourced from the top local job listing platforms in Singapore."
-        ></meta>
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://techjobs.sg/" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Find a Tech Job in Singapore | techjobs.sg" />
-        <meta
-          property="og:description"
-          content="Search for your dream tech job on techjobs.sg, where our jobs are sourced from the top local job listing platforms in Singapore."
-        />
-        <meta property="og:image" content="https://techjobs.sg/favicon.png" />
-        <meta property="og:url" content="https://techjobs.sg/" />
-        <meta property="og:site_name" content="techjobs.sg" />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:title" content="Find a Tech Job in Singapore | techjobs.sg" />
-        <meta
-          property="twitter:description"
-          content="Search for your dream tech job on techjobs.sg, where our jobs are sourced from the top local job listing platforms in Singapore."
-        />
-        <meta property="twitter:image" content="https://techjobs.sg/favicon.png" />
-        <meta property="twitter:site" content="https://techjobs.sg/" />
-      </Head>
       <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
       {!allowedTabs.includes(tab) && <ContentNotFound />}
       {["featured", "all", "liked"].includes(tab) && <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />}
@@ -151,5 +124,7 @@ const Home = () => {
     </LikedContext.Provider>
   )
 }
+
+Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
 
 export default Home

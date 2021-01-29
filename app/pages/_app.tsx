@@ -1,22 +1,29 @@
-import { useEffect } from "react"
-import { useRouter } from "blitz"
-import * as Fathom from "fathom-client"
+import { AppProps, ErrorComponent, useRouter, AuthenticationError, AuthorizationError } from "blitz"
+import { ErrorBoundary, FallbackProps } from "react-error-boundary"
+import { queryCache } from "react-query"
 import "react-bulma-components/dist/react-bulma-components.min.css"
 
-export default function MyApp({ Component, pageProps }) {
-  const Router = useRouter()
+export default function App({ Component, pageProps }: AppProps) {
+  const getLayout = Component.getLayout || ((page) => page)
+  const router = useRouter()
 
-  // Initialize Fathom when the app loads
-  useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      Fathom.load(process.env.NEXT_PUBLIC_FATHOM_SITE_ID)
-      Fathom.trackPageview()
+  return (
+    <ErrorBoundary
+      FallbackComponent={RootErrorFallback}
+      resetKeys={[router.asPath]}
+      onReset={() => {
+        // This ensures the Blitz useQuery hooks will automatically refetch
+        // data any time you reset the error boundary
+        queryCache.resetErrorBoundaries()
+      }}
+    >
+      {getLayout(<Component {...pageProps} />)}
+    </ErrorBoundary>
+  )
+}
 
-      // Record a pageview when route changes
-      Router.events.on("routeChangeComplete", (url) => {
-        Fathom.trackPageview({ url })
-      })
-    }
-  }, [])
-  return <Component {...pageProps} />
+function RootErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+  return (
+    <ErrorComponent statusCode={(error as any)?.statusCode || 400} title={error?.message || error?.name} />
+  )
 }

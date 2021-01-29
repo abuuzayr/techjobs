@@ -1,4 +1,4 @@
-import { Document, Html, DocumentHead, Main, NextScript, DocumentContext } from "@blitzjs/core"
+import { Document, Html, DocumentHead, Main, BlitzScript } from "blitz"
 
 // Import styled components ServerStyleSheet
 import { ServerStyleSheet } from "styled-components"
@@ -35,7 +35,7 @@ class MyDocument extends Document {
         <DocumentHead>{this.props.styles}</DocumentHead>
         <body>
           <Main />
-          <NextScript />
+          <BlitzScript />
           <script
             defer
             src="https://static.cloudflareinsights.com/beacon.min.js"
