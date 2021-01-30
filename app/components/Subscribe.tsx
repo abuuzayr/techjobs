@@ -87,7 +87,7 @@ const Subscribe = () => {
             type="text"
             name="hpd94d7bfc-b4f4-11ea-a3d0-06b4694bee2a"
             tabIndex={-1}
-            autoComplete="nope"
+            autoComplete="false"
           />
         </div>
 
