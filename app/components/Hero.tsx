@@ -1,7 +1,7 @@
 // Imports from libraries
-import { useState, useRef, useEffect } from "react"
-import { Link, useRouter } from "blitz"
-import { Container, Hero, Tabs, Columns, Level, Heading } from "react-bulma-components"
+import { useState, useRef, useEffect, Suspense, useMemo } from "react"
+import { Link, useRouter, useQuery } from "blitz"
+import { Container, Hero, Tabs, Columns, Level, Heading, Loader } from "react-bulma-components"
 import { FiSearch, FiDelete } from "react-icons/fi"
 import { GrStackOverflow } from "react-icons/gr"
 import { FcLike } from "react-icons/fc"
@@ -29,13 +29,15 @@ const IconWrapper = styled.div`
 `
 
 const HeroComponent = (props) => {
-  const FRESH_THRESHOLD = 31 * 24 * 60 * 60 * 1000
-  const [search, setSearch] = useState(props.search)
+  const FRESH_THRESHOLD = useMemo(() => {
+    let d = new Date()
+    d = new Date(d.toLocaleDateString())
+    d.setMonth(d.getMonth() - 1)
+    return d
+  }, [])
   const heroRef = useRef(null)
   const router = useRouter()
   const [queryStr, setQueryStr] = useState("")
-  const [jobsCounts, setJobsCounts] = useState({})
-  const [allJobsCount, setAllJobsCount] = useState(0)
   const tabs = [
     {
       id: "featured",
@@ -50,7 +52,7 @@ const HeroComponent = (props) => {
             contains: props.search.toLowerCase(),
           },
           postedDate: {
-            gte: new Date(new Date().getTime() - FRESH_THRESHOLD),
+            gte: FRESH_THRESHOLD,
           },
         },
       },
@@ -67,7 +69,7 @@ const HeroComponent = (props) => {
             },
             {
               postedDate: {
-                gte: new Date(new Date().getTime() - FRESH_THRESHOLD),
+                gte: FRESH_THRESHOLD,
               },
             },
           ],
@@ -99,82 +101,98 @@ const HeroComponent = (props) => {
   }, [heroRef])
 
   useEffect(() => {
-    setSearch(props.search)
-  }, [props.search])
+    setQueryStr(getQueryStr(props.search))
+  }, [router, props.search])
 
-  useEffect(() => {
-    async function getAllJobsCount() {
-      const count = await getJobsCount({
-        where: {
-          postedDate: {
-            gte: new Date(new Date().getTime() - FRESH_THRESHOLD),
-          },
-        },
-      })
-      setAllJobsCount(count)
-    }
-    getAllJobsCount()
-  }, [props.search])
-
-  useEffect(() => {
-    async function getCounts() {
-      await Promise.all(
-        tabs.map(async (tab) => {
-          const count = await getJobsCount(tab.query)
-          setJobsCounts((p) => ({
-            ...p,
-            [tab.id]: count,
-          }))
-        })
-      )
-    }
-    getCounts()
-  }, [props.search])
-
-  useEffect(() => {
-    if (!router) return
+  const getQueryStr = (searchStr) => {
+    if (!router) return ""
     const query = { ...router.query }
     delete query.tab
-    if (search) {
-      query["search"] = search
+    if (searchStr) {
+      query["search"] = searchStr
     } else {
       delete query.search
     }
-    setQueryStr(
-      Object.keys(query)
-        .reduce((str, key) => {
-          if (key && query[key]) {
-            str += `${key}=${query[key]}&`
-          }
-          return str
-        }, "")
-        .slice(0, -1)
-    )
-  }, [router, search])
-
-  const handleChange = (e) => {
-    setSearch(e.currentTarget.value)
+    return Object.keys(query)
+      .reduce((str, key) => {
+        if (key && query[key]) {
+          str += `${key}=${query[key]}&`
+        }
+        return str
+      }, "")
+      .slice(0, -1)
   }
 
   const clearSearch = () => {
     props.setSearch("")
-    setSearch("")
     pushRoute(true)
   }
 
-  const keyDown = (e, bypass = false) => {
-    if (e.key === "Enter" || bypass) {
-      props.setSearch(search)
-      pushRoute()
-    }
-  }
-
-  const pushRoute = (clear = false) => {
+  const pushRoute = (clear = false, search = "") => {
+    const query = getQueryStr(search)
     router.push(
-      `/?tab=${props.tab}&${!clear && queryStr ? queryStr : ""}`,
-      `/category/${props.tab}${!clear && queryStr ? `?${queryStr}` : ""}`,
+      `/?tab=${props.tab}&${!clear && query ? query : ""}`,
+      `/category/${props.tab}${!clear && query ? `?${query}` : ""}`,
       { shallow: true }
     )
+  }
+
+  const SearchInput = ({ propsSearch }) => {
+    const [search, setSearch] = useState(propsSearch)
+    const [allJobsCount, { refetch }] = useQuery(
+      getJobsCount,
+      {
+        where: {
+          postedDate: {
+            gte: FRESH_THRESHOLD,
+          },
+        },
+      },
+      {
+        enabled: false,
+        refetchOnWindowFocus: false,
+      }
+    )
+
+    useEffect(() => {
+      refetch()
+    }, [propsSearch])
+
+    const handleChange = (e) => {
+      setSearch(e.currentTarget.value)
+    }
+
+    const keyDown = (e, bypass = false) => {
+      if (e.key === "Enter" || bypass) {
+        props.setSearch(search)
+        pushRoute(false, search)
+      }
+    }
+
+    return (
+      <input
+        type="text"
+        className="input is-large"
+        placeholder={allJobsCount ? `Search ${allJobsCount} recent jobs` : "e.g. python, javascript"}
+        value={search}
+        onChange={handleChange}
+        onKeyDown={keyDown}
+        onBlur={(e) => keyDown(e, true)}
+      />
+    )
+  }
+
+  const JobsCount = ({ query, search }) => {
+    const [count, { refetch }] = useQuery(getJobsCount, query, {
+      enabled: false,
+      refetchOnWindowFocus: false,
+    })
+
+    useEffect(() => {
+      refetch()
+    }, [search])
+
+    return <span>&nbsp; ({count})</span>
   }
 
   return (
@@ -194,17 +212,7 @@ const HeroComponent = (props) => {
             <Columns.Column size={10} offset={1}>
               <div className="field" style={{ marginTop: 15 }} ref={heroRef}>
                 <p className="control has-icons-left has-icons-right">
-                  <input
-                    type="text"
-                    className="input is-large"
-                    placeholder={
-                      allJobsCount ? `Search ${allJobsCount} recent jobs` : "e.g. python, javascript"
-                    }
-                    value={search}
-                    onChange={handleChange}
-                    onKeyDown={keyDown}
-                    onBlur={(e) => keyDown(e, true)}
-                  />
+                  <ErrorHOC component={SearchInput} otherProps={{ propsSearch: props.search }} />
                   <span className="icon is-left">
                     <FiSearch />
                   </span>
@@ -261,7 +269,15 @@ const HeroComponent = (props) => {
                   >
                     <a style={{ color: props.tab === li.id ? "#333" : "" }}>
                       <IconWrapper>{li.icon}</IconWrapper>
-                      {li.title} {jobsCounts.hasOwnProperty(li.id) ? `(${jobsCounts[li.id]})` : ""}
+                      {li.title}{" "}
+                      {li.query ? (
+                        <ErrorHOC
+                          component={JobsCount}
+                          otherProps={{ query: li.query, search: props.search }}
+                        />
+                      ) : (
+                        ""
+                      )}
                     </a>
                   </Link>
                 </li>
@@ -283,5 +299,23 @@ const HeroComponent = (props) => {
     </Hero>
   )
 }
+
+const ErrorHOC = ({ component: Component, small = true, otherProps = {} }) => (
+  <Suspense
+    fallback={
+      <span>
+        <Loader
+          style={{
+            width: small ? 10 : 100,
+            height: small ? 10 : 100,
+            margin: small ? 5 : 100,
+          }}
+        />
+      </span>
+    }
+  >
+    <Component {...otherProps} />
+  </Suspense>
+)
 
 export default HeroComponent
