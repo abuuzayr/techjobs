@@ -1,7 +1,7 @@
-import db, { FindOneJobArgs } from "db"
+import db, { FindUniqueJobArgs } from "db"
 
-export default async function getJob(args: FindOneJobArgs) {
-  const job = await db.job.findOne({
+export default async function getJob(args: FindUniqueJobArgs) {
+  const job = await db.job.findFirst({
     ...args,
     include: {
       company: true,

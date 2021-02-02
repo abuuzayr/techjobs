@@ -7,7 +7,7 @@ const createJob = async (args) => {
   // Find job if exists
   let jobFound: Job
   if (args.data.aggId) {
-    jobFound = await db.job.findOne({
+    jobFound = await db.job.findFirst({
       where: {
         aggId: `${args.data.aggId}`,
       },
@@ -16,7 +16,7 @@ const createJob = async (args) => {
     args.data["aggId"] = v4()
   }
   // Find or create a company to connect job with
-  let company = await db.company.findOne({
+  let company = await db.company.findFirst({
     where: {
       name: `${args.data.company}`,
     },
