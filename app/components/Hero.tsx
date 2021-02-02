@@ -93,6 +93,7 @@ const HeroComponent = (props) => {
 
   useEffect(() => {
     if (heroRef.current) {
+      // @ts-ignore: Object is possibly 'null'.
       props.setScrollTo(heroRef.current.closest(".hero").offsetHeight)
     }
   }, [heroRef])
