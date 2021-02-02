@@ -1,4 +1,4 @@
-import { AppProps, ErrorComponent, useRouter, AuthenticationError, AuthorizationError } from "blitz"
+import { AppProps, ErrorComponent, useRouter } from "blitz"
 import { ErrorBoundary, FallbackProps } from "react-error-boundary"
 import { queryCache } from "react-query"
 import "react-bulma-components/dist/react-bulma-components.min.css"
@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
   )
 }
 
-function RootErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+function RootErrorFallback({ error }: FallbackProps) {
   return (
     <ErrorComponent statusCode={(error as any)?.statusCode || 400} title={error?.message || error?.name} />
   )
