@@ -16,7 +16,7 @@ Modal.setAppElement("#__next")
 
 const Home: BlitzPage = () => {
   const router = useRouter()
-  const [tab, setTab] = useState((router?.query?.tab as string) || "all")
+  const [tab, setTab] = useState(router?.params?.tab || "all")
   const [search, setSearch] = useState("")
   const [liked, setLiked] = useState([])
   const [scrollTo, setScrollTo] = useState(0)
@@ -24,16 +24,16 @@ const Home: BlitzPage = () => {
 
   useEffect(() => {
     if (localStorage && localStorage.getItem("_liked")) {
-      setLiked(JSON.parse(localStorage.getItem("_liked")))
+      setLiked(JSON.parse(localStorage.getItem("_liked") as string))
     }
   }, [])
 
   useEffect(() => {
-    const tab = router?.query?.tab as string
+    const tab = router?.params?.tab
     if (tab) setTab(tab)
     const searchStr = router?.query?.search as string
     if (searchStr) setSearch(searchStr)
-  }, [router])
+  }, [router.query, router.params])
 
   // arguments for database searching
   // we declare all so we won't have a problem with types
@@ -58,7 +58,9 @@ const Home: BlitzPage = () => {
     <LikedContext.Provider value={{ liked, setLiked }}>
       <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
       {!allowedTabs.includes(tab) && <ContentNotFound />}
-      {["featured", "all", "liked"].includes(tab) && <Jobs {...{ args, scrollTo: search ? scrollTo : 0 }} />}
+      {["featured", "all", "liked"].includes(tab) && (
+        <Jobs {...{ args, scrollTo: search ? scrollTo : 0, search, tab }} />
+      )}
       {tab === "about" && <About />}
       {tab === "resources" && <Resources />}
       {tab === "post" && (
@@ -66,16 +68,16 @@ const Home: BlitzPage = () => {
       )}
       <Footer />
       {
-        <RemoveScroll enabled={router?.query?.jobId ? !!router.query.jobId : false}>
+        <RemoveScroll enabled={router?.params?.jobId ? !!router.params.jobId : false}>
           <Modal
-            isOpen={router?.query?.jobId ? !!router.query.jobId : false}
+            isOpen={router?.params?.jobId ? !!router.params.jobId : false}
             onRequestClose={() => router.push("/")}
             closeTimeoutMS={1000}
             style={{
               content: { top: "", right: "", left: "", bottom: "" },
             }}
           >
-            {router?.query?.jobId && <JobContent id={router.query.jobId} />}
+            {router?.params?.jobId && <JobContent id={router.params.jobId} />}
           </Modal>
         </RemoveScroll>
       }

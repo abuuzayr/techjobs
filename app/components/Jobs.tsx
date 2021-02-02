@@ -1,5 +1,5 @@
 import { Suspense, useState, useEffect } from "react"
-import { useQuery } from "blitz"
+import { useQuery, usePaginatedQuery } from "blitz"
 import Job from "./Job"
 import TagsSelect from "./TagsSelect"
 import getJobs from "../jobs/queries/getJobs"
@@ -11,7 +11,7 @@ import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
 
 const Jobs = (props) => {
-  const { args } = props
+  const { args, search, tab } = props
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
@@ -51,11 +51,7 @@ const Jobs = (props) => {
     }
   }
 
-  const [jobs] = useQuery(
-    getJobs,
-    { ...updatedArgs, first: JOBS_TO_SHOW * (page + 1), skip: 0 },
-    { paginated: true }
-  )
+  const [jobs] = usePaginatedQuery(getJobs, { ...updatedArgs, take: JOBS_TO_SHOW * (page + 1), skip: 0 })
 
   // get featured jobs
   let featuredArgs = JSON.parse(JSON.stringify(updatedArgs))
@@ -79,7 +75,7 @@ const Jobs = (props) => {
         behavior: smooth ? "smooth" : "auto",
       })
     }
-  }, [scrollTo])
+  }, [search, tab, scrollTo])
 
   const tags = allTags.map((tag) => tag.name)
 
