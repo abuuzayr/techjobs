@@ -93,7 +93,7 @@ const Subscribe = () => {
 
         <div className="email-octopus-form-row-subscribe">
           <input type="hidden" name="successRedirectUrl" value="" />
-          <Button small color="success" type="submit">
+          <Button small={1} color="success" type="submit">
             Subscribe
           </Button>
         </div>
