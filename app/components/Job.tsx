@@ -40,7 +40,7 @@ const Job = (props) => {
     postedDays = postedAge / 1000 / 60 / 60 / 24
   }
   return (
-    <JobBox old={postedDays > 31 ? 1 : 0} featured={type === "featured"}>
+    <JobBox old={postedDays > 31 ? 1 : 0} featured={type === "featured" ? 1 : 0}>
       <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
         <div>
           <Media renderAs="article" className="is-hidden-mobile">
