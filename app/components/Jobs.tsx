@@ -16,7 +16,7 @@ const Jobs = (props) => {
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [totalJobsCount] = useQuery(getJobsCount, args)
-  const [allTags] = useQuery(getTags)
+  const [allTags] = useQuery(getTags, {})
   const [selectedTags, setSelectedTags] = useState([])
   const [scrollTo, setScrollTo] = useState(props.scrollTo)
   const [scrollBehavior, setScrollBehavior] = useState("smooth")
