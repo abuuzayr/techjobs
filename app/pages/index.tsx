@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Head, useRouter, BlitzPage } from "blitz"
+import { useRouter, BlitzPage } from "blitz"
 import Layout from "app/layouts/Layout"
 import Modal from "react-modal"
 import { RemoveScroll } from "react-remove-scroll"
@@ -12,7 +12,7 @@ import ContentNotFound from "../components/ContentNotFound"
 import About from "../components/About"
 import Resources from "../components/Resources"
 
-Modal.setAppElement("#__next")
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#__next")
 
 type QueryArgs = {
   where: {
