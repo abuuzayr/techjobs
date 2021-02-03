@@ -34,7 +34,10 @@ const Job = ({ id }) => {
     incrementJob({ key: "views", id })
   }, [])
 
-  const { name, company, description, postedDate, url }: JobType = job
+  if (!job) return null
+
+  const { name, description, postedDate, url }: JobType = job
+  const company = job?.company
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
   const showCompanyBlock =
     company.about ||
