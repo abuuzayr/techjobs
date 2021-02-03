@@ -23,7 +23,7 @@ const NavBar = () => (
         </Navbar.Item>
       </Navbar.Brand>
       <Navbar.Container position="end" className="is-hidden-touch">
-        <Navbar.Item style={{ backgroundColor: "transparent" }}>
+        <Navbar.Item style={{ backgroundColor: "transparent" }} renderAs="div">
           <Link href="/?tab=post" as="/category/post" scroll={false}>
             <a className="heading" style={{ color: "white" }}>
               <Send /> Post a Job
