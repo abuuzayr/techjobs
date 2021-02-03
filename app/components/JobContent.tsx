@@ -14,6 +14,7 @@ import Apply from "../components/Apply"
 import JobMeta from "../components/JobMeta"
 import Logo from "./Logo"
 import incrementJob from "app/jobs/mutations/incrementJob"
+import { Job as JobType } from "db"
 
 const Job = ({ id }) => {
   // Get the ID in integer
@@ -33,7 +34,7 @@ const Job = ({ id }) => {
     incrementJob({ key: "views", id })
   }, [])
 
-  const { name, company, description, postedDate, url } = job
+  const { name, company, description, postedDate, url }: JobType = job
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
   const showCompanyBlock =
     company.about ||
@@ -117,7 +118,7 @@ const Job = ({ id }) => {
                 </p>
               </Content>
             )}
-            <a href={url} target="_blank" rel="noopener noreferrer">
+            <a href={url || ""} target="_blank" rel="noopener noreferrer">
               <Button size="small" color="info" outlined={true}>
                 Read more <FiArrowRight />
               </Button>

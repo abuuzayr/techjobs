@@ -1,11 +1,11 @@
-import db, { Job } from "db"
+import db, { Job, Tag } from "db"
 import { v4 } from "uuid"
 
 const createJob = async (args) => {
   if (!args.data) return false
   if (!args.data.company) return false
   // Find job if exists
-  let jobFound: Job
+  let jobFound: any
   if (args.data.aggId) {
     jobFound = await db.job.findFirst({
       where: {
@@ -53,7 +53,7 @@ const createJob = async (args) => {
     },
   }
   // Get tags for searching
-  let existingTags = []
+  let existingTags: Tag[] = []
   let tags = []
   const tagObj = {}
   if (args.data.tags && args.data.tags.length) {
@@ -82,10 +82,10 @@ const createJob = async (args) => {
     })
   }
   if (existingTags.length) {
-    tagObj["connect"] = existingTags.map((t) => ({ id: t.id }))
+    tagObj["connect"] = existingTags.map((t: Tag) => ({ id: t.id }))
     if (existingTags.length !== tags.length) {
       tagObj["create"] = tags
-        .filter((tag) => !existingTags.map((t) => t.name).includes(tag))
+        .filter((tag) => !existingTags.map((t: Tag) => t.name).includes(tag))
         .map((t) => ({ name: t }))
     }
   } else {

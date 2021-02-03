@@ -14,6 +14,13 @@ import Resources from "../components/Resources"
 
 Modal.setAppElement("#__next")
 
+type QueryArgs = {
+  where: {
+    AND?: Object[]
+    OR?: Object[]
+  }
+}
+
 const Home: BlitzPage = () => {
   const router = useRouter()
   const [tab, setTab] = useState(router?.params?.tab || "all")
@@ -37,7 +44,7 @@ const Home: BlitzPage = () => {
 
   // arguments for database searching
   // we declare all so we won't have a problem with types
-  let args = {
+  let args: QueryArgs = {
     where: {
       AND: [{ type: { equals: tab } }, { searchStr: { contains: search.toLowerCase() } }],
       OR: liked.map((id) => ({
@@ -47,9 +54,11 @@ const Home: BlitzPage = () => {
   }
   // we remove the keys that we do not need based on the tab
   if (tab === "all") {
-    args["where"]["AND"] = args["where"]["AND"].filter((arg) => {
-      return !Object.keys(arg).includes("type")
-    })
+    args["where"]["AND"] = args["where"]["AND"]
+      ? args["where"]["AND"].filter((arg) => {
+          return !Object.keys(arg).includes("type")
+        })
+      : args["where"]["AND"]
   } else if (tab === "liked") {
     delete args["where"]["AND"]
   }
@@ -57,14 +66,14 @@ const Home: BlitzPage = () => {
   return (
     <LikedContext.Provider value={{ liked, setLiked }}>
       <Hero {...{ tab, setTab, search, setSearch, liked, setScrollTo }} />
-      {!allowedTabs.includes(tab) && <ContentNotFound />}
-      {["featured", "all", "liked"].includes(tab) && (
+      {!allowedTabs.includes(tab as string) && <ContentNotFound />}
+      {["featured", "all", "liked"].includes(tab as string) && (
         <Jobs {...{ args, scrollTo: search ? scrollTo : 0, search, tab }} />
       )}
       {tab === "about" && <About />}
       {tab === "resources" && <Resources />}
       {tab === "post" && (
-        <div dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME }} />
+        <div dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME || "" }} />
       )}
       <Footer />
       {

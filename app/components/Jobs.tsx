@@ -23,7 +23,7 @@ const Jobs = (props) => {
 
   useEffect(() => {
     if (localStorage && localStorage.getItem("_tags")) {
-      setSelectedTags(JSON.parse(localStorage.getItem("_tags")))
+      setSelectedTags(JSON.parse(localStorage.getItem("_tags") || ""))
     }
   }, [])
 

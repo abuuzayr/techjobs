@@ -6,7 +6,7 @@ interface IncrementJobArgs {
 }
 
 export default async function incrementJob(args: IncrementJobArgs) {
-  let job: Object = await db.job.findFirst({
+  let job: Object | null = await db.job.findFirst({
     where: {
       id: args.id,
     },
