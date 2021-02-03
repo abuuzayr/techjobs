@@ -31,7 +31,7 @@ const IconWrapper = styled.div`
 const HeroComponent = (props) => {
   const FRESH_THRESHOLD = useMemo(() => {
     let d = new Date()
-    d = new Date(d.toLocaleDateString())
+    d = new Date(d.toLocaleDateString("en-us"))
     d.setMonth(d.getMonth() - 1)
     return d
   }, [])
@@ -150,7 +150,6 @@ const HeroComponent = (props) => {
       },
       {
         enabled: false,
-        refetchOnWindowFocus: false,
       }
     )
 
@@ -185,7 +184,6 @@ const HeroComponent = (props) => {
   const JobsCount = ({ query, search }) => {
     const [count, { refetch }] = useQuery(getJobsCount, query, {
       enabled: false,
-      refetchOnWindowFocus: false,
     })
 
     useEffect(() => {
