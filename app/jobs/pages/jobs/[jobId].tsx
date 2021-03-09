@@ -4,9 +4,9 @@ import { Loader, Level } from "react-bulma-components"
 const JobPage = () => {
   const router = useRouter()
   if (router) {
-    const { pathname, query } = router
-    if (pathname === "/jobs/[jobId]" && query.jobId) {
-      router.push(`/?jobId=${query.jobId}`, `/jobs/${query.jobId}`, { shallow: true })
+    const { pathname, params } = router
+    if (pathname === "/jobs/[jobId]" && params.jobId) {
+      router.push(`/?jobId=${params.jobId}`, `/jobs/${params.jobId}`, { shallow: true })
     }
     return (
       <Level.Item>
