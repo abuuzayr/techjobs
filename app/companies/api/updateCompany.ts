@@ -14,9 +14,7 @@ export default async (req, res) => {
       res.end("No body provided")
     }
     const data = { ...req.body }
-    delete data.id
-    delete data.name
-    const company = await updateCompany({ data: req.body, where: { name: req.body.name } })
+    const company = await updateCompany({ data, where: { name: data.name } })
     if (company) {
       res.statusCode = 200
       res.setHeader("Content-Type", "application/json")
