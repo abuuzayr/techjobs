@@ -1,4 +1,4 @@
-import db, { CompanyUpdateArgs } from "db"
+import db, { CompanyUpdateArgs, RecordNo } from "db"
 
 async function updateCompany(args: CompanyUpdateArgs) {
   const company = await db.company.update(args)
@@ -14,14 +14,24 @@ export default async (req, res) => {
       res.end("No body provided")
     }
     const data = { ...req.body }
-    const company = await updateCompany({ data, where: { name: data.name } })
-    if (company) {
-      res.statusCode = 200
-      res.setHeader("Content-Type", "application/json")
-      res.end(JSON.stringify(company))
-    } else {
-      res.statusCode = 422
-      res.end("Unable to update company. Check POST body")
+    try {
+      const company = await updateCompany({ data, where: { name: data.name } })
+      if (company) {
+        res.statusCode = 200
+        res.setHeader("Content-Type", "application/json")
+        res.end(JSON.stringify(company))
+      } else {
+        res.statusCode = 422
+        res.end("Unable to update company. Check POST body")
+      }
+    } catch (e) {
+      if (e.meta && e.meta.details && e.meta.details.includes("RecordNotFound")) {
+        console.log("Company not found in DB")
+        res.status(404).end(`Company not found in DB`)
+      } else {
+        console.log(e)
+        res.status(400).end(`Server error`)
+      }
     }
   } else {
     // Handle any other HTTP method
