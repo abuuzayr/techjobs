@@ -11,18 +11,37 @@ export default async (req, res) => {
     const args = {}
     if (req.query.select) {
       args["select"] = {
+        aggId: true,
         [req.query.select]: true,
       }
     }
-    const jobs = await getJobs(args)
-    console.log(jobs)
-    if (jobs) {
-      res.statusCode = 200
-      res.setHeader("Content-Type", "application/json")
-      res.end(JSON.stringify(jobs))
-    } else {
-      res.statusCode = 404
-      res.end("No jobs to return")
+    if (req.query.recent || req.query.aggPrefix) {
+      args["where"] = {}
+      if (req.query.recent) {
+        args["where"]["postedDate"] = {
+          gt: new Date(new Date() - 3 * 30 * 24 * 60 * 60 * 1000).toISOString(),
+        }
+      }
+      if (req.query.aggPrefix) {
+        args["where"]["aggId"] = {
+          startsWith: `${req.query.aggPrefix}-----`,
+        }
+      }
+    }
+    try {
+      const jobs = await getJobs(args)
+      if (jobs) {
+        res.statusCode = 200
+        res.setHeader("Content-Type", "application/json")
+        res.end(JSON.stringify(jobs))
+      } else {
+        res.statusCode = 404
+        res.end("No jobs to return")
+      }
+    } catch (e) {
+      res.statusCode = 500
+      res.end("Unable to retrieve jobs")
+      console.log(e)
     }
   } else {
     // Handle any other HTTP method
