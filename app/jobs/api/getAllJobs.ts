@@ -19,7 +19,7 @@ export default async (req, res) => {
       args["where"] = {}
       if (req.query.recent) {
         args["where"]["postedDate"] = {
-          gt: new Date(new Date() - 3 * 30 * 24 * 60 * 60 * 1000).toISOString(),
+          gt: new Date(new Date().getTime() - 3 * 30 * 24 * 60 * 60 * 1000).toISOString(),
         }
       }
       if (req.query.aggPrefix) {
