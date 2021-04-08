@@ -47,7 +47,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: .blitz/
-          remote_path: /home/abuuzayr/techjobs/
+          remote_path: /home/abuuzayr/techjobs/.blitz/
           remote_host: 128.199.136.148
           remote_user: abuuzayr
           remote_key: ${{ secrets.DEPLOY_KEY }}
@@ -58,7 +58,7 @@ jobs:
         with:
           switches: -avzr --delete
           path: .next/
-          remote_path: /home/abuuzayr/techjobs/
+          remote_path: /home/abuuzayr/techjobs/.next/
           remote_host: 128.199.136.148
           remote_user: abuuzayr
           remote_key: ${{ secrets.DEPLOY_KEY }}
