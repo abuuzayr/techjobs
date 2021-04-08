@@ -25,13 +25,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - uses: nodenv/actions-setup-nodenv@v2.0.4
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          check-latest: true
+      - run: npm install
 
-      - name: nodenv/setup-nodenv
+      - name: install global blitz
         run: npm i -g blitz
 
       # Runs a single command using the runners shell
-      - name: Install blitz
+      - name: build project
         run: blitz build
         env:
           NEXT_PUBLIC_BACKGROUND_URL: https://js-talks.builtforfifty.workers.dev//bg2.jpg
