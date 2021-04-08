@@ -1,4 +1,4 @@
-import db, { CompanyUpdateArgs, RecordNo } from "db"
+import db, { CompanyUpdateArgs } from "db"
 
 async function updateCompany(args: CompanyUpdateArgs) {
   const company = await db.company.update(args)
