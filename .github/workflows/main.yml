@@ -51,6 +51,7 @@ jobs:
           remote_host: 128.199.136.148
           remote_user: abuuzayr
           remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_port: 60022
 
       - name: rsync next folder
         uses: burnett01/rsync-deployments@4.1
@@ -61,3 +62,4 @@ jobs:
           remote_host: 128.199.136.148
           remote_user: abuuzayr
           remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_port: 60022
