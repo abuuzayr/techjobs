@@ -6,27 +6,15 @@ import { FiSearch, FiDelete } from "react-icons/fi"
 import { GrStackOverflow } from "react-icons/gr"
 import { FcLike } from "react-icons/fc"
 import { AiFillLike, AiOutlineProfile } from "react-icons/ai"
-import styled from "styled-components"
 
 // Import components
 import NavBar from "./NavBar"
 import UnsplashCredit from "./UnsplashCredit"
-import { Title, HeroBody, Sun, FillCode } from "../styles/common"
+import { Title, HeroBody, Sun, FillCode, Logo, IconWrapper } from "../styles/common"
+import { SOURCES } from "app/pages/index"
 
 // Import queries
 import getJobsCount from "app/jobs/queries/getJobsCount"
-
-const Logo = styled.img`
-  max-height: 30px;
-  filter: brightness(0) invert(1);
-`
-
-const IconWrapper = styled.div`
-  margin-right: 10px;
-  svg {
-    vertical-align: middle;
-  }
-`
 
 const HeroComponent = (props) => {
   const FRESH_THRESHOLD = useMemo(() => {
@@ -82,15 +70,6 @@ const HeroComponent = (props) => {
       icon: <FcLike />,
       query: { where: { OR: props.liked.map((id) => ({ id })) } },
     },
-  ]
-  const jobsiteLogos = [
-    "/TechInAsia-logo.svg",
-    "/Adzuna-logo.svg",
-    "/StackOverflow-logo.svg",
-    "/eFinancialCareers-logo.svg",
-    "/jobsDB.png",
-    "/jobsCentral.png",
-    "/jobstreet.png",
   ]
 
   useEffect(() => {
@@ -172,7 +151,9 @@ const HeroComponent = (props) => {
       <input
         type="text"
         className="input is-large"
-        placeholder={allJobsCount ? `Search ${allJobsCount} recent jobs` : "e.g. python, javascript"}
+        placeholder={
+          allJobsCount ? `Search ${allJobsCount} recent jobs` : "e.g. python, javascript"
+        }
         value={search}
         onChange={handleChange}
         onKeyDown={keyDown}
@@ -242,9 +223,9 @@ const HeroComponent = (props) => {
               </Level.Item>
             </Level>
             <Level>
-              {jobsiteLogos.map((path, index) => (
-                <Level.Item key={path} className={index > 4 ? "is-hidden-touch" : ""}>
-                  <Logo src={path} key={path} alt={path.slice(1).split(".")[0].split("-")[0] + " logo"} />
+              {SOURCES.map((source, index) => (
+                <Level.Item key={source.logoPath} className={index > 4 ? "is-hidden-touch" : ""}>
+                  <Logo src={source.logoPath} key={source.logoPath} alt={source.name + " logo"} />
                 </Level.Item>
               ))}
             </Level>

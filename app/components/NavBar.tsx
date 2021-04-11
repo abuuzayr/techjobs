@@ -1,14 +1,7 @@
 import React from "react"
 import { Link } from "blitz"
 import { Navbar, Container } from "react-bulma-components"
-import { Code, Title, Send } from "../styles/common"
-import styled from "styled-components"
-
-const Post = styled.div`
-  position: absolute;
-  right: 20px;
-  top: 20px;
-`
+import { Code, Title, Send, Post } from "../styles/common"
 
 const NavBar = () => (
   <Navbar color="info" fixed="top" transparent={true}>

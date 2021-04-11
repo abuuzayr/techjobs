@@ -2,8 +2,7 @@ import React from "react"
 import { Link, Head } from "blitz"
 import { Box, Media, Content, Container } from "react-bulma-components"
 import Modal from "react-modal"
-import styled from "styled-components"
-import { MobileActions } from "../styles/common"
+import { MobileActions, JobBox } from "../styles/common"
 
 // Components
 import Logo from "./Logo"
@@ -14,20 +13,6 @@ import Apply from "./Apply"
 
 // Change Modal default styles
 Modal.defaultStyles.content.overflow = ""
-
-const JobBox = styled(Box)`
-  cursor: pointer;
-  border: 2px solid transparent;
-  :hover {
-    border: 2px solid gray;
-    opacity: 1;
-  }
-  ${(props) => (props.old ? "opacity: 0.6;" : "")}
-  ${(props) => (props.featured ? "background: rgba(32, 156, 238,0.2);" : "")}
-  a {
-    color: black;
-  }
-`
 
 const Job = (props) => {
   let { id, url, name, company, postedDate, type } = props.data

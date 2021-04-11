@@ -115,7 +115,8 @@ const Job = ({ id }) => {
               <Content size="small" dangerouslySetInnerHTML={{ __html: description }}></Content>
             ) : (
               <Content>
-                We got nothing <FiFrown size={20} style={{ verticalAlign: "middle" }} color="orange" />
+                We got nothing{" "}
+                <FiFrown size={20} style={{ verticalAlign: "middle" }} color="orange" />
                 <p>
                   Click the <strong>Read More</strong> button below to see the Job posting
                 </p>
@@ -241,15 +242,6 @@ const Job = ({ id }) => {
           </LevelItem>
         </Level>
       </Columns>
-      <style jsx global>
-        {`
-          @media screen and (min-width: 768px) {
-            .job-name {
-              max-width: calc(100% - 215px);
-            }
-          }
-        `}
-      </style>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Heading, Hero, Level } from "react-bulma-components"
+import { Heading, Hero, Level, Notification } from "react-bulma-components"
 import { AiOutlineCode, AiFillBell } from "react-icons/ai"
 import { IoIosSend } from "react-icons/io"
 import { FiSun } from "react-icons/fi"
@@ -82,5 +82,59 @@ export const LevelItem = styled(Level.Item)`
   @media screen and (max-width: 768px) {
     text-align: center;
     display: flex !important;
+  }
+`
+
+export const Post = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 20px;
+`
+
+export const Logo = styled.img`
+  max-height: 30px;
+  filter: brightness(0) invert(1);
+`
+
+export const IconWrapper = styled.div`
+  margin-right: 10px;
+  svg {
+    vertical-align: middle;
+  }
+`
+
+export const JobBox = styled(Box)`
+  cursor: pointer;
+  border: 2px solid transparent;
+  :hover {
+    border: 2px solid gray;
+    opacity: 1;
+  }
+  ${(props) => (props.old ? "opacity: 0.6;" : "")}
+  ${(props) => (props.featured ? "background: rgba(32, 156, 238,0.2);" : "")}
+  a {
+    color: black;
+  }
+`
+
+export const ShareBubble = styled(Notification)`
+  position: absolute;
+  z-index: 99;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  color: black;
+  border: 1px solid rgba(10, 10, 10, 0.2);
+  padding: 0.25rem 2rem 0.5rem 0.25rem;
+  width: 210px;
+  > a {
+    > svg {
+      height: 30px;
+      width: 30px;
+    }
+    > div {
+      border-radius: 100%;
+      padding: 0.75em 0.75em;
+    }
   }
 `
