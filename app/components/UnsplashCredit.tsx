@@ -1,10 +1,11 @@
 import { Level } from "react-bulma-components"
+import { Credits, A } from "../styles/unsplash"
 
 const UnsplashCredit = () => (
-  <div className="credits">
+  <Credits>
     <Level.Side align="right">
-      <a
-        className="unsplash"
+      <A
+        className="styles.unsplash"
         href="https://unsplash.com/@peterng1618?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText"
         target="_blank"
         rel="noopener noreferrer"
@@ -17,36 +18,9 @@ const UnsplashCredit = () => (
           </svg>
         </span>
         <span>Peter Nguyen</span>
-      </a>
+      </A>
     </Level.Side>
-    <style jsx>{`
-      .credits {
-        position: absolute;
-        top: 70px;
-        right: 20px;
-      }
-      .unsplash {
-        color: white;
-        padding: 4px 6px;
-        font-size: 12px;
-        line-height: 1.2;
-        border-radius: 3px;
-        opacity: 0.6;
-      }
-      .unsplash span {
-        display: inline-block;
-        padding: 2px 3px;
-      }
-      .unsplash span svg {
-        height: 12px;
-        width: auto;
-        position: relative;
-        vertical-align: middle;
-        top: -2px;
-        fill: white;
-      }
-    `}</style>
-  </div>
+  </Credits>
 )
 
 export default UnsplashCredit
