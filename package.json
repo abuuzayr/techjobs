@@ -1,13 +1,15 @@
 {
-  "name": "new-blitz-app",
+  "name": "techjobs.sg",
   "version": "1.0.0",
   "scripts": {
-    "start": "blitz start",
+    "dev": "blitz dev",
+    "build": "NODE_ENV=production blitz prisma migrate deploy --preview-feature && blitz build",
+    "start": "blitz start --port $PORT",
     "studio": "blitz prisma studio",
-    "build": "blitz build",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
   },
   "browserslist": [
     "defaults"
