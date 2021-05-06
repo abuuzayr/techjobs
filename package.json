@@ -8,8 +8,7 @@
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "prepare": "husky install"
+    "test:watch": "jest --watch"
   },
   "browserslist": [
     "defaults"
