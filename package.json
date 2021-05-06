@@ -32,6 +32,7 @@
     ]
   },
   "dependencies": {
+    "@panelbear/panelbear-js": "1.2.0",
     "@prisma/cli": "~2.14",
     "@prisma/client": "~2.14",
     "babel-plugin-styled-components": "1.12.0",
