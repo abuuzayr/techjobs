@@ -2,15 +2,14 @@
 import { useState, useRef, useEffect, Suspense, useMemo } from "react"
 import { Link, useRouter, useQuery } from "blitz"
 import { Container, Hero, Tabs, Columns, Level, Heading, Loader } from "react-bulma-components"
-import { FiSearch, FiDelete } from "react-icons/fi"
+import { FiSearch, FiDelete, FiSun } from "react-icons/fi"
 import { GrStackOverflow } from "react-icons/gr"
 import { FcLike } from "react-icons/fc"
-import { AiFillLike, AiOutlineProfile } from "react-icons/ai"
+import { AiFillLike, AiOutlineProfile, AiFillCode } from "react-icons/ai"
 
 // Import components
 import NavBar from "./NavBar"
 import UnsplashCredit from "./UnsplashCredit"
-import { Title, HeroBody, Sun, FillCode, Logo, IconWrapper } from "../styles/common"
 import { SOURCES } from "app/pages/index"
 
 // Import queries
@@ -179,12 +178,13 @@ const HeroComponent = (props) => {
       <Hero.Head>
         <NavBar />
       </Hero.Head>
-      <HeroBody>
+      <Hero.Body className="hero-body">
         <UnsplashCredit />
         <Container>
-          <Title size={1} renderAs="h1" className="has-text-centered">
-            Find a <FillCode /> job in <Sun /> Singapore
-          </Title>
+          <Heading size={1} renderAs="h1" className="has-text-centered hero-title">
+            Find a <AiFillCode style={{ verticalAlign: "middle" }} /> job in{" "}
+            <FiSun className="sun-icon" /> Singapore
+          </Heading>
         </Container>
         <Container>
           <Columns>
@@ -225,7 +225,12 @@ const HeroComponent = (props) => {
             <Level>
               {SOURCES.map((source, index) => (
                 <Level.Item key={source.logoPath} className={index > 4 ? "is-hidden-touch" : ""}>
-                  <Logo src={source.logoPath} key={source.logoPath} alt={source.name + " logo"} />
+                  <img
+                    src={source.logoPath}
+                    key={source.logoPath}
+                    alt={source.name + " logo"}
+                    className="source-logo"
+                  />
                 </Level.Item>
               ))}
             </Level>
@@ -234,7 +239,7 @@ const HeroComponent = (props) => {
             <div style={{ marginTop: 30 }} />
           </Columns.Column>
         </Columns>
-      </HeroBody>
+      </Hero.Body>
       <Hero.Footer style={{ marginTop: -41 }}>
         <Tabs type="boxed" fullwidth={true}>
           <Container>
@@ -247,7 +252,7 @@ const HeroComponent = (props) => {
                     scroll={false}
                   >
                     <a style={{ color: props.tab === li.id ? "#333" : "" }}>
-                      <IconWrapper>{li.icon}</IconWrapper>
+                      <div className="icon-wrapper">{li.icon}</div>
                       {li.title}{" "}
                       {li.query ? (
                         <ErrorHOC
@@ -264,9 +269,9 @@ const HeroComponent = (props) => {
               <li className={props.tab === "resources" ? "is-active" : ""}>
                 <Link href={`/?tab=resources`} as={`/category/resources`} scroll={false}>
                   <a style={{ color: props.tab === "resources" ? "#333" : "" }}>
-                    <IconWrapper>
+                    <div className="icon-wrapper">
                       <AiOutlineProfile />
-                    </IconWrapper>
+                    </div>
                     Resources
                   </a>
                 </Link>
@@ -275,6 +280,41 @@ const HeroComponent = (props) => {
           </Container>
         </Tabs>
       </Hero.Footer>
+      <style scoped>
+        {`
+        .sun-icon {
+          color: hsl(48, 100%, 67%);
+          vertical-align: middle;
+        }
+        .hero-body {
+          background-image: url(${process.env.NEXT_PUBLIC_BACKGROUND_URL});
+          background-size: cover;
+          background-position: center;
+          background-color: rgba(0, 0, 0, 0.2);
+          background-blend-mode: color;
+        }
+        @media screen and (min-width: 768px) {
+          .hero-body {
+            margintop: -41px;
+          }
+        }
+        .hero-title {
+          color: white;
+          margin-bottom: 0 !important;
+          margin-right: 10px;
+        }
+        .icon-wrapper {
+          margin-right: 10px;
+        }
+        .icon-wrapper svg {
+          vertical-align: middle;
+        }
+        .source-logo {
+          max-height: 30px;
+          filter: brightness(0) invert(1);
+        }
+      `}
+      </style>
     </Hero>
   )
 }
