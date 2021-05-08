@@ -1,9 +1,9 @@
 {
-  "name": "techjobs",
+  "name": "techjobs.sg",
   "version": "1.0.0",
   "scripts": {
     "dev": "blitz dev",
-    "build": "blitz build",
+    "build": "NODE_ENV=production blitz prisma migrate deploy --preview-feature && blitz build",
     "start": "blitz start --port $PORT",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
@@ -29,6 +29,7 @@
     ]
   },
   "dependencies": {
+    "@panelbear/panelbear-js": "1.2.0",
     "@prisma/cli": "~2.14",
     "@prisma/client": "~2.19",
     "babel-plugin-styled-components": "1.12.0",
