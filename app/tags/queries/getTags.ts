@@ -1,6 +1,6 @@
-import db, { FindManyTagArgs } from "db"
+import db, { Prisma } from "db"
 
-export default async function getTags(args: FindManyTagArgs) {
+export default async function getTags(args: Prisma.TagFindManyArgs) {
   const tags = await db.tag.findMany({
     orderBy: {
       name: "asc",

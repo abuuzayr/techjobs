@@ -1,6 +1,6 @@
-import db, {TagCreateArgs} from 'db'
+import db, { Prisma } from "db"
 
-export default async function createTag(args: TagCreateArgs) {
+export default async function createTag(args: Prisma.TagCreateArgs) {
   const tag = await db.tag.create(args)
 
   return tag
