@@ -6,7 +6,6 @@ import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
 import getTags from "../tags/queries/getTags"
 import { Container, Level, Button, Loader, Content } from "react-bulma-components"
-import ErrorBoundary from "app/components/ErrorBoundary"
 import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
 
@@ -132,17 +131,15 @@ const Jobs = (props) => {
 
 const WrappedJobs = (props) => {
   return (
-    <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
-      <Suspense
-        fallback={
-          <Level.Item>
-            <Loader style={{ width: 100, height: 100, marginTop: 100 }} />
-          </Level.Item>
-        }
-      >
-        <Jobs {...props} />
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense
+      fallback={
+        <Level.Item>
+          <Loader style={{ width: 100, height: 100, marginTop: 100 }} />
+        </Level.Item>
+      }
+    >
+      <Jobs {...props} />
+    </Suspense>
   )
 }
 
