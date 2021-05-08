@@ -1,7 +1,15 @@
-import { AppProps, ErrorComponent, useRouter } from "blitz"
-import { ErrorBoundary, FallbackProps } from "react-error-boundary"
+import {
+  AppProps,
+  ErrorComponent,
+  useRouter,
+  ErrorFallbackProps,
+  CSRFTokenMismatchError,
+} from "blitz"
+import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import "react-bulma-components/dist/react-bulma-components.min.css"
+import "../global.css"
+import ErrorRedirectHome from "app/core/components/ErrorRedirectHome"
 import { usePanelbear } from "app/hooks/usePanelbear"
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -25,8 +33,19 @@ export default function App({ Component, pageProps }: AppProps) {
   )
 }
 
-function RootErrorFallback({ error }: FallbackProps) {
+function RootErrorFallback({ error }: ErrorFallbackProps) {
+  if (error instanceof CSRFTokenMismatchError) {
+    return (
+      <ErrorRedirectHome
+        statusCode={error.statusCode || 400}
+        title={`An ${error.message || error.name} was thrown. Try reloading the page`}
+      />
+    )
+  }
   return (
-    <ErrorComponent statusCode={(error as any)?.statusCode || 400} title={error?.message || error?.name} />
+    <ErrorComponent
+      statusCode={error.statusCode || 400}
+      title={`An ${error.message || error.name} was thrown. Try reloading the page`}
+    />
   )
 }

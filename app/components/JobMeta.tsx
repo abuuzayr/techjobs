@@ -1,7 +1,6 @@
 import { Level } from "react-bulma-components"
 import { FaRegMoneyBillAlt } from "react-icons/fa"
 import { MdDateRange } from "react-icons/md"
-import styled from "styled-components"
 import Tags from "./Tags"
 
 const LOGO_PATHS = {
@@ -15,28 +14,6 @@ const LOGO_PATHS = {
   Hirebridge: "/Hirebridge-logo.png",
   myCareersFuture: "/myCareersFuture-logo.png",
 }
-
-const Source = styled.img`
-  max-height: 16px;
-  margin-left: 5px;
-`
-
-const Item = styled(Level.Item)`
-  @media screen and (max-width: 768px) {
-    display: inline-block;
-    & + & {
-      margin-left: 5px;
-    }
-  }
-`
-
-const Job = styled(Level)`
-  margin: 0.5em 0;
-  font-size: 0.8em;
-  @media screen and (max-width: 768px) {
-    text-align: center;
-  }
-`
 
 const JobMeta = (props) => {
   const { selectedTags, setSelectedTags, postedDays, select } = props
@@ -53,32 +30,45 @@ const JobMeta = (props) => {
 
   return (
     <>
-      <Job>
+      <Level className="job-wrapper">
         <Level.Side align="left">
           {salary && (
-            <Item>
+            <Level.Item className="logo-level-item">
               <FaRegMoneyBillAlt size="1.5em" style={{ marginRight: 5 }} /> {salary}
-            </Item>
+            </Level.Item>
           )}
-          <Item style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}>
+          <Level.Item
+            style={{ color: postedDays > 31 ? "#e74c3c" : "black" }}
+            className="logo-level-item"
+          >
             <MdDateRange size="1.5em" style={{ marginRight: 5 }} /> {postedAgeStr}
-          </Item>
-          <Item>
+          </Level.Item>
+          <Level.Item className="logo-level-item">
             {source && LOGO_PATHS[source.split(",")[0]] && (
               <>
-                by <Source src={LOGO_PATHS[source.split(",")[0]]} />
+                by{" "}
+                <img
+                  src={LOGO_PATHS[source.split(",")[0]]}
+                  className="img-source"
+                  alt={`${source.split(",")[0]} logo`}
+                />
               </>
             )}
-          </Item>
-          <Item>
+          </Level.Item>
+          <Level.Item className="logo-level-item">
             {source && source.includes(",") && (
               <>
-                via <Source src={LOGO_PATHS[source.split(",")[1]]} />
+                via{" "}
+                <img
+                  src={LOGO_PATHS[source.split(",")[1]]}
+                  className="img-source"
+                  alt={`${source.split(",")[1]} logo`}
+                />
               </>
             )}
-          </Item>
+          </Level.Item>
         </Level.Side>
-      </Job>
+      </Level>
       {tags && (
         <Tags
           tags={tags.map((t) => t.name)}
@@ -86,6 +76,27 @@ const JobMeta = (props) => {
           setSelectedTags={select && setSelectedTags}
         />
       )}
+      <style>{`
+        .img-source {
+          max-height: 16px;
+          margin-left: 5px;
+        }
+        .job-wrapper {
+          margin: 0.5em 0;
+          font-size: 0.8em;
+        }
+        @media screen and (max-width: 768px) {
+          .logo-level-item {
+            display: inline-block;
+          }
+          .logo-level-item + .logo-level-item {
+            margin-left: 5px;
+          }
+          .job-wrapper {
+            text-align: center;
+          }
+        }
+      `}</style>
     </>
   )
 }

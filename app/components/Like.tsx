@@ -1,5 +1,4 @@
 import { FcLikePlaceholder, FcLike } from "react-icons/fc"
-import { IconSlot } from "../styles/common"
 import LikedContext from "./LikedContext"
 import incrementJob from "../jobs/mutations/incrementJob"
 
@@ -20,9 +19,29 @@ const Like = (props) => {
   return (
     <LikedContext.Consumer>
       {({ liked, setLiked }) => (
-        <IconSlot onClick={(e) => clickLike(e, setLiked)} title="Like">
-          {liked.includes(id) ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
-        </IconSlot>
+        <>
+          <span
+            onClick={(e) => clickLike(e, setLiked)}
+            title="Like"
+            className="icon-slot"
+            onKeyDown={(e) => clickLike(e, setLiked)}
+            role="button"
+            tabIndex={0}
+          >
+            {liked.includes(id) ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
+          </span>
+          <style>{`
+            span.icon-slot {
+              margin-left: 10px;
+              cursor: pointer;
+              align-items: center;
+              display: inline-flex;
+              justify-content: center;
+              height: 1.5rem;
+              width: 1.5rem;
+            }
+          `}</style>
+        </>
       )}
     </LikedContext.Consumer>
   )

@@ -21,6 +21,40 @@ type QueryArgs = {
   }
 }
 
+export const SOURCES = [
+  {
+    name: "Tech in Asia",
+    logoPath: "/TechInAsia-logo.svg",
+  },
+  {
+    name: "Adzuna",
+    logoPath: "/Adzuna-logo.svg",
+  },
+  {
+    name: "Stack Overflow",
+    logoPath: "/StackOverflow-logo.svg",
+  },
+  {
+    name: "eFinancialCareers",
+    logoPath: "/eFinancialCareers-logo.svg",
+  },
+  {
+    name: "JobsDB",
+    via: "Adzuna",
+    logoPath: "/jobsDB.png",
+  },
+  {
+    name: "JobsCentral",
+    via: "Adzuna",
+    logoPath: "/jobsCentral.png",
+  },
+  {
+    name: "JobStreet",
+    via: "Adzuna",
+    logoPath: "/jobstreet.png",
+  },
+]
+
 const Home: BlitzPage = () => {
   const router = useRouter()
   const [tab, setTab] = useState(router?.params?.tab || "all")
@@ -73,7 +107,9 @@ const Home: BlitzPage = () => {
       {tab === "about" && <About />}
       {tab === "resources" && <Resources />}
       {tab === "post" && (
-        <div dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME || "" }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME || "" }}
+        />
       )}
       <Footer />
       {
@@ -90,48 +126,6 @@ const Home: BlitzPage = () => {
           </Modal>
         </RemoveScroll>
       }
-      <style jsx global>{`
-        .ReactModal__Overlay.ReactModal__Overlay--after-open {
-          z-index: 99;
-          overflow: hidden;
-        }
-        .ReactModal__Overlay {
-          opacity: 0;
-          margin-top: 50px;
-          transition: all 1000ms ease-in-out;
-        }
-        .ReactModal__Overlay--after-open {
-          opacity: 1;
-          margin-top: 0;
-        }
-        .ReactModal__Content.ReactModal__Content--after-open {
-          overflow: auto;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-        }
-        .ReactModal__Overlay--before-close {
-          opacity: 0;
-          margin-top: 50px;
-        }
-        @media screen and (max-width: 768px) {
-          .ReactModal__Content.ReactModal__Content--after-open {
-            overflow: auto;
-          }
-          .level-item {
-            text-align: center;
-          }
-        }
-        @media screen and (min-width: 768px) {
-          .ReactModal__Content.ReactModal__Content--after-open {
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-          }
-        }
-      `}</style>
     </LikedContext.Provider>
   )
 }

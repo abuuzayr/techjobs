@@ -1,6 +1,6 @@
-import db, { FindUniqueCompanyArgs } from "db"
+import db, { Prisma } from "db"
 
-async function getCompany(args: FindUniqueCompanyArgs) {
+async function getCompany(args: Prisma.CompanyFindUniqueArgs) {
   const company = await db.company.findFirst(args)
 
   return company

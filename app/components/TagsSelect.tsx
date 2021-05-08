@@ -1,13 +1,27 @@
-import Select from "react-select"
+import AsyncSelect from "react-select/async"
 import makeAnimated from "react-select/animated"
 import { Level } from "react-bulma-components"
+import getTags from "../tags/queries/getTags"
 
 const animatedComponents = makeAnimated()
 
-const TagsSelect = (props) => {
-  const { tags, selectedTags, setSelectedTags } = props
+const promiseOptions = (inputValue) =>
+  new Promise(async (resolve) => {
+    if (!inputValue) resolve([])
+    const tags = await getTags({
+      where: {
+        name: {
+          contains: inputValue,
+        },
+      },
+    })
+    resolve(tags.map((tag) => ({ value: tag.name, label: tag.name })))
+  })
 
-  return tags.length ? (
+const TagsSelect = (props) => {
+  const { selectedTags, setSelectedTags } = props
+
+  return (
     <Level>
       <Level.Side align="left">
         <p className="heading" style={{ marginRight: 10, alignSelf: "center" }}>
@@ -15,11 +29,14 @@ const TagsSelect = (props) => {
         </p>
       </Level.Side>
       <Level.Item>
-        <Select
+        <AsyncSelect
+          placeholder="Type to see options.."
+          isMulti
+          cacheOptions
+          defaultOptions
           closeMenuOnSelect={true}
           components={animatedComponents}
-          isMulti
-          options={tags.map((tag) => ({ value: tag, label: tag }))}
+          loadOptions={promiseOptions}
           value={selectedTags.map((t) => ({ value: t, label: t }))}
           onChange={(e) =>
             setSelectedTags((prevTags) => {
@@ -43,8 +60,6 @@ const TagsSelect = (props) => {
         />
       </Level.Item>
     </Level>
-  ) : (
-    <></>
   )
 }
 

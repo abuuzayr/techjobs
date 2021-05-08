@@ -1,4 +1,4 @@
-const { sessionMiddleware, simpleRolesIsAuthorized } = require("@blitzjs/server")
+const { sessionMiddleware, simpleRolesIsAuthorized } = require("blitz")
 
 module.exports = {
   middleware: [
@@ -14,14 +14,4 @@ module.exports = {
     return config
   },
   */
-  webpackDevMiddleware: (config) => {
-    // Perform customizations to webpack dev middleware config
-    // Important: return the modified config
-    return config
-  },
-  env: {
-    NEXT_PUBLIC_FATHOM_SITE_ID: process.env.NEXT_PUBLIC_FATHOM_SITE_ID,
-    NEXT_PUBLIC_BACKGROUND_URL: process.env.NEXT_PUBLIC_BACKGROUND_URL,
-    NEXT_PUBLIC_FORM_EMBED_IFRAME: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME,
-  },
 }
