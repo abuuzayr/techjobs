@@ -1,6 +1,6 @@
-import db, {JobCreateArgs} from 'db'
+import db, { Prisma } from "db"
 
-export default async function createJob(args: JobCreateArgs) {
+export default async function createJob(args: Prisma.JobCreateArgs) {
   const job = await db.job.create(args)
 
   return job

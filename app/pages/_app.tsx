@@ -1,7 +1,8 @@
-import { AppProps, ErrorComponent, useRouter } from "blitz"
-import { ErrorBoundary, FallbackProps } from "react-error-boundary"
+import { AppProps, ErrorComponent, useRouter, ErrorFallbackProps } from "blitz"
+import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import "react-bulma-components/dist/react-bulma-components.min.css"
+import "../global.css"
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
@@ -22,8 +23,6 @@ export default function App({ Component, pageProps }: AppProps) {
   )
 }
 
-function RootErrorFallback({ error }: FallbackProps) {
-  return (
-    <ErrorComponent statusCode={(error as any)?.statusCode || 400} title={error?.message || error?.name} />
-  )
+function RootErrorFallback({ error }: ErrorFallbackProps) {
+  return <ErrorComponent statusCode={error.statusCode || 400} title={error.message || error.name} />
 }

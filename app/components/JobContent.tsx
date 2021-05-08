@@ -6,8 +6,7 @@ import { FiExternalLink, FiArrowRight, FiFrown } from "react-icons/fi"
 import { MdClose } from "react-icons/md"
 import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs"
 import { IconContext } from "react-icons"
-import { Content, Level, Heading, Button, Columns, Loader } from "react-bulma-components"
-import { ContentBox, A, MobileActions, LevelItem } from "../styles/common"
+import { Content, Level, Heading, Button, Columns, Loader, Box } from "react-bulma-components"
 import Share from "../components/Share"
 import Like from "../components/Like"
 import Apply from "../components/Apply"
@@ -69,53 +68,54 @@ const Job = ({ id }) => {
       </div>
       <Level>
         <Level.Side align="left" className="job-name">
-          <LevelItem>
+          <Level.Item className="level-item-mobile-center">
             <Logo job={job} />
-          </LevelItem>
-          <LevelItem style={{ flexShrink: 1 }}>
+          </Level.Item>
+          <Level.Item style={{ flexShrink: 1 }}>
             <Content>
               <Heading size={4} style={{ wordBreak: "break-word" }}>
                 {name}
               </Heading>
               <p>{company.name}</p>
             </Content>
-          </LevelItem>
+          </Level.Item>
         </Level.Side>
         <Level.Side align="right" className="is-hidden-mobile">
-          <LevelItem>
+          <Level.Item className="level-item-mobile-center">
             <Share id={id} slug={slug} />
-          </LevelItem>
-          <LevelItem>
+          </Level.Item>
+          <Level.Item className="level-item-mobile-center">
             <Like id={id} />
-          </LevelItem>
-          <LevelItem>
+          </Level.Item>
+          <Level.Item className="level-item-mobile-center">
             <Apply url={url} />
-          </LevelItem>
-          <LevelItem className="is-hidden-mobile">
+          </Level.Item>
+          <Level.Item className="is-hidden-mobile">
             <Link href="/" as="/" scroll={false}>
               <a>
                 <MdClose size={30} color="black" />
               </a>
             </Link>
-          </LevelItem>
+          </Level.Item>
         </Level.Side>
-        <MobileActions className="is-hidden-tablet">
+        <div className="is-hidden-tablet mobile-actions">
           <Apply url={url} />
           <Like id={id} />
           <Share id={id} slug={slug} />
-        </MobileActions>
+        </div>
       </Level>
       <Columns>
         <Columns.Column size={showCompanyBlock ? 6 : 12}>
           <Heading size="6">About the job</Heading>
-          <ContentBox>
+          <Box className="content-box">
             <JobMeta postedDays={postedDays} data={job} />
             <hr />
             {description ? (
               <Content size="small" dangerouslySetInnerHTML={{ __html: description }}></Content>
             ) : (
               <Content>
-                We got nothing <FiFrown size={20} style={{ verticalAlign: "middle" }} color="orange" />
+                We got nothing{" "}
+                <FiFrown size={20} style={{ verticalAlign: "middle" }} color="orange" />
                 <p>
                   Click the <strong>Read More</strong> button below to see the Job posting
                 </p>
@@ -126,18 +126,18 @@ const Job = ({ id }) => {
                 Read more <FiArrowRight />
               </Button>
             </a>
-          </ContentBox>
+          </Box>
         </Columns.Column>
         {showCompanyBlock && (
           <Columns.Column size={6}>
             <Heading size={6}>About the company</Heading>
-            <ContentBox>
+            <Box className="content-box">
               {company.tagline && <Content>{company.tagline}</Content>}
               {
                 <Heading size="6" as="h6">
                   <Level>
                     {company.companySize && (
-                      <Level.Item>
+                      <Level.Item className="level-item-mobile-center">
                         <div className="tags has-addons">
                           <span className="tag is-info">size</span>
                           <span className="tag is-light">{company.companySize}</span>
@@ -145,7 +145,7 @@ const Job = ({ id }) => {
                       </Level.Item>
                     )}
                     {company.foundedYear && (
-                      <Level.Item>
+                      <Level.Item className="level-item-mobile-center">
                         <div className="tags has-addons">
                           <span className="tag is-info">founded in</span>
                           <span className="tag is-light">{company.foundedYear}</span>
@@ -153,13 +153,18 @@ const Job = ({ id }) => {
                       </Level.Item>
                     )}
                     {company.url && (
-                      <Level.Item>
+                      <Level.Item className="level-item-mobile-center">
                         <div className="tags">
                           <span className="tag">
-                            <A href={company.url} rel="noopener noreferrer" target="_blank">
+                            <a
+                              href={company.url}
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              style={{ color: "#333" }}
+                            >
                               {company.url}
                               <FiExternalLink size="15px" style={{ marginLeft: 5 }} />
-                            </A>
+                            </a>
                           </span>
                         </div>
                       </Level.Item>
@@ -175,7 +180,7 @@ const Job = ({ id }) => {
               {company.gdUrl && company.gdRating && (
                 <Level>
                   <Level.Side align="left">
-                    <LevelItem>
+                    <Level.Item className="level-item-mobile-center">
                       <IconContext.Provider value={{ size: "25px", color: "#0CAA41" }}>
                         {[...Array(parseInt(company.gdRating))].map((e, i) => (
                           <BsStarFill key={i} />
@@ -189,67 +194,82 @@ const Job = ({ id }) => {
                           <BsStar key={i} />
                         ))}
                       </IconContext.Provider>
-                    </LevelItem>
-                    <LevelItem>
+                    </Level.Item>
+                    <Level.Item className="level-item-mobile-center">
                       <Heading subtitle size={6} renderAs="h6">
                         rating on
                       </Heading>
-                      <A href={company.gdUrl} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={company.gdUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#333" }}
+                      >
                         <img
                           src="../glassdoor.png"
                           alt="Glassdoor logo"
                           style={{ width: 100, margin: "0 10px" }}
                         />
                         <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
-                      </A>
-                    </LevelItem>
+                      </a>
+                    </Level.Item>
                   </Level.Side>
                 </Level>
               )}
               {company.liUrl && company.liEmpCount && (
                 <Level>
                   <Level.Side align="left">
-                    <LevelItem>
+                    <Level.Item className="level-item-mobile-center">
                       <Heading>{company.liEmpCount}</Heading>
-                    </LevelItem>
-                    <LevelItem>
+                    </Level.Item>
+                    <Level.Item className="level-item-mobile-center">
                       <Heading subtitle size={6} renderAs="h6">
                         employees on
                       </Heading>
-                      <A href={company.liUrl} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={company.liUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#333" }}
+                      >
                         <img
                           src="../linkedin.png"
                           alt="LinkedIn logo"
                           style={{ width: 100, margin: "0 10px" }}
                         />
                         <FiExternalLink size="15px" style={{ verticalAlign: "middle" }} />
-                      </A>
-                    </LevelItem>
+                      </a>
+                    </Level.Item>
                   </Level.Side>
                 </Level>
               )}
-            </ContentBox>
+            </Box>
           </Columns.Column>
         )}
         <Level className="is-hidden-tablet">
-          <LevelItem>
+          <Level.Item className="level-item-mobile-center">
             <Link href="/" as="/" scroll={false}>
               <Button renderAs="a" color="info" size="small" outlined={true}>
                 Close
               </Button>
             </Link>
-          </LevelItem>
+          </Level.Item>
         </Level>
       </Columns>
-      <style jsx global>
-        {`
-          @media screen and (min-width: 768px) {
-            .job-name {
-              max-width: calc(100% - 215px);
-            }
-          }
-        `}
-      </style>
+      <style>{`
+        .mobile-actions {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 10px;
+        }
+        .content-box {
+          font-size: 0.8rem;
+        }
+        .content-box br {
+          display: none;
+        }
+      `}</style>
     </>
   )
 }
@@ -259,13 +279,25 @@ const JobContent = (props) => {
     <ErrorBoundary fallback={(error) => <div>Error: {JSON.stringify(error)}</div>}>
       <Suspense
         fallback={
-          <LevelItem>
+          <Level.Item className="level-item-mobile-center">
             <Loader style={{ width: 100, height: 100, marginTop: 100 }} />
-          </LevelItem>
+          </Level.Item>
         }
       >
         <Job {...props} />
       </Suspense>
+      <style>{`
+        @media screen and (max-width: 768px) {
+          .level-item-mobile-center {
+            text-align: center;
+            display: flex !important;
+          }
+          .content-box {
+            overflow-y: scroll;
+            max-height: calc(100vh - 250px);
+          }
+        }
+      `}</style>
     </ErrorBoundary>
   )
 }

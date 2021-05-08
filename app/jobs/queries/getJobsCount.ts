@@ -1,9 +1,8 @@
-import db, { FindManyJobArgs } from "db"
+import { resolver } from "blitz"
+import db, { Prisma } from "db"
 
-type GetJobsInput = Pick<FindManyJobArgs, "where" | "orderBy" | "skip" | "take">
+interface GetJobsInput extends Pick<Prisma.JobFindManyArgs, "where"> {}
 
-export default async function getJobsCount(args: GetJobsInput) {
-  const count = await db.job.count(args)
-
-  return count
-}
+export default resolver.pipe(async ({ where }: GetJobsInput) => {
+  return db.job.count({ where })
+})

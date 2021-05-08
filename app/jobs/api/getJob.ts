@@ -1,6 +1,6 @@
-import db, { FindUniqueJobArgs } from "db"
+import db, { Prisma } from "db"
 
-async function getJob(args: FindUniqueJobArgs) {
+async function getJob(args: Prisma.JobFindUniqueArgs) {
   const job = await db.job.findFirst(args)
 
   return job

@@ -1,9 +1,7 @@
 import React from "react"
-import { Link, Head } from "blitz"
+import { Link } from "blitz"
 import { Box, Media, Content, Container } from "react-bulma-components"
 import Modal from "react-modal"
-import styled from "styled-components"
-import { MobileActions } from "../styles/common"
 
 // Components
 import Logo from "./Logo"
@@ -14,20 +12,6 @@ import Apply from "./Apply"
 
 // Change Modal default styles
 Modal.defaultStyles.content.overflow = ""
-
-const JobBox = styled(Box)`
-  cursor: pointer;
-  border: 2px solid transparent;
-  :hover {
-    border: 2px solid gray;
-    opacity: 1;
-  }
-  ${(props) => (props.old ? "opacity: 0.6;" : "")}
-  ${(props) => (props.featured ? "background: rgba(32, 156, 238,0.2);" : "")}
-  a {
-    color: black;
-  }
-`
 
 const Job = (props) => {
   let { id, url, name, company, postedDate, type } = props.data
@@ -40,7 +24,9 @@ const Job = (props) => {
     postedDays = postedAge / 1000 / 60 / 60 / 24
   }
   return (
-    <JobBox old={postedDays > 31 ? 1 : 0} featured={type === "featured" ? 1 : 0}>
+    <Box
+      className={`job-box ${postedDays > 31 ? "old" : ""} ${type === "featured" ? "featured" : ""}`}
+    >
       <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
         <div>
           <Media renderAs="article" className="is-hidden-mobile">
@@ -73,15 +59,41 @@ const Job = (props) => {
               </div>
               <JobMeta {...props} postedDays={postedDays} select={true} />
             </Content>
-            <MobileActions>
+            <div className="mobile-actions">
               <Apply url={url} />
               <Like id={id} />
               <Share id={id} slug={slug} />
-            </MobileActions>
+            </div>
           </div>
         </div>
       </Link>
-    </JobBox>
+      <style>{`
+      .mobile-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .job-box {
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+      .job-box:hover {
+        border: 2px solid gray;
+        opacity: 1;
+      }
+      .job-box a {
+        color: black;
+      }
+      .job-box.old {
+        opacity: 0.6;
+      }
+      .job-box.featured {
+        background: rgba(32, 156, 238,0.2);
+      }
+      
+      `}</style>
+    </Box>
   )
 }
 

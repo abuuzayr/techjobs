@@ -1,6 +1,6 @@
-import db, { FindManyJobArgs } from "db"
+import db, { Prisma } from "db"
 
-async function getJobs(args: FindManyJobArgs) {
+async function getJobs(args: Prisma.JobFindManyArgs) {
   const jobs = await db.job.findMany(args)
 
   return jobs
