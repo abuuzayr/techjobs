@@ -5,7 +5,7 @@ import TagsSelect from "./TagsSelect"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
 import getTags from "../tags/queries/getTags"
-import { Container, Columns, Level, Button, Loader, Content } from "react-bulma-components"
+import { Container, Level, Button, Loader, Content } from "react-bulma-components"
 import ErrorBoundary from "app/components/ErrorBoundary"
 import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
@@ -16,7 +16,6 @@ const Jobs = (props) => {
   const SCROLL_OFFSET = 50
   const [page, setPage] = useState(0)
   const [totalJobsCount] = useQuery(getJobsCount, args)
-  const [allTags] = useQuery(getTags, {})
   const [selectedTags, setSelectedTags] = useState([])
   const [scrollTo, setScrollTo] = useState(props.scrollTo)
   const [scrollBehavior, setScrollBehavior] = useState("smooth")
@@ -51,7 +50,11 @@ const Jobs = (props) => {
     }
   }
 
-  const [jobs] = usePaginatedQuery(getJobs, { ...updatedArgs, take: JOBS_TO_SHOW * (page + 1), skip: 0 })
+  const [jobs] = usePaginatedQuery(getJobs, {
+    ...updatedArgs,
+    take: JOBS_TO_SHOW * (page + 1),
+    skip: 0,
+  })
 
   // get featured jobs
   let featuredArgs = JSON.parse(JSON.stringify(updatedArgs))
@@ -77,11 +80,9 @@ const Jobs = (props) => {
     }
   }, [search, tab, scrollTo])
 
-  const tags = allTags.map((tag) => tag.name)
-
   return (
     <Container style={{ padding: "2rem 2rem 0" }}>
-      <TagsSelect {...{ tags, selectedTags, setSelectedTags }} />
+      <TagsSelect {...{ selectedTags, setSelectedTags }} />
       {selectedTags.length > 0 && (
         <Level>
           <Level.Side align="left"></Level.Side>
