@@ -40,19 +40,6 @@ const NavBar = () => {
           </Link>
         </div>
       </Container>
-      <style>{`
-        .navbar-title {
-          color: white;
-          margin-bottom: 0 !important;
-          margin-right: 10px;
-          
-        }
-        .post-a-job {
-          position: absolute;
-          right: 20px;
-          top: 20px;
-        }
-      `}</style>
     </Navbar>
   )
 }

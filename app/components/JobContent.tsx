@@ -256,20 +256,6 @@ const Job = ({ id }) => {
           </Level.Item>
         </Level>
       </Columns>
-      <style>{`
-        .mobile-actions {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-top: 10px;
-        }
-        .content-box {
-          font-size: 0.8rem;
-        }
-        .content-box br {
-          display: none;
-        }
-      `}</style>
     </>
   )
 }
@@ -286,18 +272,6 @@ const JobContent = (props) => {
       >
         <Job {...props} />
       </Suspense>
-      <style>{`
-        @media screen and (max-width: 768px) {
-          .level-item-mobile-center {
-            text-align: center;
-            display: flex !important;
-          }
-          .content-box {
-            overflow-y: scroll;
-            max-height: calc(100vh - 250px);
-          }
-        }
-      `}</style>
     </ErrorBoundary>
   )
 }
