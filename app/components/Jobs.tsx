@@ -1,13 +1,15 @@
 import { Suspense, useState, useEffect } from "react"
 import { useQuery, usePaginatedQuery } from "blitz"
+import { Container, Button, Loader, Content, Level } from "react-bulma-components"
+import { IoMdHappy } from "react-icons/io"
+import { RiDownloadLine } from "react-icons/ri"
+
 import Job from "./Job"
 import TagsSelect from "./TagsSelect"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
-import getTags from "../tags/queries/getTags"
-import { Container, Level, Button, Loader, Content } from "react-bulma-components"
-import { IoMdHappy } from "react-icons/io"
-import { RiDownloadLine } from "react-icons/ri"
+import Filters from "app/components/JobFilters"
+import { SOURCES } from "app/pages/index"
 
 const Jobs = (props) => {
   const { args, search, tab } = props
@@ -18,10 +20,20 @@ const Jobs = (props) => {
   const [selectedTags, setSelectedTags] = useState([])
   const [scrollTo, setScrollTo] = useState(props.scrollTo)
   const [scrollBehavior, setScrollBehavior] = useState("smooth")
+  const [withSalary, setWithSalary] = useState(false)
+  const [sources, setSources] = useState(
+    SOURCES.filter((s) => !s.hasOwnProperty("via")).map((s) => s.name)
+  )
 
   useEffect(() => {
-    if (localStorage && localStorage.getItem("_tags")) {
-      setSelectedTags(JSON.parse(localStorage.getItem("_tags") || ""))
+    if (localStorage) {
+      if (localStorage.getItem("_tags")) {
+        setSelectedTags(JSON.parse(localStorage.getItem("_tags") || ""))
+      }
+      if (localStorage.getItem("_sources")) {
+        setSources(JSON.parse(localStorage.getItem("_sources") || ""))
+      }
+      setWithSalary(!!localStorage.getItem("_withSalary"))
     }
   }, [])
 
@@ -82,6 +94,12 @@ const Jobs = (props) => {
   return (
     <Container style={{ padding: "2rem 2rem 0" }}>
       <TagsSelect {...{ selectedTags, setSelectedTags }} />
+      <Filters
+        withSalary={withSalary}
+        setWithSalary={setWithSalary}
+        sources={sources}
+        setSources={setSources}
+      />
       {selectedTags.length > 0 && (
         <Level>
           <Level.Side align="left"></Level.Side>
