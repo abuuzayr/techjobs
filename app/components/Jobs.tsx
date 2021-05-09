@@ -1,5 +1,5 @@
 import { Suspense, useState, useEffect } from "react"
-import { useQuery, usePaginatedQuery } from "blitz"
+import { useQuery, useInfiniteQuery } from "blitz"
 import { Container, Button, Loader, Content, Level } from "react-bulma-components"
 import { IoMdHappy } from "react-icons/io"
 import { RiDownloadLine } from "react-icons/ri"
@@ -61,10 +61,11 @@ const Jobs = (props) => {
     }
   }
 
-  const [jobs] = usePaginatedQuery(getJobs, {
-    ...updatedArgs,
-    take: JOBS_TO_SHOW * (page + 1),
-    skip: 0,
+  const [
+    jobPages,
+    { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage },
+  ] = useInfiniteQuery(getJobs, (page = { ...updatedArgs, take: JOBS_TO_SHOW, skip: 0 }) => page, {
+    getNextPageParam: (lastPage) => lastPage.nextPage,
   })
 
   // get featured jobs
@@ -116,14 +117,16 @@ const Jobs = (props) => {
           </Level.Side>
         </Level>
       )}
-      {featuredJobs.map((job) => (
+      {featuredJobs.jobs.map((job) => (
         <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
       ))}
-      {jobs.map((job) => (
-        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-      ))}
+      {jobPages.map((page) =>
+        page.jobs.map((job) => (
+          <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
+        ))
+      )}
       <Level>
-        {jobs.length === jobsCount ? (
+        {!hasNextPage ? (
           <Level.Item>
             <IoMdHappy /> You have loaded all jobs!
           </Level.Item>
@@ -135,10 +138,11 @@ const Jobs = (props) => {
               onClick={() => {
                 setScrollTo(window.scrollY)
                 setScrollBehavior("auto")
-                setPage(page + 1)
+                fetchNextPage()
               }}
+              disabled={isFetching || isFetchingNextPage}
             >
-              <RiDownloadLine style={{ marginRight: 5 }} /> Load more jobs
+              {isFetchingNextPage ? "Loading more jobs..." : <><RiDownloadLine style={{ marginRight: 5 }} />Load more jobs</>}
             </Button>
           </Level.Item>
         )}
