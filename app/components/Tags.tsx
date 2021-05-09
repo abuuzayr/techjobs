@@ -30,7 +30,7 @@ const Tag = (props) => {
   })
 
   return (
-    <>
+    <div className="tags-block">
       {tags.length ? (
         <div
           className={`field is-grouped is-grouped-multiline ${
@@ -62,15 +62,7 @@ const Tag = (props) => {
       ) : (
         <></>
       )}
-      <style>{`
-      @media screen and (max-width: 768px) {
-        .tags-must-flex.field.is-grouped {
-          display: flex;
-          justify-content: center;
-        }
-      }
-    `}</style>
-    </>
+    </div>
   )
 }
 

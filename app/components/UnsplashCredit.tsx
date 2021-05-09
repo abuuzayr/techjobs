@@ -26,28 +26,6 @@ const UnsplashCredit = () => {
           <span>Peter Nguyen</span>
         </a>
       </Level.Side>
-      <style>{`
-        .styles-unsplash {
-          color: white;
-          padding: 4px 6px;
-          font-size: 12px;
-          line-height: 1.2;
-          border-radius: 3px;
-          opacity: 0.6;
-        }
-        .styles-unsplash span {
-          display: inline-block;
-          padding: 2px 3px;
-        }
-        .styles-unsplash span svg {
-          height: 12px;
-          width: auto;
-          position: relative;
-          vertical-align: middle;
-          top: -2px;
-          fill: white;
-        }
-      `}</style>
     </div>
   )
 }

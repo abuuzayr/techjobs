@@ -76,27 +76,6 @@ const JobMeta = (props) => {
           setSelectedTags={select && setSelectedTags}
         />
       )}
-      <style>{`
-        .img-source {
-          max-height: 16px;
-          margin-left: 5px;
-        }
-        .job-wrapper {
-          margin: 0.5em 0;
-          font-size: 0.8em;
-        }
-        @media screen and (max-width: 768px) {
-          .logo-level-item {
-            display: inline-block;
-          }
-          .logo-level-item + .logo-level-item {
-            margin-left: 5px;
-          }
-          .job-wrapper {
-            text-align: center;
-          }
-        }
-      `}</style>
     </>
   )
 }

@@ -50,28 +50,6 @@ const Footer = () => {
           </Container>
         </IconContext.Provider>
       </div>
-      <style>{`
-        .foot {
-          border-top: 1px solid #000;
-          padding: 30px;
-          margin: 50px 50px 0;
-        }
-        .foot a {
-          color: black;
-        }
-        @media screen and (max-width: 768px) {
-          .foot .level-item {
-            justify-content: center;
-            align-items: end;
-          }
-          .foot .level-left .level-item {
-            margin-bottom: 0;
-          }
-          .foot .level-left .level-item + .level-item {
-            margin-left: 10px;
-          }
-        }
-      `}</style>
     </footer>
   )
 }

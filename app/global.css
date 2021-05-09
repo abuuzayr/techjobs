@@ -1,3 +1,176 @@
+.styles-unsplash {
+  color: white;
+  padding: 4px 6px;
+  font-size: 12px;
+  line-height: 1.2;
+  border-radius: 3px;
+  opacity: 0.6;
+}
+.styles-unsplash span {
+  display: inline-block;
+  padding: 2px 3px;
+}
+.styles-unsplash span svg {
+  height: 12px;
+  width: auto;
+  position: relative;
+  vertical-align: middle;
+  top: -2px;
+  fill: white;
+}
+.foot {
+  border-top: 1px solid #000;
+  padding: 30px;
+  margin: 50px 50px 0;
+}
+.foot a {
+  color: black;
+}
+.mobile-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+.job-box {
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.job-box:hover {
+  border: 2px solid gray;
+  opacity: 1;
+}
+.job-box a {
+  color: black;
+}
+.job-box.old {
+  opacity: 0.6;
+}
+.job-box.featured {
+  background: rgba(32, 156, 238, 0.2);
+}
+.content-box {
+  font-size: 0.8rem;
+}
+.content-box br {
+  display: none;
+}
+.img-source {
+  max-height: 16px;
+  margin-left: 5px;
+}
+.job-wrapper {
+  margin: 0.5em 0;
+  font-size: 0.8em;
+}
+span.icon-slot {
+  margin-left: 10px;
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.company-placeholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+  border-radius: 10px;
+  background: aliceblue;
+  font-weight: 700;
+}
+.navbar-title {
+  color: white;
+  margin-bottom: 0 !important;
+  margin-right: 10px;
+}
+.post-a-job {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.share-icon-slot {
+  margin-left: 10px;
+  cursor: pointer;
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.share-bubble-notification {
+  position: absolute;
+  z-index: 99;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  color: black;
+  border: 1px solid rgba(10, 10, 10, 0.2);
+  padding: 0.25rem 2rem 0.5rem 0.25rem;
+  width: 210px;
+}
+.share-bubble-notification > a > svg {
+  height: 30px;
+  width: 30px;
+}
+.share-bubble-notification > a > div {
+  border-radius: 100%;
+  padding: 0.75em 0.75em;
+}
+.email-octopus-form-wrapper {
+  margin-top: 2rem;
+  padding: 3rem;
+  background: #f0f1f6;
+  text-align: center;
+}
+.email-octopus-form-wrapper .email-octopus-success-message:not(:empty),
+.email-octopus-form-wrapper .email-octopus-error-message:not(:empty) {
+  margin-bottom: 10px;
+}
+.email-octopus-form-wrapper .email-octopus-error-message {
+  color: #e74c3c;
+}
+.email-octopus-form-wrapper .email-octopus-form {
+  width: 100%;
+}
+.email-octopus-form-wrapper .email-octopus-form-row {
+  margin-bottom: 15px;
+}
+.email-octopus-form-wrapper .email-octopus-form-row-hp {
+  position: absolute;
+  left: -5000px;
+}
+.email-octopus-form-wrapper .email-octopus-form-row label {
+  display: block;
+}
+.email-octopus-form-wrapper .email-octopus-form-row input {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  height: 40px;
+  border: 2px solid #ccc;
+  font-size: 16px;
+}
+.email-octopus-form-wrapper .email-octopus-form-row-consent {
+  margin-top: 20px;
+}
+.email-octopus-form-wrapper .email-octopus-form-row-consent label {
+  vertical-align: middle;
+  margin-left: 5px;
+  font-size: 12px;
+}
+.email-octopus-form-wrapper .email-octopus-form-row-subscribe {
+  margin-top: 20px;
+}
+.email-octopus-form-wrapper .email-octopus-form-row-subscribe .email-octopus-form-wrapper button {
+  width: 200px;
+}
+.email-octopus-form-wrapper svg {
+  vertical-align: middle;
+}
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
   z-index: 99;
   overflow: hidden;
@@ -28,6 +201,38 @@
   }
   .level-item {
     text-align: center;
+  }
+  .foot .level-item {
+    justify-content: center;
+    align-items: end;
+  }
+  .foot .level-left .level-item {
+    margin-bottom: 0;
+  }
+  .foot .level-left .level-item + .level-item {
+    margin-left: 10px;
+  }
+
+  .level-item-mobile-center {
+    text-align: center;
+    display: flex !important;
+  }
+  .content-box {
+    overflow-y: scroll;
+    max-height: calc(100vh - 250px);
+  }
+  .logo-level-item {
+    display: inline-block;
+  }
+  .logo-level-item + .logo-level-item {
+    margin-left: 5px;
+  }
+  .job-wrapper {
+    text-align: center;
+  }
+  .tags-must-flex.field.is-grouped {
+    display: flex;
+    justify-content: center;
   }
 }
 @media screen and (min-width: 768px) {

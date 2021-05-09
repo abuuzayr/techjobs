@@ -48,59 +48,6 @@ const Subscribe = () => {
           </Button>
         </div>
       </form>
-      <style>{`
-        .email-octopus-form-wrapper {
-          margin-top: 2rem;
-          padding: 3rem;
-          background: #f0f1f6;
-          text-align: center;
-        }
-        .email-octopus-form-wrapper .email-octopus-success-message:not(:empty),
-        .email-octopus-form-wrapper .email-octopus-error-message:not(:empty) {
-          margin-bottom: 10px;
-        }
-        .email-octopus-form-wrapper .email-octopus-error-message {
-          color: #e74c3c;
-        }
-        .email-octopus-form-wrapper .email-octopus-form {
-          width: 100%;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row {
-          margin-bottom: 15px;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row-hp {
-          position: absolute;
-          left: -5000px;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row label {
-          display: block;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row input {
-          width: 100%;
-          max-width: 600px;
-          padding: 20px;
-          height: 40px;
-          border: 2px solid #ccc;
-          font-size: 16px;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row-consent {
-          margin-top: 20px;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row-consent label {
-          vertical-align: middle;
-          margin-left: 5px;
-          font-size: 12px;
-        }
-        .email-octopus-form-wrapper .email-octopus-form-row-subscribe {
-          margin-top: 20px;
-          .email-octopus-form-wrapper button {
-            width: 200px;
-          }
-        }
-        .email-octopus-form-wrapper svg {
-          vertical-align: middle;
-        }
-      `}</style>
     </div>
   )
 }
