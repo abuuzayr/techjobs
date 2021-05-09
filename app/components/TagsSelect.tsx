@@ -1,3 +1,5 @@
+import { useCallback } from "react"
+import { invoke } from "blitz"
 import AsyncSelect from "react-select/async"
 import makeAnimated from "react-select/animated"
 import { Level } from "react-bulma-components"
@@ -5,21 +7,43 @@ import getTags from "../tags/queries/getTags"
 
 const animatedComponents = makeAnimated()
 
-const promiseOptions = (inputValue) =>
-  new Promise(async (resolve) => {
-    if (!inputValue) resolve([])
-    const tags = await getTags({
-      where: {
-        name: {
-          contains: inputValue,
-        },
-      },
-    })
-    resolve(tags.map((tag) => ({ value: tag.name, label: tag.name })))
-  })
-
 const TagsSelect = (props) => {
   const { selectedTags, setSelectedTags } = props
+  const debounce = (func, wait) => {
+    var timeout
+    return function () {
+      var context = this,
+        args = arguments
+      var later = function () {
+        timeout = null
+        func.apply(context, args)
+      }
+      var callNow = !timeout
+      clearTimeout(timeout)
+      timeout = setTimeout(later, wait)
+      if (callNow) func.apply(context, args)
+    }
+  }
+
+  const promiseOptions = useCallback(
+    debounce((inputValue, callback) => {
+      getOptions(inputValue).then((options) => callback(options))
+    }, 500),
+    []
+  )
+
+  const getOptions = (inputValue) =>
+    new Promise(async (resolve) => {
+      if (!inputValue) resolve([])
+      const tags = await invoke(getTags, {
+        where: {
+          name: {
+            contains: inputValue,
+          },
+        },
+      })
+      resolve(tags.map((tag) => ({ value: tag.name, label: tag.name })))
+    })
 
   return (
     <Level>
@@ -33,7 +57,6 @@ const TagsSelect = (props) => {
           placeholder="Type to see options.."
           isMulti
           cacheOptions
-          defaultOptions
           closeMenuOnSelect={true}
           components={animatedComponents}
           loadOptions={promiseOptions}

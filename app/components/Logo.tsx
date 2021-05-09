@@ -11,20 +11,6 @@ const Logo = (props) => {
           </div>
         )}
       </figure>
-      <style>
-        {`
-        .company-placeholder {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2em;
-          border-radius: 10px;
-          background: aliceblue;
-          font-weight: 700;
-        }
-        `}
-      </style>
     </>
   )
 }

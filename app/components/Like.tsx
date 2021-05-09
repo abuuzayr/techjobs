@@ -30,17 +30,6 @@ const Like = (props) => {
           >
             {liked.includes(id) ? <FcLike size="2em" /> : <FcLikePlaceholder size="2em" />}
           </span>
-          <style>{`
-            span.icon-slot {
-              margin-left: 10px;
-              cursor: pointer;
-              align-items: center;
-              display: inline-flex;
-              justify-content: center;
-              height: 1.5rem;
-              width: 1.5rem;
-            }
-          `}</style>
         </>
       )}
     </LikedContext.Consumer>

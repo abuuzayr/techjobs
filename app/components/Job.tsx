@@ -52,7 +52,7 @@ const Job = (props) => {
           </Media>
           <div className="is-hidden-tablet" style={{ textAlign: "center" }}>
             <Logo job={props.data} style={{ margin: "0 auto" }} />
-            <Content style={{ marginTop: 10 }}>
+            <Content style={{ marginTop: 10 }} className="inner-content">
               {type === "featured" && <div className="heading">featured</div>}
               <div>
                 <strong>{name}</strong> @ <small>{company && company.name}</small>
@@ -67,32 +67,6 @@ const Job = (props) => {
           </div>
         </div>
       </Link>
-      <style>{`
-      .mobile-actions {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 10px;
-      }
-      .job-box {
-        cursor: pointer;
-        border: 2px solid transparent;
-      }
-      .job-box:hover {
-        border: 2px solid gray;
-        opacity: 1;
-      }
-      .job-box a {
-        color: black;
-      }
-      .job-box.old {
-        opacity: 0.6;
-      }
-      .job-box.featured {
-        background: rgba(32, 156, 238,0.2);
-      }
-      
-      `}</style>
     </Box>
   )
 }
