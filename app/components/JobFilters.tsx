@@ -47,7 +47,7 @@ const Filters = (props) => {
           </Box>
         </Level.Item>
       </Level.Side>
-      <Level.Side>
+      <Level.Side style={{ marginBottom: 10 }}>
         <Level.Item>
           <Box className="job-filter-text-box">
             <span className="job-filter-text">Filter: </span>
