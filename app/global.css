@@ -1,3 +1,14 @@
+.job-filter-label-text {
+  font-size: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.job-filter-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-right: 10px;
+}
 .styles-unsplash {
   color: white;
   padding: 4px 6px;
