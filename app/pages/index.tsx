@@ -21,40 +21,6 @@ type QueryArgs = {
   }
 }
 
-export const SOURCES = [
-  {
-    name: "Tech in Asia",
-    logoPath: "/TechInAsia-logo.svg",
-  },
-  {
-    name: "Adzuna",
-    logoPath: "/Adzuna-logo.svg",
-  },
-  {
-    name: "Stack Overflow",
-    logoPath: "/StackOverflow-logo.svg",
-  },
-  {
-    name: "eFinancialCareers",
-    logoPath: "/eFinancialCareers-logo.svg",
-  },
-  {
-    name: "JobsDB",
-    via: "Adzuna",
-    logoPath: "/jobsDB.png",
-  },
-  {
-    name: "JobsCentral",
-    via: "Adzuna",
-    logoPath: "/jobsCentral.png",
-  },
-  {
-    name: "JobStreet",
-    via: "Adzuna",
-    logoPath: "/jobstreet.png",
-  },
-]
-
 const Home: BlitzPage = () => {
   const router = useRouter()
   const [tab, setTab] = useState(router?.params?.tab || "all")

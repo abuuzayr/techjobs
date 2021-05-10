@@ -1,27 +1,44 @@
 import { Suspense, useState, useEffect } from "react"
-import { useQuery, usePaginatedQuery } from "blitz"
+import { useQuery, useInfiniteQuery } from "blitz"
+import { Container, Button, Loader, Content, Level } from "react-bulma-components"
+import { IoMdHappy } from "react-icons/io"
+import { RiDownloadLine } from "react-icons/ri"
+
 import Job from "./Job"
 import TagsSelect from "./TagsSelect"
 import getJobs from "../jobs/queries/getJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
-import getTags from "../tags/queries/getTags"
-import { Container, Level, Button, Loader, Content } from "react-bulma-components"
-import { IoMdHappy } from "react-icons/io"
-import { RiDownloadLine } from "react-icons/ri"
+import Filters from "app/components/JobFilters"
+import { SOURCES } from "app/core/constants"
 
 const Jobs = (props) => {
-  const { args, search, tab } = props
+  const {
+    args,
+    search,
+    tab,
+    selectedTags,
+    setSelectedTags,
+    withSalary,
+    setWithSalary,
+    sources,
+    setSources,
+    originalSources,
+  } = props
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
-  const [page, setPage] = useState(0)
   const [totalJobsCount] = useQuery(getJobsCount, args)
-  const [selectedTags, setSelectedTags] = useState([])
   const [scrollTo, setScrollTo] = useState(props.scrollTo)
   const [scrollBehavior, setScrollBehavior] = useState("smooth")
 
   useEffect(() => {
-    if (localStorage && localStorage.getItem("_tags")) {
-      setSelectedTags(JSON.parse(localStorage.getItem("_tags") || ""))
+    if (localStorage) {
+      if (localStorage.getItem("_tags")) {
+        setSelectedTags(JSON.parse(localStorage.getItem("_tags") || ""))
+      }
+      if (localStorage.getItem("_sources")) {
+        setSources(JSON.parse(localStorage.getItem("_sources") || ""))
+      }
+      setWithSalary(!!localStorage.getItem("_withSalary"))
     }
   }, [])
 
@@ -34,25 +51,60 @@ const Jobs = (props) => {
   } else {
     args["where"]["AND"] = [{ type: "aggregated" }]
   }
+  let objToAdd: any[] = []
   if (selectedTags.length) {
-    updatedArgs = {
-      ...args,
-      where: {
-        ...args.where,
-        AND: [
-          ...args.where.AND,
-          {
-            AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
-          },
-        ],
-      },
-    }
+    objToAdd.push({
+      AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+    })
   }
 
-  const [jobs] = usePaginatedQuery(getJobs, {
-    ...updatedArgs,
-    take: JOBS_TO_SHOW * (page + 1),
-    skip: 0,
+  if (sources.length !== originalSources.length) {
+    const excludes = originalSources.filter(source => !sources.includes(source.name))
+    objToAdd.push(
+      ...excludes.map((exclude) => ({
+        aggId: {
+          not: {
+            startsWith: exclude.aggPrefix,
+          },
+        },
+      }))
+    )
+  }
+
+  if (withSalary) {
+    objToAdd.push({
+      AND: [
+        {
+          salary: {
+            not: {
+              equals: null
+            }
+          },
+        },
+        {
+          salary: {
+            not: {
+              equals: ''
+            },
+          },
+        },
+      ],
+    })
+  }
+  
+  updatedArgs = {
+    ...args,
+    where: {
+      ...args.where,
+      AND: [...args.where.AND, ...objToAdd],
+    },
+  }
+
+  const [
+    jobPages,
+    { isFetching, isFetchingNextPage, fetchNextPage, hasNextPage },
+  ] = useInfiniteQuery(getJobs, (page = { ...updatedArgs, take: JOBS_TO_SHOW, skip: 0 }) => page, {
+    getNextPageParam: (lastPage) => lastPage.nextPage,
   })
 
   // get featured jobs
@@ -80,8 +132,7 @@ const Jobs = (props) => {
   }, [search, tab, scrollTo])
 
   return (
-    <Container style={{ padding: "2rem 2rem 0" }}>
-      <TagsSelect {...{ selectedTags, setSelectedTags }} />
+    <>
       {selectedTags.length > 0 && (
         <Level>
           <Level.Side align="left"></Level.Side>
@@ -98,14 +149,16 @@ const Jobs = (props) => {
           </Level.Side>
         </Level>
       )}
-      {featuredJobs.map((job) => (
+      {featuredJobs.jobs.map((job) => (
         <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
       ))}
-      {jobs.map((job) => (
-        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-      ))}
+      {jobPages.map((page) =>
+        page.jobs.map((job) => (
+          <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
+        ))
+      )}
       <Level>
-        {jobs.length === jobsCount ? (
+        {!hasNextPage ? (
           <Level.Item>
             <IoMdHappy /> You have loaded all jobs!
           </Level.Item>
@@ -117,29 +170,60 @@ const Jobs = (props) => {
               onClick={() => {
                 setScrollTo(window.scrollY)
                 setScrollBehavior("auto")
-                setPage(page + 1)
+                fetchNextPage()
               }}
+              disabled={isFetching || isFetchingNextPage}
             >
-              <RiDownloadLine style={{ marginRight: 5 }} /> Load more jobs
+              {isFetchingNextPage ? (
+                "Loading more jobs..."
+              ) : (
+                <>
+                  <RiDownloadLine style={{ marginRight: 5 }} />
+                  Load more jobs
+                </>
+              )}
             </Button>
           </Level.Item>
         )}
       </Level>
-    </Container>
+    </>
   )
 }
 
 const WrappedJobs = (props) => {
+  const originalSources = SOURCES.filter((s) => !s.hasOwnProperty("via"))
+  const [selectedTags, setSelectedTags] = useState([])
+  const [withSalary, setWithSalary] = useState(false)
+  const [sources, setSources] = useState(originalSources.map((s) => s.name))
+
   return (
-    <Suspense
-      fallback={
-        <Level.Item>
-          <Loader style={{ width: 100, height: 100, marginTop: 100 }} />
-        </Level.Item>
-      }
-    >
-      <Jobs {...props} />
-    </Suspense>
+    <Container style={{ padding: "2rem 2rem 0" }}>
+      <TagsSelect {...{ selectedTags, setSelectedTags }} />
+      <Filters
+        withSalary={withSalary}
+        setWithSalary={setWithSalary}
+        sources={sources}
+        setSources={setSources}
+      />
+      <Suspense
+        fallback={
+          <Level.Item>
+            <Loader style={{ width: 100, height: 100, marginTop: 100 }} />
+          </Level.Item>
+        }
+      >
+        <Jobs
+          {...props}
+          originalSources={originalSources}
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+          withSalary={withSalary}
+          setWithSalary={setWithSalary}
+          sources={sources}
+          setSources={setSources}
+        />
+      </Suspense>
+    </Container>
   )
 }
 

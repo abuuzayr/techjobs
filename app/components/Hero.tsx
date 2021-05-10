@@ -10,7 +10,7 @@ import { AiFillLike, AiOutlineProfile, AiFillCode } from "react-icons/ai"
 // Import components
 import NavBar from "./NavBar"
 import UnsplashCredit from "./UnsplashCredit"
-import { SOURCES } from "app/pages/index"
+import { SOURCES } from "app/core/constants"
 
 // Import queries
 import getJobsCount from "app/jobs/queries/getJobsCount"
@@ -190,7 +190,7 @@ const HeroComponent = (props) => {
           <Columns>
             <Columns.Column size={10} offset={1}>
               <div className="field" style={{ marginTop: 15 }} ref={heroRef}>
-                <p className="control has-icons-left has-icons-right">
+                <div className="control has-icons-left has-icons-right">
                   <ErrorHOC component={SearchInput} otherProps={{ propsSearch: props.search }} />
                   <span className="icon is-left">
                     <FiSearch />
@@ -207,7 +207,7 @@ const HeroComponent = (props) => {
                   >
                     <FiDelete />
                   </span>
-                </p>
+                </div>
                 {/* TODO: Add quick search buttons for languages, etc. */}
               </div>
             </Columns.Column>
@@ -223,7 +223,7 @@ const HeroComponent = (props) => {
               </Level.Item>
             </Level>
             <Level>
-              {SOURCES.map((source, index) => (
+              {SOURCES.slice(0,7).map((source, index) => (
                 <Level.Item key={source.logoPath} className={index > 4 ? "is-hidden-touch" : ""}>
                   <img
                     src={source.logoPath}
