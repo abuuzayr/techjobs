@@ -4,9 +4,9 @@ import {
   useRouter,
   ErrorFallbackProps,
   CSRFTokenMismatchError,
+  useQueryErrorResetBoundary
 } from "blitz"
 import { ErrorBoundary } from "react-error-boundary"
-import { queryCache } from "react-query"
 import "react-bulma-components/dist/react-bulma-components.min.css"
 import "../global.css"
 import ErrorRedirectHome from "app/core/components/ErrorRedirectHome"
@@ -15,6 +15,7 @@ import { usePanelbear } from "app/hooks/usePanelbear"
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
   const router = useRouter()
+  const { reset } = useQueryErrorResetBoundary()
   // Load Panelbear only once during the app lifecycle
   usePanelbear(process.env.NEXT_PUBLIC_PANELBEAR_SITE_ID, {})
 
@@ -22,11 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ErrorBoundary
       FallbackComponent={RootErrorFallback}
       resetKeys={[router.asPath]}
-      onReset={() => {
-        // This ensures the Blitz useQuery hooks will automatically refetch
-        // data any time you reset the error boundary
-        queryCache.resetErrorBoundaries()
-      }}
+      onReset={reset}
     >
       {getLayout(<Component {...pageProps} />)}
     </ErrorBoundary>
