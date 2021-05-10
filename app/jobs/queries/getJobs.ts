@@ -13,6 +13,7 @@ export default resolver.pipe(async ({ where, orderBy, skip = 0, take = 25 }: Get
     query: (paginateArgs) =>
       db.job.findMany({
         ...paginateArgs,
+        where,
         include: {
           company: true,
           tags: true,
