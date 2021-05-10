@@ -1,10 +1,10 @@
 {
-  "name": "techjobs",
+  "name": "techjobs.sg",
   "version": "1.0.0",
   "scripts": {
     "dev": "blitz dev",
-    "build": "blitz build",
-    "start": "blitz start",
+    "build": "NODE_ENV=production blitz prisma migrate deploy --preview-feature && blitz build",
+    "start": "blitz start --port $PORT",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest --passWithNoTests",
@@ -24,9 +24,10 @@
     ]
   },
   "dependencies": {
-    "prisma": "~2.20",
-    "@prisma/client": "~2.20",
-    "blitz": "0.34.3",
+    "@panelbear/panelbear-js": "1.2.0",
+    "@prisma/cli": "~2.14",
+    "babel-plugin-styled-components": "1.12.0",
+    "final-form": "4.20.2",
     "react": "0.0.0-experimental-6a589ad71",
     "react-dom": "0.0.0-experimental-6a589ad71",
     "react-error-boundary": "3.1.3",
