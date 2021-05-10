@@ -10,10 +10,13 @@ import { queryCache } from "react-query"
 import "react-bulma-components/dist/react-bulma-components.min.css"
 import "../global.css"
 import ErrorRedirectHome from "app/core/components/ErrorRedirectHome"
+import { usePanelbear } from "app/hooks/usePanelbear"
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
   const router = useRouter()
+  // Load Panelbear only once during the app lifecycle
+  usePanelbear(process.env.NEXT_PUBLIC_PANELBEAR_SITE_ID, {})
 
   return (
     <ErrorBoundary
