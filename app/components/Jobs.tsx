@@ -54,7 +54,7 @@ const Jobs = (props) => {
   let objToAdd: any[] = []
   if (selectedTags.length) {
     objToAdd.push({
-      "AND": selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
+      AND: selectedTags.map((tag) => ({ tags: { some: { name: { equals: tag } } } })),
     })
   }
 
@@ -70,6 +70,28 @@ const Jobs = (props) => {
       }))
     )
   }
+
+  if (withSalary) {
+    objToAdd.push({
+      AND: [
+        {
+          salary: {
+            not: {
+              equals: null
+            }
+          },
+        },
+        {
+          salary: {
+            not: {
+              equals: ''
+            },
+          },
+        },
+      ],
+    })
+  }
+  
   updatedArgs = {
     ...args,
     where: {
