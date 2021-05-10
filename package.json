@@ -8,7 +8,8 @@
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest --passWithNoTests",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
   },
   "prisma": {
     "schema": "db/schema.prisma"
@@ -16,12 +17,6 @@
   "prettier": {
     "semi": false,
     "printWidth": 100
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && pretty-quick --staged",
-      "pre-push": "tsc && npm run lint && npm run test"
-    }
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
@@ -31,34 +26,32 @@
   "dependencies": {
     "@panelbear/panelbear-js": "1.2.0",
     "@prisma/cli": "~2.14",
-    "@prisma/client": "~2.19",
     "babel-plugin-styled-components": "1.12.0",
-    "blitz": "0.33.1",
     "final-form": "4.20.2",
-    "prisma": "~2.19",
     "react": "0.0.0-experimental-6a589ad71",
-    "react-bulma-components": "3.4.0",
     "react-dom": "0.0.0-experimental-6a589ad71",
-    "react-error-boundary": "3.1.1",
+    "react-error-boundary": "3.1.3",
+    "typescript": "~4.2",
+    "zod": "1.11.17",
+    "final-form": "4.20.2",
     "react-final-form": "6.5.3",
+    "react-bulma-components": "3.4.0",
     "react-icons": "4.1.0",
     "react-modal": "3.12.1",
     "react-remove-scroll": "2.4.1",
     "react-select": "4.0.2",
-    "react-social-sharing": "3.3.0",
-    "typescript": "~4.1",
-    "zod": "1.11.13"
+    "react-social-sharing": "3.3.0"
   },
   "devDependencies": {
+    "@types/react": "17.0.5",
     "@types/preview-email": "2.0.0",
-    "@types/react": "17.0.3",
-    "eslint": "7.24.0",
-    "husky": "4.3.8",
+    "eslint": "7.26.0",
+    "husky": "6.0.0",
     "lint-staged": "10.5.4",
     "prettier": "2.2.1",
-    "prettier-plugin-prisma": "0.7.0",
     "pretty-quick": "3.1.0",
-    "preview-email": "3.0.4"
+    "preview-email": "3.0.4",
+    "prettier-plugin-prisma": "0.7.0"
   },
   "private": true
 }

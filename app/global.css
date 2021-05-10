@@ -1,3 +1,20 @@
+
+.job-filter-text-box {
+  display: flex;
+  place-items: center;
+}
+.job-filter-label-text {
+  font-size: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.job-filter-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-right: 10px;
+  margin-top: 4px;
+}
 .styles-unsplash {
   color: white;
   padding: 4px 6px;
@@ -233,6 +250,13 @@ span.icon-slot {
   .tags-must-flex.field.is-grouped {
     display: flex;
     justify-content: center;
+  }
+  .job-filter-text-box {
+    padding: 0.5rem 1rem;
+  }
+  .job-filters, .filter-labels {
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 @media screen and (min-width: 768px) {
