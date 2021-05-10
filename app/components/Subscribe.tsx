@@ -18,7 +18,7 @@ const Subscribe = () => {
       <form
         method="post"
         action="https://emailoctopus.com/lists/d94d7bfc-b4f4-11ea-a3d0-06b4694bee2a/members/embedded/1.3/add"
-        className="email-octopus-form"
+        className="email-octopus-form bound"
         data-sitekey="6LdYsmsUAAAAAPXVTt-ovRsPIJ_IVhvYBBhGvRV6"
       >
         <p className="email-octopus-error-message"></p>
