@@ -27,6 +27,7 @@
     "prisma": "~2.20",
     "@prisma/client": "~2.20",
     "blitz": "0.34.3",
+    "@panelbear/panelbear-js": "1.2.0",
     "react": "0.0.0-experimental-6a589ad71",
     "react-dom": "0.0.0-experimental-6a589ad71",
     "react-error-boundary": "3.1.3",
