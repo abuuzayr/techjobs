@@ -11,6 +11,8 @@ import LikedContext from "../components/LikedContext"
 import ContentNotFound from "../components/ContentNotFound"
 import About from "../components/About"
 import Resources from "../components/Resources"
+import { JobForm } from "app/jobs/components/JobForm"
+import { NewJob } from "app/jobs/validations"
 
 if (process.env.NODE_ENV !== "test") Modal.setAppElement("#__next")
 
@@ -73,9 +75,7 @@ const Home: BlitzPage = () => {
       {tab === "about" && <About />}
       {tab === "resources" && <Resources />}
       {tab === "post" && (
-        <div
-          dangerouslySetInnerHTML={{ __html: process.env.NEXT_PUBLIC_FORM_EMBED_IFRAME || "" }}
-        />
+        <JobForm submitText="Proceed to payment (S$49)" schema={NewJob} initialValues={{}} onSubmit={async (values) => {console.log(values)}} />
       )}
       <Footer />
       {
