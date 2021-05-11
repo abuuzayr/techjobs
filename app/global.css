@@ -269,4 +269,7 @@ span.icon-slot {
   .job-name {
     max-width: calc(100% - 215px);
   }
+  .new-job-form {
+   max-width: 600px; 
+  }
 }
