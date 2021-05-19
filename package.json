@@ -40,7 +40,11 @@
     "react-modal": "3.12.1",
     "react-remove-scroll": "2.4.1",
     "react-select": "4.0.2",
-    "react-social-sharing": "3.3.0"
+    "react-social-sharing": "3.3.0",
+    "light-toast": "0.3.3",
+    "stripe": "8.148.0",
+    "@stripe/react-stripe-js": "1.4.0",
+    "@stripe/stripe-js": "1.14.0"
   },
   "devDependencies": {
     "@types/react": "17.0.5",
