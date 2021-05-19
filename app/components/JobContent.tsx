@@ -15,7 +15,7 @@ import Logo from "./Logo"
 import incrementJob from "app/jobs/mutations/incrementJob"
 import { Job as JobType } from "db"
 
-const Job = ({ id }) => {
+const Job = ({ id, router }) => {
   // Get the ID in integer
   // Parse int strips from the first non-number
   id = parseInt(id)
@@ -60,7 +60,7 @@ const Job = ({ id }) => {
         </title>
       </Head>
       <div style={{ textAlign: "right" }} className="is-hidden-tablet">
-        <Link href="/" as="/" scroll={false}>
+        <Link href={router?.query?.referrer|| "/"} scroll={false}>
           <a>
             <MdClose size={30} color="black" />
           </a>
@@ -91,7 +91,7 @@ const Job = ({ id }) => {
             <Apply url={url} />
           </Level.Item>
           <Level.Item className="is-hidden-mobile">
-            <Link href="/" as="/" scroll={false}>
+            <Link href={router?.query?.referrer || "/"} scroll={false}>
               <a>
                 <MdClose size={30} color="black" />
               </a>
