@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "blitz"
+import { Link, useRouter } from "blitz"
 import { Box, Media, Content, Container } from "react-bulma-components"
 import Modal from "react-modal"
 
@@ -14,6 +14,7 @@ import Apply from "./Apply"
 Modal.defaultStyles.content.overflow = ""
 
 const Job = (props) => {
+  const router = useRouter()
   let { id, url, name, company, postedDate, type } = props.data
   const slug = name.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()
 
@@ -26,8 +27,9 @@ const Job = (props) => {
   return (
     <Box
       className={`job-box ${postedDays > 31 ? "old" : ""} ${type === "featured" ? "featured" : ""}`}
+      onClick={() => props.setScrollTo(window.scrollY)}
     >
-      <Link href={`/?jobId=${id}`} as={`/jobs/${id}-${slug}`} scroll={false}>
+      <Link href={`/jobs/${id}-${slug}?referrer=${router.asPath}`} scroll={false}>
         <div>
           <Media renderAs="article" className="is-hidden-mobile">
             <Media.Item position="left">
