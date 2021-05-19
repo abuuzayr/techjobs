@@ -109,8 +109,8 @@ const HeroComponent = (props) => {
   const pushRoute = (clear = false, search = "") => {
     const query = getQueryStr(search)
     router.push(
-      `/?tab=${props.tab}&${!clear && query ? query : ""}`,
       `/category/${props.tab}${!clear && query ? `?${query}` : ""}`,
+      undefined,
       { shallow: true }
     )
   }
@@ -247,8 +247,7 @@ const HeroComponent = (props) => {
               {tabs.map((li) => (
                 <li key={li.id} className={props.tab === li.id ? "is-active" : ""}>
                   <Link
-                    href={`/?tab=${li.id}${queryStr ? `&${queryStr}` : ""}`}
-                    as={`/category/${li.id}${queryStr ? `?${queryStr}` : ""}`}
+                    href={`/category/${li.id}${queryStr ? `?${queryStr}` : ""}`}
                     scroll={false}
                   >
                     <a style={{ color: props.tab === li.id ? "#333" : "" }}>
@@ -267,7 +266,7 @@ const HeroComponent = (props) => {
                 </li>
               ))}
               <li className={props.tab === "resources" ? "is-active" : ""}>
-                <Link href={`/?tab=resources`} as={`/category/resources`} scroll={false}>
+                <Link href={`/category/resources`} scroll={false}>
                   <a style={{ color: props.tab === "resources" ? "#333" : "" }}>
                     <div className="icon-wrapper">
                       <AiOutlineProfile />
