@@ -41,10 +41,12 @@ export async function getStaticPaths() {
         gt: new Date(new Date().getTime() - 3 * 30 * 24 * 60 * 60 * 1000).toISOString(),
       },
     },
-    select: { id: true },
+    select: { id: true, name: true },
   })
   return {
-    paths: jobs.map((job) => ({ params: { jobId: `${job.id}` } })),
+    paths: jobs.map((job) => ({
+      params: { jobId: `${job.id}-${job.name?.replace(/[^A-Z0-9]+/gi, "-").toLowerCase()}` },
+    })),
     fallback: true,
   }
 }
