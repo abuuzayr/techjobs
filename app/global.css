@@ -362,7 +362,16 @@ span.icon-slot {
 
 @media only screen and (max-width: 600px) {
   form {
-    width: 80vw;
+    width: 100%;
+  }
+  .field .is-grouped {
+    flex-wrap: wrap;
+  }
+  .field .is-grouped .control + .control {
+    margin-top: 1rem;
+  }
+  .field .control {
+    width: 100%;
   }
 }
 

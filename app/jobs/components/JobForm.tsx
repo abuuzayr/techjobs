@@ -70,7 +70,7 @@ export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
       <Head>
         <title>Post a new job | techjobs.sg</title>
       </Head>
-      <Container style={{ padding: "2rem 2rem 0" }} className="new-job-form">
+      <Container style={{ padding: "2rem" }} className="new-job-form">
         <Heading>Post a featured job</Heading>
         <Heading subtitle>
           &mdash; Featured jobs always appear at the top
@@ -98,13 +98,25 @@ export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
             name="tags"
             placeholder="Enter comma delimited tags, e.g. java, kafka, react.."
           />
-          <BulmaForm.Field kind="group">
-            <BulmaForm.Control>
-              <LabeledTextField label="Salary Min ($)" name="salaryMin" placeholder="5000" type="number" />
-            </BulmaForm.Control>
-            <BulmaForm.Control>
-              <LabeledTextField label="Salary Max ($)" name="salaryMax" placeholder="10000" type="number" />
-            </BulmaForm.Control>
+          <BulmaForm.Field>
+            <BulmaForm.Field kind="group">
+              <BulmaForm.Control>
+                <LabeledTextField
+                  label="Salary Min ($)"
+                  name="salaryMin"
+                  placeholder="5000"
+                  type="number"
+                />
+              </BulmaForm.Control>
+              <BulmaForm.Control>
+                <LabeledTextField
+                  label="Salary Max ($)"
+                  name="salaryMax"
+                  placeholder="10000"
+                  type="number"
+                />
+              </BulmaForm.Control>
+            </BulmaForm.Field>
           </BulmaForm.Field>
           <LabeledTextField
             label="Job / Company avatar "
@@ -161,7 +173,7 @@ export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
                   setProcessing,
                   disabled,
                   setDisabled,
-                  submit
+                  submit,
                 }}
               />
               {error && <BulmaForm.Help color="danger">{error}</BulmaForm.Help>}
