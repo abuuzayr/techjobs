@@ -25,7 +25,7 @@ const NavBar = () => {
         </Navbar.Brand>
         <Navbar.Container position="end" className="is-hidden-touch">
           <Navbar.Item style={{ backgroundColor: "transparent" }} renderAs="div">
-            <Link href="/?tab=post" as="/category/post" scroll={false}>
+            <Link href="/category/post#top" scroll={false}>
               <a className="heading" style={{ color: "white" }}>
                 <IoIosSend style={{ marginRight: 5 }} /> Post a Job
               </a>
@@ -33,7 +33,7 @@ const NavBar = () => {
           </Navbar.Item>
         </Navbar.Container>
         <div className="is-hidden-desktop post-a-job">
-          <Link href="/?tab=post" as="/category/post" scroll={false}>
+          <Link href="/category/post#top" scroll={false}>
             <a className="heading" style={{ color: "white" }}>
               <IoIosSend style={{ marginRight: 5 }} /> Post a Job
             </a>

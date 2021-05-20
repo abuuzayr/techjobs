@@ -6,10 +6,11 @@ import { RiDownloadLine } from "react-icons/ri"
 
 import Job from "./Job"
 import TagsSelect from "./TagsSelect"
-import getJobs from "../jobs/queries/getJobs"
+import getJobs from "../jobs/queries/getPaginatedJobs"
 import getJobsCount from "../jobs/queries/getJobsCount"
 import Filters from "app/components/JobFilters"
 import { SOURCES } from "app/core/constants"
+import ScrollToContext from "app/components/ScrollToContext"
 
 const Jobs = (props) => {
   const {
@@ -27,7 +28,7 @@ const Jobs = (props) => {
   const JOBS_TO_SHOW = 20
   const SCROLL_OFFSET = 50
   const [totalJobsCount] = useQuery(getJobsCount, args)
-  const [scrollTo, setScrollTo] = useState(props.scrollTo)
+  const [scrollTo, setScrollTo] = useState(0)
   const [scrollBehavior, setScrollBehavior] = useState("smooth")
 
   useEffect(() => {
@@ -58,38 +59,40 @@ const Jobs = (props) => {
     })
   }
 
-  if (sources.length !== originalSources.length) {
-    const excludes = originalSources.filter(source => !sources.includes(source.name))
-    objToAdd.push(
-      ...excludes.map((exclude) => ({
-        aggId: {
-          not: {
-            startsWith: exclude.aggPrefix,
-          },
-        },
-      }))
-    )
-  }
-
-  if (withSalary) {
-    objToAdd.push({
-      AND: [
-        {
-          salary: {
+  if (tab === "all") {
+    if (sources.length !== originalSources.length) {
+      const excludes = originalSources.filter(source => !sources.includes(source.name))
+      objToAdd.push(
+        ...excludes.map((exclude) => ({
+          aggId: {
             not: {
-              equals: null
-            }
-          },
-        },
-        {
-          salary: {
-            not: {
-              equals: ''
+              startsWith: exclude.aggPrefix,
             },
           },
-        },
-      ],
-    })
+        }))
+      )
+    }
+  
+    if (withSalary) {
+      objToAdd.push({
+        AND: [
+          {
+            salary: {
+              not: {
+                equals: null
+              }
+            },
+          },
+          {
+            salary: {
+              not: {
+                equals: ''
+              },
+            },
+          },
+        ],
+      })
+    }
   }
   
   updatedArgs = {
@@ -132,61 +135,68 @@ const Jobs = (props) => {
   }, [search, tab, scrollTo])
 
   return (
-    <>
-      {selectedTags.length > 0 && (
-        <Level>
-          <Level.Side align="left"></Level.Side>
-          <Level.Side align="right">
-            <Content size="small">
-              {jobsCount ? (
-                <p style={{ margin: "0 10px 0 0" }}>
-                  {jobsCount} / {totalJobsCount} {totalJobsCount > 1 ? "total jobs" : "job"}
-                </p>
+    <ScrollToContext.Consumer>
+      {({ scrollTo: scrollToContext, setScrollTo: setScrollToContext }) => {
+        setScrollTo(scrollToContext)
+        return (
+          <>
+            {selectedTags.length > 0 && (
+              <Level>
+                <Level.Side align="left"></Level.Side>
+                <Level.Side align="right">
+                  <Content size="small">
+                    {jobsCount ? (
+                      <p style={{ margin: "0 10px 0 0" }}>
+                        {jobsCount} / {totalJobsCount} {totalJobsCount > 1 ? "total jobs" : "job"}
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                  </Content>
+                </Level.Side>
+              </Level>
+            )}
+            {featuredJobs.jobs.map((job) => (
+              <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags, setScrollTo: setScrollToContext }} />
+            ))}
+            {tab === "all" && jobPages.map((page) =>
+              page.jobs.map((job) => (
+                <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags, setScrollTo: setScrollToContext }} />
+              ))
+            )}
+            <Level>
+              {!hasNextPage ? (
+                <Level.Item>
+                  <IoMdHappy /> You have loaded all jobs!
+                </Level.Item>
               ) : (
-                <></>
+                <Level.Item>
+                  <Button
+                    outlined={true}
+                    color="info"
+                    onClick={() => {
+                      setScrollToContext(window.scrollY)
+                      setScrollBehavior("auto")
+                      fetchNextPage()
+                    }}
+                    disabled={isFetching || isFetchingNextPage}
+                  >
+                    {isFetchingNextPage ? (
+                      "Loading more jobs..."
+                    ) : (
+                      <>
+                        <RiDownloadLine style={{ marginRight: 5 }} />
+                        Load more jobs
+                      </>
+                    )}
+                  </Button>
+                </Level.Item>
               )}
-            </Content>
-          </Level.Side>
-        </Level>
-      )}
-      {featuredJobs.jobs.map((job) => (
-        <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-      ))}
-      {jobPages.map((page) =>
-        page.jobs.map((job) => (
-          <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags }} />
-        ))
-      )}
-      <Level>
-        {!hasNextPage ? (
-          <Level.Item>
-            <IoMdHappy /> You have loaded all jobs!
-          </Level.Item>
-        ) : (
-          <Level.Item>
-            <Button
-              outlined={true}
-              color="info"
-              onClick={() => {
-                setScrollTo(window.scrollY)
-                setScrollBehavior("auto")
-                fetchNextPage()
-              }}
-              disabled={isFetching || isFetchingNextPage}
-            >
-              {isFetchingNextPage ? (
-                "Loading more jobs..."
-              ) : (
-                <>
-                  <RiDownloadLine style={{ marginRight: 5 }} />
-                  Load more jobs
-                </>
-              )}
-            </Button>
-          </Level.Item>
-        )}
-      </Level>
-    </>
+            </Level>
+          </>
+        )
+      }}
+    </ScrollToContext.Consumer>
   )
 }
 
@@ -199,12 +209,15 @@ const WrappedJobs = (props) => {
   return (
     <Container style={{ padding: "2rem 2rem 0" }}>
       <TagsSelect {...{ selectedTags, setSelectedTags }} />
-      <Filters
-        withSalary={withSalary}
-        setWithSalary={setWithSalary}
-        sources={sources}
-        setSources={setSources}
-      />
+      {
+        props.tab === "all" &&
+        <Filters
+          withSalary={withSalary}
+          setWithSalary={setWithSalary}
+          sources={sources}
+          setSources={setSources}
+        />
+      }
       <Suspense
         fallback={
           <Level.Item>

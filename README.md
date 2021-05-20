@@ -27,7 +27,7 @@ By listing jobs from as many places as we can!
 
 ### Want to list a job?
 
-We're happy to help. Post a job <a href="https://techjobs.sg/category/post" target="_blank">here</a> and it will appear as a _featured_ job at the top of searches.
+We're happy to help. Post a job <a href="https://techjobs.sg/category/post#top" target="_blank">here</a> and it will appear as a _featured_ job at the top of searches.
 
 ## Aggregated job sources
 

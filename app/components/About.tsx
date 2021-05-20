@@ -52,7 +52,7 @@ const About = (props) => {
                 <Heading>Want to list a job?</Heading>
                 <Heading subtitle>
                   We're happy to help. Post a job{" "}
-                  <Link href="/?tab=post" as="/category/post" scroll={false}>
+                  <Link href="/category/post#top" scroll={false}>
                     <a>here</a>
                   </Link>{" "}
                   and it will appear as a <strong>featured</strong> job at the top of searches.
