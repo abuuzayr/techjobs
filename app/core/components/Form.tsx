@@ -2,6 +2,7 @@ import { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
 export { FORM_ERROR } from "final-form"
+import { Form as BulmaForm, Button } from "react-bulma-components"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
@@ -12,6 +13,10 @@ export interface FormProps<S extends z.ZodType<any, any>>
   schema?: S
   onSubmit: FinalFormProps<z.infer<S>>["onSubmit"]
   initialValues?: FinalFormProps<z.infer<S>>["initialValues"]
+  disabled?: boolean
+  processing?: boolean
+  succeeded?: boolean,
+  error?: string
 }
 
 export function Form<S extends z.ZodType<any, any>>({
@@ -20,6 +25,10 @@ export function Form<S extends z.ZodType<any, any>>({
   schema,
   initialValues,
   onSubmit,
+  disabled,
+  processing, 
+  succeeded,
+  error,
   ...props
 }: FormProps<S>) {
   return (
@@ -46,16 +55,10 @@ export function Form<S extends z.ZodType<any, any>>({
           )}
 
           {submitText && (
-            <button type="submit" disabled={submitting}>
-              {submitText}
-            </button>
+            <BulmaForm.Control>
+              <Button color="link" disabled={submitting || disabled || processing || succeeded || !!error}>{succeeded ? "Job created" : submitText}</Button>
+            </BulmaForm.Control>
           )}
-
-          <style global jsx>{`
-            .form > * + * {
-              margin-top: 1rem;
-            }
-          `}</style>
         </form>
       )}
     />
