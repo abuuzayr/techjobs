@@ -80,6 +80,7 @@ const TagsSelect = (props) => {
               width: "100%",
             }),
           }}
+          aria-label="filter by tags"
         />
       </Level.Item>
     </Level>
