@@ -25,13 +25,11 @@ export const LabeledTextAreaField = forwardRef<HTMLInputElement, LabeledTextArea
 
     return (
       <Form.Field {...outerProps}>
-        <Form.Label>{label}</Form.Label>
+        <Form.Label style={{ fontWeight: "normal" }}>{label}</Form.Label>
         <Form.Control>
-          <Form.Textarea disabled={submitting} {...props} ref={ref} />
+          <Form.Textarea disabled={submitting} {...input} {...props} ref={ref} />
         </Form.Control>
-        {touched && normalizedError && (
-          <Form.Help color="error">{normalizedError}</Form.Help>
-        )}
+        {normalizedError && <Form.Help color="danger">{normalizedError}</Form.Help>}
       </Form.Field>
     )
   }
