@@ -1,12 +1,70 @@
-import { Head } from "blitz"
-import { Form, FormProps } from "app/core/components/Form"
+import { useState, useEffect } from "react"
+import { Head, useMutation, useRouter } from "blitz"
+import { Form, FormProps, FORM_ERROR } from "app/core/components/Form"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { LabeledTextAreaField } from "app/core/components/LabeledTextAreaField"
 import * as z from "zod"
 export { FORM_ERROR } from "app/core/components/Form"
 import { Container, Form as BulmaForm, Heading } from "react-bulma-components"
+import createJob from "app/jobs/mutations/createJob"
+import Toast from 'light-toast';
+
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
+import CheckoutForm from "./CheckoutForm"
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "")
 
 export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
+  const router = useRouter()
+  const [succeeded, setSucceeded] = useState(false)
+  const [error, setError] = useState("")
+  const [processing, setProcessing] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+  const [submit, setSubmit] = useState(false)
+  const [values, setValues] = useState({})
+  const [createJobMutation] = useMutation(createJob)
+  
+  const onSubmitWithPayment = (values) => {
+    setValues(values)
+    setSubmit(true)
+  }
+
+  useEffect(() => {
+    if (processing) {
+      Toast.loading('Processing payment...')
+    } else {
+      Toast.hide()
+    }
+  }, [processing])
+
+  useEffect(() => {
+    async function submitValues() {
+      try {
+        // @ts-ignore
+        const newJob = await createJobMutation({...values, type: "featured"})
+        if (newJob) {
+          Toast.hide()
+          Toast.success('Featured job added successfully!')
+          router.push('/category/featured')
+        } else {
+          Toast.hide()
+          Toast.fail("Error adding job! Please contact us at hello@techjobs.sg", Infinity)
+        }
+      } catch (error) {
+        Toast.hide()
+        Toast.fail("Error adding job! Please contact us at hello@techjobs.sg", Infinity)
+        return { [FORM_ERROR]: error.toString() }
+      }
+      Toast.hide()
+    }
+    if (succeeded) {
+      Toast.loading("Adding featured job")
+      submitValues()
+    } else {
+      Toast.hide()
+    }
+  }, [succeeded])
   return (
     <>
       <Head>
@@ -19,10 +77,14 @@ export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
           <br />
           &mdash; For only $49
         </Heading>
-        <Form<S> {...props}>
+        <Form<S>
+          {...props}
+          {...{ disabled, processing, succeeded, error }}
+          onSubmit={onSubmitWithPayment}
+        >
           <LabeledTextField label="Job Name *" name="name" placeholder="e.g. Front end developer" />
           <LabeledTextField
-            label="Job URL"
+            label="Job URL *"
             name="url"
             placeholder="Url to the job posting to apply"
           />
@@ -38,10 +100,10 @@ export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
           />
           <BulmaForm.Field kind="group">
             <BulmaForm.Control>
-              <LabeledTextField label="Salary Min ($)" name="salaryMin" placeholder="5000" />
+              <LabeledTextField label="Salary Min ($)" name="salaryMin" placeholder="5000" type="number" />
             </BulmaForm.Control>
             <BulmaForm.Control>
-              <LabeledTextField label="Salary Max ($)" name="salaryMax" placeholder="10000" />
+              <LabeledTextField label="Salary Max ($)" name="salaryMax" placeholder="10000" type="number" />
             </BulmaForm.Control>
           </BulmaForm.Field>
           <LabeledTextField
@@ -74,7 +136,37 @@ export function JobForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
             name="companyLiUrl"
             placeholder="Optional, we will get company data from the about page"
           />
-          <LabeledTextField label="Submission email" name="email" placeholder="Your email address" />
+          <LabeledTextField
+            label="Submission email"
+            name="email"
+            placeholder="Your email address"
+          />
+          <BulmaForm.Field>
+            <BulmaForm.Label style={{ fontWeight: "normal" }}>
+              Payment details (S$49)
+              <img
+                src="/stripe.svg"
+                alt="powered by stripe"
+                style={{ display: "inline-block", width: 120, float: "right" }}
+              />
+            </BulmaForm.Label>
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                {...{
+                  succeeded,
+                  setSucceeded,
+                  error,
+                  setError,
+                  processing,
+                  setProcessing,
+                  disabled,
+                  setDisabled,
+                  submit
+                }}
+              />
+              {error && <BulmaForm.Help color="danger">{error}</BulmaForm.Help>}
+            </Elements>
+          </BulmaForm.Field>
         </Form>
       </Container>
     </>
