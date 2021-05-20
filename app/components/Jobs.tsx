@@ -59,38 +59,40 @@ const Jobs = (props) => {
     })
   }
 
-  if (sources.length !== originalSources.length) {
-    const excludes = originalSources.filter(source => !sources.includes(source.name))
-    objToAdd.push(
-      ...excludes.map((exclude) => ({
-        aggId: {
-          not: {
-            startsWith: exclude.aggPrefix,
-          },
-        },
-      }))
-    )
-  }
-
-  if (withSalary) {
-    objToAdd.push({
-      AND: [
-        {
-          salary: {
+  if (tab === "all") {
+    if (sources.length !== originalSources.length) {
+      const excludes = originalSources.filter(source => !sources.includes(source.name))
+      objToAdd.push(
+        ...excludes.map((exclude) => ({
+          aggId: {
             not: {
-              equals: null
-            }
-          },
-        },
-        {
-          salary: {
-            not: {
-              equals: ''
+              startsWith: exclude.aggPrefix,
             },
           },
-        },
-      ],
-    })
+        }))
+      )
+    }
+  
+    if (withSalary) {
+      objToAdd.push({
+        AND: [
+          {
+            salary: {
+              not: {
+                equals: null
+              }
+            },
+          },
+          {
+            salary: {
+              not: {
+                equals: ''
+              },
+            },
+          },
+        ],
+      })
+    }
   }
   
   updatedArgs = {
@@ -157,7 +159,7 @@ const Jobs = (props) => {
             {featuredJobs.jobs.map((job) => (
               <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags, setScrollTo: setScrollToContext }} />
             ))}
-            {jobPages.map((page) =>
+            {tab === "all" && jobPages.map((page) =>
               page.jobs.map((job) => (
                 <Job key={job.id} data={job} {...{ selectedTags, setSelectedTags, setScrollTo: setScrollToContext }} />
               ))
@@ -207,12 +209,15 @@ const WrappedJobs = (props) => {
   return (
     <Container style={{ padding: "2rem 2rem 0" }}>
       <TagsSelect {...{ selectedTags, setSelectedTags }} />
-      <Filters
-        withSalary={withSalary}
-        setWithSalary={setWithSalary}
-        sources={sources}
-        setSources={setSources}
-      />
+      {
+        props.tab === "all" &&
+        <Filters
+          withSalary={withSalary}
+          setWithSalary={setWithSalary}
+          sources={sources}
+          setSources={setSources}
+        />
+      }
       <Suspense
         fallback={
           <Level.Item>
