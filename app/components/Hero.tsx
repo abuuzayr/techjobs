@@ -204,6 +204,7 @@ const HeroComponent = (props) => {
                     }}
                     role="button"
                     tabIndex={0}
+                    aria-label="clear search"
                   >
                     <FiDelete />
                   </span>
