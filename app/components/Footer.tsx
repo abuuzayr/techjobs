@@ -42,6 +42,7 @@ const Footer = () => {
                   href="https://www.github.com/abuuzayr/techjobs"
                   rel="noopener noreferrer"
                   target="_blank"
+                  aria-label="github repository"
                 >
                   <FiGithub />
                 </a>
