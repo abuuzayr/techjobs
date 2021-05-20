@@ -240,7 +240,7 @@ const HeroComponent = (props) => {
           </Columns.Column>
         </Columns>
       </Hero.Body>
-      <Hero.Footer style={{ marginTop: -41 }}>
+      <Hero.Footer style={{ marginTop: -41 }} id="top">
         <Tabs type="boxed" fullwidth={true}>
           <Container>
             <ul>
