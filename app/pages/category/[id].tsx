@@ -51,18 +51,18 @@ const Category: BlitzPage = () => {
   return (
     <LikedContext.Consumer>
       {({ liked: likedFromContext }) => {
-        setLiked(likedFromContext)
         return (
           <SearchContext.Consumer>
             {({ search: searchFromContext }) => {
-              setSearch(searchFromContext)
               return (
                 <TabContext.Consumer>
                   {({ tab: tabFromContext, setTab: setTabContext }) => {
-                    setTabContext(tab)
                     return (
                       <JobContext.Consumer>
                         {({ job, setJob }) => {
+                          setLiked(likedFromContext)
+                          setSearch(searchFromContext)
+                          setTabContext(tab)
                           setJob(0)
                           return (
                             <>
