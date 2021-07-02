@@ -57,5 +57,9 @@
     "preview-email": "3.0.4",
     "prettier-plugin-prisma": "0.7.0"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">= 14.x",
+    "yarn": "1.22.x"
+  }
 }
