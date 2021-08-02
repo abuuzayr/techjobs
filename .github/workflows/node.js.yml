@@ -24,9 +24,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
     - name: Check file existence
       id: check_files
       uses: andstor/file-existence-action@v1
@@ -37,3 +34,6 @@ jobs:
       if: steps.check_files.outputs.files_exists == 'true'
       # Only runs if all of the files exists
       run: exit code 1
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
