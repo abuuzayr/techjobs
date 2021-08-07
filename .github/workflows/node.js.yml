@@ -20,18 +20,19 @@ jobs:
         node-version: '14'
         check-latest: true
         cache: 'npm'
-      env:
-        SHOPIFY_DOMAIN: ${{ secrets.SHOPIFY_DOMAIN }}
     - name: Check yarn.lock
       id: check_files
       uses: andstor/file-existence-action@v1
       with:
         files: "yarn.locks"
-
     - name: File exists
       if: steps.check_files.outputs.files_exists == 'true'
       # Only runs if all of the files exists
       run: exit 1
+    - name: create env file
+      run: |
+        touch .env
+        echo SHOPIFY_DOMAIN=${{ secrets.SHOPIFY_DOMAIN }} >> .env
     - run: node test.js
     - run: exit 1
     - run: npm i
