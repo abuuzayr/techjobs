@@ -32,7 +32,7 @@ jobs:
       if: steps.check_files.outputs.files_exists == 'true'
       # Only runs if all of the files exists
       run: exit 1
-    - run: echo $SHOPIFY_DOMAIN
+    - run: node test.js
     - run: exit 1
     - run: npm i
     - run: npm run build --if-present
