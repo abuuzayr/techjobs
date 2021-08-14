@@ -139,22 +139,37 @@ We're happy to help. Post a job <a href="https://techjobs.sg/category/post#top" 
 ## Contributing
 
 1. Ensure you have Postgres installed locally
-2. Set the `DATABASE_URL` environment variable, something like this:
+
+2. Make a copy of `.env.example` and rename it to `.env`
+
+3. Install BlitzJS
 
 ```
-DATABASE_URL=postgresql://<your_computer_username>@localhost:5432/blitz-example-store
+yarn global add blitz
 ```
 
-3. DB migrate
+4. Set the `DATABASE_URL` environment variable. `<postgres_port>` is your local Postgres database port number, generally the default port number is 5432 and `<db_name>` refers to your local database name
 
 ```
-blitz db migrate
+DATABASE_URL=postgresql://<your_computer_username>@localhost:<postgres_port>/<db_name>
 ```
 
-4. Start the dev server
+5. DB migrate. Do note that this will reset your database and apply all migrations
+
+```
+blitz prisma migrate reset
+```
+
+6. Start the dev server
 
 ```
 blitz start
+```
+
+7. If you get this error `Could not find a production build, you must run `blitz build` before starting`, then run the command and then rerun the command from step 6 again
+
+```
+blitz build && blitz start
 ```
 
 ## Issues
