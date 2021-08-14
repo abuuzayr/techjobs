@@ -1,8 +1,8 @@
+import { Form as BulmaForm, Button } from "react-bulma-components"
 import { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
 export { FORM_ERROR } from "final-form"
-import { Form as BulmaForm, Button } from "react-bulma-components"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
