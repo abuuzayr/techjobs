@@ -166,7 +166,7 @@ blitz prisma migrate reset
 blitz start
 ```
 
-7. If you get this error `Could not find a production build, you must run `blitz build` before starting`, then run the command and then rerun the command from step 6 again
+7. If you get this error `Could not find a production build`, you must run `blitz build`, then rerun the command from step 6 again
 
 ```
 blitz build
