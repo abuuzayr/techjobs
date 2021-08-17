@@ -6,7 +6,7 @@ async function createCompany(args: Prisma.CompanyCreateArgs) {
   return company
 }
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "POST") {
     // Process only if body supplied
     if (!req.body) {
@@ -28,3 +28,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn;
