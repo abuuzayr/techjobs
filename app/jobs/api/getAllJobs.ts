@@ -6,7 +6,7 @@ async function getJobs(args: Prisma.JobFindManyArgs) {
   return jobs
 }
 
-export default async (req, res) => {
+const getAllJobs = async (req, res) => {
   if (req.method === "GET") {
     const args = {}
     if (req.query.select) {
@@ -49,3 +49,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default getAllJobs;
