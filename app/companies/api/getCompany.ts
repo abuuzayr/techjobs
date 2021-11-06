@@ -6,7 +6,7 @@ async function getCompany(args: Prisma.CompanyFindUniqueArgs) {
   return company
 }
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "GET") {
     if (!req.query.name) {
       res.statusCode = 400
@@ -27,3 +27,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn

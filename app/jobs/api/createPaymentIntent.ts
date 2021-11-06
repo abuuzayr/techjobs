@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "POST") {
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
@@ -11,12 +11,16 @@ export default async (req, res) => {
 
     res.statusCode = 200
     res.setHeader("Content-Type", "application/json")
-    res.end(JSON.stringify({
+    res.end(
+      JSON.stringify({
         clientSecret: paymentIntent.client_secret,
-    }))
+      })
+    )
   } else {
     // Handle any other HTTP method
     res.setHeader("Allow", ["POST"])
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn

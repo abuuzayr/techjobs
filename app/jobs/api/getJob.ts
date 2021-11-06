@@ -6,7 +6,7 @@ async function getJob(args: Prisma.JobFindUniqueArgs) {
   return job
 }
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "GET") {
     if (!req.query.aggId) {
       res.statusCode = 400
@@ -27,3 +27,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn

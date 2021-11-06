@@ -1,12 +1,12 @@
 import {
   AppProps,
+  ErrorBoundary,
   ErrorComponent,
-  useRouter,
-  ErrorFallbackProps,
   CSRFTokenMismatchError,
-  useQueryErrorResetBoundary
+  ErrorFallbackProps,
+  useQueryErrorResetBoundary,
+  useRouter,
 } from "blitz"
-import { ErrorBoundary } from "react-error-boundary"
 import "react-bulma-components/dist/react-bulma-components.min.css"
 import "../global.css"
 import ErrorRedirectHome from "app/core/components/ErrorRedirectHome"
@@ -39,10 +39,6 @@ function RootErrorFallback({ error }: ErrorFallbackProps) {
       />
     )
   }
-  return (
-    <ErrorComponent
-      statusCode={error.statusCode || 400}
-      title={`An ${error.message || error.name} was thrown. Try reloading the page`}
-    />
-  )
+  const title = `An ${error.message || error.name} was thrown. Try reloading the page`
+  return <ErrorComponent statusCode={error.statusCode || 400} title={title} />
 }

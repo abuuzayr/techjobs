@@ -111,7 +111,7 @@ const createJob = async (args) => {
   return await db.job.create(jobData)
 }
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "POST") {
     // Process a POST request
     if (!req.body) {
@@ -133,3 +133,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn

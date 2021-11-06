@@ -1,4 +1,4 @@
-import { Link } from "blitz"
+import { Link, Image } from "blitz"
 import { Section, Container, Heading, Tile, Level } from "react-bulma-components"
 
 const About = (props) => {
@@ -37,7 +37,9 @@ const About = (props) => {
                 </Tile>
                 <Tile renderAs="article" kind="child" notification color="warning">
                   <Heading>What we want</Heading>
-                  <Heading subtitle>To help people find tech related jobs in Singapore easily</Heading>
+                  <Heading subtitle>
+                    To help people find tech related jobs in Singapore easily
+                  </Heading>
                 </Tile>
               </Tile>
               <Tile kind="parent">
@@ -51,7 +53,7 @@ const About = (props) => {
               <Tile renderAs="article" kind="child" notification color="danger">
                 <Heading>Want to list a job?</Heading>
                 <Heading subtitle>
-                  We're happy to help. Post a job{" "}
+                  We{`&apos;`}re happy to help. Post a job{" "}
                   <Link href="/category/post#top" scroll={false}>
                     <a>here</a>
                   </Link>{" "}
@@ -65,7 +67,7 @@ const About = (props) => {
                 <Heading>Technologies used for this app</Heading>
                 <Heading subtitle style={{ marginBottom: 0, textAlign: "center" }}>
                   {Object.entries(logos).map(([path, url]) => (
-                    <a href={url} target="_blank">
+                    <a href={url} target="_blank" rel="noreferrer" key={path}>
                       <img
                         src={`/${path}`}
                         alt={path.split(".")[0]}

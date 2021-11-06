@@ -6,7 +6,7 @@ async function updateCompany(args: Prisma.CompanyUpdateArgs) {
   return company
 }
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "PUT") {
     // Process only if body supplied
     if (!req.body) {
@@ -39,3 +39,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn

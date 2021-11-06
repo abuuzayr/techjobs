@@ -7,7 +7,7 @@ const ErrorRedirectHome = ({ statusCode, title }) => {
     if (router.query && !router.query.retry) {
       window.location.replace("/?retry=1")
     }
-  }, [])
+  }, [router.query])
   return (
     <ErrorComponent
       statusCode={statusCode}

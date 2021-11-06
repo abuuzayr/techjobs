@@ -10,11 +10,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 // --------------------------------------
 
 model Job {
-  id          Int      @default(autoincrement()) @id
+  id          Int      @id @default(autoincrement())
   aggId       String?  @unique
   name        String
   company     Company  @relation(fields: [companyId], references: [id])
@@ -28,24 +27,24 @@ model Job {
   tags        Tag[]    @relation(references: [id])
   source      String?
   searchStr   String   @default("")
-  likes       Int @default(0)
-  cools       Int @default(0)
-  views       Int @default(0)
-  shares      Int @default(0)
+  likes       Int      @default(0)
+  cools       Int      @default(0)
+  views       Int      @default(0)
+  shares      Int      @default(0)
 }
 
 model Tag {
-  id        Int      @default(autoincrement()) @id
-  name      String   @unique
-  jobs      Job[]    @relation(references: [id])
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  jobs Job[]  @relation(references: [id])
 }
 
 model Company {
-  id            Int      @default(autoincrement()) @id
-  name          String   @unique
-  about         String?  @default("")
-  tagline       String?  @default("")
-  url           String?  @default("")
+  id            Int     @id @default(autoincrement())
+  name          String  @unique
+  about         String? @default("")
+  tagline       String? @default("")
+  url           String? @default("")
   imgUrl        String
   gdUrl         String?
   gdRating      String?

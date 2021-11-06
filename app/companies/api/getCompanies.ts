@@ -6,7 +6,7 @@ async function getCompanies(args: Prisma.CompanyFindManyArgs) {
   return companies
 }
 
-export default async (req, res) => {
+const fn = async (req, res) => {
   if (req.method === "GET") {
     const companies = await getCompanies({})
     if (companies) {
@@ -22,3 +22,5 @@ export default async (req, res) => {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
+export default fn

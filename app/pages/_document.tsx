@@ -36,11 +36,6 @@ class MyDocument extends Document {
         <body>
           <Main />
           <BlitzScript />
-          <script
-            defer
-            src="https://static.cloudflareinsights.com/beacon.min.js"
-            data-cf-beacon='{"token": "e54aae6d15ac401f8d56a7ca4fb18251"}'
-          />
         </body>
       </Html>
     )

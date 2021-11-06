@@ -1,6 +1,7 @@
 import { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
-import * as z from "zod"
+import { z } from "zod"
+import { validateZodSchema } from "blitz"
 export { FORM_ERROR } from "final-form"
 import { Form as BulmaForm, Button } from "react-bulma-components"
 
@@ -15,7 +16,7 @@ export interface FormProps<S extends z.ZodType<any, any>>
   initialValues?: FinalFormProps<z.infer<S>>["initialValues"]
   disabled?: boolean
   processing?: boolean
-  succeeded?: boolean,
+  succeeded?: boolean
   error?: string
 }
 
@@ -26,7 +27,7 @@ export function Form<S extends z.ZodType<any, any>>({
   initialValues,
   onSubmit,
   disabled,
-  processing, 
+  processing,
   succeeded,
   error,
   ...props
@@ -34,14 +35,7 @@ export function Form<S extends z.ZodType<any, any>>({
   return (
     <FinalForm
       initialValues={initialValues}
-      validate={(values) => {
-        if (!schema) return
-        try {
-          schema.parse(values)
-        } catch (error) {
-          return error.formErrors.fieldErrors
-        }
-      }}
+      validate={validateZodSchema(schema)}
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, submitError }) => (
         <form onSubmit={handleSubmit} className="form" {...props}>
@@ -56,7 +50,12 @@ export function Form<S extends z.ZodType<any, any>>({
 
           {submitText && (
             <BulmaForm.Control>
-              <Button color="link" disabled={submitting || disabled || processing || succeeded || !!error}>{succeeded ? "Job created" : submitText}</Button>
+              <Button
+                color="link"
+                disabled={submitting || disabled || processing || succeeded || !!error}
+              >
+                {succeeded ? "Job created" : submitText}
+              </Button>
             </BulmaForm.Control>
           )}
         </form>
