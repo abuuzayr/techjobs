@@ -6,6 +6,6 @@ interface GetJobsInput
 
 export default resolver.pipe(async (args: GetJobsInput) => {
   const jobs = await db.job.findMany(args)
-
+  console.log(args);
   return jobs
 })

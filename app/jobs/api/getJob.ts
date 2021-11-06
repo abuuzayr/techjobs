@@ -28,4 +28,4 @@ const fn = async (req, res) => {
   }
 }
 
-export default fn
+export default fn;
